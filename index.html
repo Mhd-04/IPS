@@ -68,12 +68,17 @@
             }
         }
 
-        function startExam(title) {
-            const name = document.getElementById('studentName').value;
-            if(!name) { alert("يرجى كتابة اسمك أولاً"); return; }
-            alert("أهلاً يا " + name + "، جاري تحميل " + title);
-            // هنا يمكنك التوجيه لصفحة الاختبار الفعلية
-        }
+        function startExam(title, link) {
+    const name = document.getElementById('studentName').value;
+    if(!name) { 
+        alert("يرجى كتابة اسمك الكامل أولاً"); 
+        return; 
+    }
+    // حفظ الاسم في ذاكرة المتصفح المؤقتة لنقله لصفحة الحل
+    localStorage.setItem('student_name', name);
+    window.location.href = link;
+}
+  
     </script>
 </body>
 </html>
