@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الاختبار الكامل - تربية إسلامية</title>
+    <title>الاختبار الشامل - تربية إسلامية</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>body { font-family: 'Tajawal', sans-serif; }</style>
 </head>
 <body class="bg-slate-100 p-4">
 
-    <div class="max-w-3xl mx-auto bg-white rounded-3xl shadow-2xl border-t-8 border-green-800">
+    <div class="max-w-3xl mx-auto bg-white rounded-3xl shadow-2xl border-t-8 border-green-800 mb-10">
         <div class="bg-green-50 p-6 text-center border-b">
             <h1 class="text-2xl font-bold text-green-900">امتحان مادة التربية الإسلامية - الفصل الأول</h1>
             <p class="text-gray-600">الصف الثالث الثانوي | الطالب: <span id="displayStdName" class="text-blue-600 font-bold"></span></p>
@@ -18,17 +18,18 @@
 
         <div class="p-6 space-y-8">
             <section class="space-y-4">
-                <h3 class="font-bold text-green-800">السؤال الأول: قال تعالى (وإذا بشر أحدهم بالأنثى ظل وجهه مسودا وهو كظيم يتوارى من القوم من سوء ما بشر به أيمسكه على هون أم يدسه في التراب ألا ساء ما يحكمون)</h3>
+                <h3 class="font-bold text-green-800 border-r-4 border-green-700 pr-2">السؤال الأول (القرآن الكريم)</h3>
+                <p class="text-sm bg-gray-50 p-2 rounded italic">قال تعالى: (وإذا بشر أحدهم بالأنثى ظل وجهه مسوداً وهو كظيم...)</p>
                 <div>
-                    <label class="block mb-2 text-sm font-bold">- اشرح ما تحته خط (كظيم - هون):</label>
-                    <textarea id="q1_1" class="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-green-500"></textarea>
+                    <label class="block mb-2 text-sm font-bold">1. اشرح ما تحته خط (كظيم - هون):</label>
+                    <input type="text" id="q1_1" class="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-green-500">
                 </div>
                 <div>
-                    <label class="block mb-2 text-sm font-bold">- استخرج مثالاً تجويدياً (إخفاء شفوي - إدغام ناقص بغنة - مد طبيعي):</label>
+                    <label class="block mb-2 text-sm font-bold">2. استخرج مثالاً تجويدياً مع التعليل (إخفاء شفوي - إدغام ناقص بغنة - مد طبيعي):</label>
                     <input type="text" id="q1_2" class="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-green-500">
                 </div>
                 <div>
-                    <label class="block mb-2 text-sm font-bold">- ما الهدي الإلهي المستفاد من قوله تعالى (وإن تعدوا نعمة الله لا تحصوها)؟</label>
+                    <label class="block mb-2 text-sm font-bold">3. ما الهدي الإلهي المستفاد من قوله تعالى (وإن تعدوا نعمة الله لا تحصوها)؟</label>
                     <textarea id="q1_3" class="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-green-500"></textarea>
                 </div>
             </section>
@@ -36,54 +37,58 @@
             <section class="space-y-4 bg-gray-50 p-4 rounded-2xl">
                 <h3 class="font-bold text-green-800">السؤال الثاني (الحفظ والتفسير)</h3>
                 <div>
-                    <label class="block mb-2 text-sm font-bold">- اكتب من قوله تعالى (لا يكلف الله نفساً...) إلى (الكافرين):</label>
+                    <label class="block mb-2 text-sm font-bold">1. اكتب من قوله تعالى (لا يكلف الله نفساً...) إلى (الكافرين):</label>
                     <textarea id="q2_1" rows="3" class="w-full p-3 border rounded-xl outline-none bg-white"></textarea>
                 </div>
                 <div>
-                    <label class="block mb-2 text-sm font-bold">- فسر التركيب القرآني (ولا تسأموا أن تكتبوه صغيراً أو كبيراً إلى أجله):</label>
+                    <label class="block mb-2 text-sm font-bold">2. فسر التركيب القرآني (ولا تسأموا أن تكتبوه صغيراً أو كبيراً إلى أجله):</label>
                     <textarea id="q2_2" class="w-full p-3 border rounded-xl outline-none bg-white"></textarea>
                 </div>
                 <div>
-                    <label class="block mb-2 text-sm font-bold">- ما الحكمة من الأمر بكتابة الدين؟</label>
+                    <label class="block mb-2 text-sm font-bold">3. ما الحكمة من الأمر بكتابة الدين؟</label>
                     <input type="text" id="q2_3" class="w-full p-3 border rounded-xl outline-none bg-white">
                 </div>
             </section>
 
             <section class="space-y-4">
-                <h3 class="font-bold text-green-800">السؤال الثالث (الحديث الشريف)</h3>
+                <h3 class="font-bold text-green-800 border-r-4 border-green-700 pr-2">السؤال الثالث (الحديث الشريف)</h3>
                 <div>
-                    <label class="block mb-2 text-sm font-bold">- اكتب الحديث: (إنما أنا بشر...) إلى آخره مع ذكر الراوي:</label>
+                    <label class="block mb-2 text-sm font-bold">1. اكتب الحديث: (إنما أنا بشر...) إلى آخره مع ذكر الراوي:</label>
                     <textarea id="q3_1" rows="3" class="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-green-500"></textarea>
                 </div>
                 <div>
-                    <label class="block mb-2 text-sm font-bold">- أين توفي الصحابي الجليل عبادة بن الصامت رضي الله عنه وفي أي سنة؟</label>
+                    <label class="block mb-2 text-sm font-bold">2. أين توفي الصحابي الجليل عبادة بن الصامت رضي الله عنه وفي أي سنة؟</label>
                     <input type="text" id="q3_2" class="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-green-500">
                 </div>
                 <div>
-                    <label class="block mb-2 text-sm font-bold">- لماذا يشترك المؤمن القوي مع المؤمن الضعيف في الخيرية؟</label>
+                    <label class="block mb-2 text-sm font-bold">3. لماذا يشترك المؤمن القوي مع المؤمن الضعيف في الخيرية؟</label>
                     <textarea id="q3_3" class="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-green-500"></textarea>
                 </div>
             </section>
 
-            <section class="space-y-4 bg-gray-50 p-4 rounded-2xl border-r-4 border-green-700">
-                <h3 class="font-bold text-green-800">السؤال الرابع (علل وإملأ فراغات)</h3>
-                <div class="space-y-2">
-                    <label class="block text-sm font-bold">1. علل: إحاطة المسلمين بعلوم اللغة والأدب:</label>
-                    <input type="text" id="q4_1" class="w-full p-3 border rounded-xl outline-none bg-white">
-                    <label class="block text-sm font-bold">2. علل: الإنسان يأبى بفطرته أن يتزوج بالمحارم:</label>
-                    <input type="text" id="q4_2" class="w-full p-3 border rounded-xl outline-none bg-white">
+            <section class="space-y-4 bg-gray-50 p-4 rounded-2xl">
+                <h3 class="font-bold text-green-800">السؤال الرابع (علل وإملاء فراغات)</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold mb-1">علل: إحاطة المسلمين بعلوم اللغة:</label>
+                        <input type="text" id="q4_1" class="w-full p-2 border rounded-lg bg-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold mb-1">علل: رفض الفطرة للزواج بالمحارم:</label>
+                        <input type="text" id="q4_2" class="w-full p-2 border rounded-lg bg-white">
+                    </div>
                 </div>
-                <div class="space-y-2 mt-4">
-                    <label class="block text-sm font-bold">إملاء الفراغات:</label>
-                    <input type="text" id="q4_3" class="w-full p-3 border rounded-xl outline-none bg-white" placeholder="للعبادة معنيان: ........ و ........">
-                    <input type="text" id="q4_4" class="w-full p-3 border rounded-xl outline-none bg-white" placeholder="من الملامح الحضارية للنظام الاقتصادي: ........ و ........">
+                <div class="mt-4">
+                    <label class="block text-sm font-bold mb-1">إملاء الفراغات:</label>
+                    <input type="text" id="q4_3" class="w-full p-3 border rounded-xl mb-2 bg-white" placeholder="للعبادة معنيان: ........ و ........">
+                    <input type="text" id="q4_4" class="w-full p-3 border rounded-xl bg-white" placeholder="من الملامح الحضارية للنظام الاقتصادي: ........ و ........">
                 </div>
             </section>
 
             <section class="space-y-4">
-                <h3 class="font-bold text-green-800">السؤال الخامس (وظائف وتعاريف)</h3>
+                <h3 class="font-bold text-green-800 border-r-4 border-green-700 pr-2">السؤال الخامس (وظائف وتعاريف)</h3>
                 <div>
-                    <label class="block mb-2 text-sm font-bold">1. أهم وظائف العبادة ثلاثة (تعداد فقط):</label>
+                    <label class="block mb-2 text-sm font-bold">1. أهم وظائف العبادة (عدد ثلاثة فقط):</label>
                     <textarea id="q5_1" rows="2" class="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-green-500"></textarea>
                 </div>
                 <div>
@@ -93,34 +98,39 @@
             </section>
 
             <button onclick="sendFinal()" class="w-full bg-green-700 hover:bg-green-800 text-white font-bold py-5 rounded-2xl shadow-2xl transition transform active:scale-95 flex items-center justify-center gap-2">
-                إرسال كافة الإجابات للمدرس (WhatsApp)
+                إرسال كامل الحل للمدرس (WhatsApp)
             </button>
         </div>
     </div>
 
     <script>
-        document.getElementById('displayStdName').innerText = localStorage.getItem('student_name') || "زائر";
+        // جلب الاسم وعرضه
+        const savedName = localStorage.getItem('student_name') || "طالب زائر";
+        document.getElementById('displayStdName').innerText = savedName;
 
         function sendFinal() {
-    // 1. ضع رقمك هنا بدقة (بدأ بـ 963 وبدون أصفار أو علامة +)
-    const phone = "9639xxxxxxxx"; 
-    const name = document.getElementById('displayStdName').innerText;
-    
-    // 2. تجميع الإجابات في نص واحد
-    let answersText = `*إجابة اختبار التربية الإسلامية الشامل*\n` +
-                      `*الطالب:* ${name}\n` +
-                      `--------------------------\n` +
-                      `*س1:* ${document.getElementById('q1_1').value} | ${document.getElementById('q1_2').value}\n` +
-                      `*الهدي الإلهي:* ${document.getElementById('q1_3').value}\n` +
-                      `*س2:* ${document.getElementById('q2_1').value}\n` +
-                      `*س3 الحديث:* ${document.getElementById('q3_1').value}\n` +
-                      `*س4 تعاليل:* ${document.getElementById('q4_1').value}\n` +
-                      `*س4 فراغات:* ${document.getElementById('q4_3').value}\n` +
-                      `*س5 وظائف:* ${document.getElementById('q5_1').value}`;
+            const phone = "9639xxxxxxxx"; // استبدله برقمك
+            
+            // تجميع كل البيانات بدقة
+            let msg = `*إجابة اختبار التربية الإسلامية الشامل*\n`;
+            msg += `*الطالب:* ${savedName}\n`;
+            msg += `--------------------------\n`;
+            msg += `*س1 (شرح):* ${document.getElementById('q1_1').value}\n`;
+            msg += `*س1 (تجويد):* ${document.getElementById('q1_2').value}\n`;
+            msg += `*س1 (هدي):* ${document.getElementById('q1_3').value}\n`;
+            msg += `*س2 (تسميع):* ${document.getElementById('q2_1').value}\n`;
+            msg += `*س2 (تفسير):* ${document.getElementById('q2_2').value}\n`;
+            msg += `*س2 (حكمة):* ${document.getElementById('q2_3').value}\n`;
+            msg += `*س3 (حديث):* ${document.getElementById('q3_1').value}\n`;
+            msg += `*س3 (وفاة):* ${document.getElementById('q3_2').value}\n`;
+            msg += `*س3 (خيرية):* ${document.getElementById('q3_3').value}\n`;
+            msg += `*س4 (علل):* ${document.getElementById('q4_1').value} / ${document.getElementById('q4_2').value}\n`;
+            msg += `*س4 (فراغات):* ${document.getElementById('q4_3').value} / ${document.getElementById('q4_4').value}\n`;
+            msg += `*س5 (وظائف وتعريف):* ${document.getElementById('q5_1').value} | ${document.getElementById('q5_2').value}`;
 
-    // 3. الحل السحري: استخدام encodeURIComponent لتجنب خطأ الرابط
-    const finalUrl = `https://wa.me/${phone}?text=${encodeURIComponent(answersText)}`;
-
-    // 4. فتح الرابط
-    window.open(finalUrl, '_blank');
-}
+            const finalUrl = "https://wa.me/" + phone + "?text=" + encodeURIComponent(msg);
+            window.location.href = finalUrl;
+        }
+    </script>
+</body>
+</html>
