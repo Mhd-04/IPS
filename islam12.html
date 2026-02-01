@@ -18,7 +18,7 @@
 
         <div class="p-6 space-y-8">
             <section class="space-y-4">
-                <h3 class="font-bold text-green-800">السؤال الأول: قال تعالى (وإذا بشر أحدهم بالأنثى...)</h3>
+                <h3 class="font-bold text-green-800">السؤال الأول: قال تعالى (وإذا بشر أحدهم بالأنثى ظل وجهه مسودا وهو كظيم يتوارى من القوم من سوء ما بشر به أيمسكه على هون أم يدسه في التراب ألا ساء ما يحكمون)</h3>
                 <div>
                     <label class="block mb-2 text-sm font-bold">- اشرح ما تحته خط (كظيم - هون):</label>
                     <textarea id="q1_1" class="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-green-500"></textarea>
@@ -66,7 +66,7 @@
             </section>
 
             <section class="space-y-4 bg-gray-50 p-4 rounded-2xl border-r-4 border-green-700">
-                <h3 class="font-bold text-green-800">السؤال الرابع (علل وإملاء فراغات)</h3>
+                <h3 class="font-bold text-green-800">السؤال الرابع (علل وإملأ فراغات)</h3>
                 <div class="space-y-2">
                     <label class="block text-sm font-bold">1. علل: إحاطة المسلمين بعلوم اللغة والأدب:</label>
                     <input type="text" id="q4_1" class="w-full p-3 border rounded-xl outline-none bg-white">
@@ -102,24 +102,25 @@
         document.getElementById('displayStdName').innerText = localStorage.getItem('student_name') || "زائر";
 
         function sendFinal() {
-            const phone = "9639xxxxxxxx"; // ضع رقمك هنا
-            const name = document.getElementById('displayStdName').innerText;
-            
-            let msg = `*إجابة اختبار التربية الإسلامية الشامل*%0A`;
-            msg += `*الطالب:* ${name}%0A`;
-            msg += `--------------------------%0A`;
-            msg += `*س1:* ${document.getElementById('q1_1').value} | ${document.getElementById('q1_2').value}%0A`;
-            msg += `*الهدي الإلهي:* ${document.getElementById('q1_3').value}%0A`;
-            msg += `*س2 (التسميع):* ${document.getElementById('q2_1').value}%0A`;
-            msg += `*تفسير و حكمة:* ${document.getElementById('q2_2').value} - ${document.getElementById('q2_3').value}%0A`;
-            msg += `*س3 (الحديث):* ${document.getElementById('q3_1').value}%0A`;
-            msg += `*وفاة الصحابي:* ${document.getElementById('q3_2').value}%0A`;
-            msg += `*س4 (تعاليل):* ${document.getElementById('q4_1').value} | ${document.getElementById('q4_2').value}%0A`;
-            msg += `*س4 (فراغات):* ${document.getElementById('q4_3').value} | ${document.getElementById('q4_4').value}%0A`;
-            msg += `*س5 (وظائف وتعريف):* ${document.getElementById('q5_1').value} | ${document.getElementById('q5_2').value}`;
+    // 1. ضع رقمك هنا بدقة (بدأ بـ 963 وبدون أصفار أو علامة +)
+    const phone = "9639xxxxxxxx"; 
+    const name = document.getElementById('displayStdName').innerText;
+    
+    // 2. تجميع الإجابات في نص واحد
+    let answersText = `*إجابة اختبار التربية الإسلامية الشامل*\n` +
+                      `*الطالب:* ${name}\n` +
+                      `--------------------------\n` +
+                      `*س1:* ${document.getElementById('q1_1').value} | ${document.getElementById('q1_2').value}\n` +
+                      `*الهدي الإلهي:* ${document.getElementById('q1_3').value}\n` +
+                      `*س2:* ${document.getElementById('q2_1').value}\n` +
+                      `*س3 الحديث:* ${document.getElementById('q3_1').value}\n` +
+                      `*س4 تعاليل:* ${document.getElementById('q4_1').value}\n` +
+                      `*س4 فراغات:* ${document.getElementById('q4_3').value}\n` +
+                      `*س5 وظائف:* ${document.getElementById('q5_1').value}`;
 
-            window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
-        }
-    </script>
-</body>
-</html>
+    // 3. الحل السحري: استخدام encodeURIComponent لتجنب خطأ الرابط
+    const finalUrl = `https://wa.me/${phone}?text=${encodeURIComponent(answersText)}`;
+
+    // 4. فتح الرابط
+    window.open(finalUrl, '_blank');
+}
