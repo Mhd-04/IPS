@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ثانوية ومعهد ابن خلدون الخاصة - اختيار الصف</title>
+    <title>معهد ابن خلدون - البوابة الإلكترونية</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>body { font-family: 'Tajawal', sans-serif; }</style>
@@ -12,16 +12,16 @@
 
     <div class="container mx-auto px-4 py-10">
         <div class="text-center mb-10">
-            <img src="1000219663.jpg" class="w-24 h-24 mx-auto rounded-full border-4 border-blue-500 mb-4 bg-white">
+            <img src="1000219663.jpg" class="w-24 h-24 mx-auto rounded-full border-4 border-blue-500 mb-4 bg-white shadow-2xl">
             <h1 class="text-3xl font-bold">بوابة معهد ابن خلدون الإلكترونية</h1>
             <p class="text-blue-300">اختر صفك لعرض الاختبارات والوظائف</p>
         </div>
 
-        <div class="max-w-xl mx-auto bg-white/10 backdrop-blur-lg p-6 rounded-3xl border border-white/20">
+        <div class="max-w-xl mx-auto bg-white/10 backdrop-blur-lg p-6 rounded-3xl border border-white/20 shadow-2xl">
             <div class="space-y-4">
-                <input type="text" id="studentName" placeholder="اكتب اسمك الكامل" class="w-full p-4 rounded-2xl bg-white text-blue-900 font-bold outline-none">
+                <input type="text" id="studentName" placeholder="اكتب اسمك الكامل" class="w-full p-4 rounded-2xl bg-white text-blue-900 font-bold outline-none shadow-inner">
                 
-                <select id="gradeSelect" onchange="showExams()" class="w-full p-4 rounded-2xl bg-white text-blue-900 font-bold outline-none">
+                <select id="gradeSelect" onchange="showExams()" class="w-full p-4 rounded-2xl bg-white text-blue-900 font-bold outline-none cursor-pointer">
                     <option value="">--- اختر الصف الدراسي ---</option>
                     <option value="7">الصف السابع</option>
                     <option value="8">الصف الثامن</option>
@@ -33,52 +33,47 @@
             </div>
         </div>
 
-        <div id="examsArea" class="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            </div>
+        <div id="examsArea" class="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
     </div>
 
     <script>
-        // قاعدة بيانات تجريبية للاختبارات
         const examsData = {
-            "7": [{ title: "رياضيات - سابع", type: "وظيفة", link: "exam_7_math.html" }],
-            "8": [{ title: "علوم - ثامن", type: "اختبار", link: "#" }],
-            "9": [{ title: "فيزياء - تاسع", type: "اختبار مؤتمت", link: "#" }, { title: "عربي - تاسع", type: "وظيفة", link: "#" }],
-            "10": [{ title: "كيمياء - عاشر", type: "اختبار", link: "#" }],
-            "11": [{ title: "رياضيات - حادي عشر", type: "وظيفة", link: "#" }],
-            "12": [{ title: "فيزياء - بكالوريا", type: "نموذج امتحاني", link: "#" }, { title: "وطنية - بكالوريا", type: "مؤتمت", link: "#" }]
+            "7": [{ title: "رياضيات - سابع", type: "وظيفة", link: "math7.html" }],
+            "8": [{ title: "علوم - ثامن", type: "اختبار", link: "science8.html" }],
+            "9": [{ title: "فيزياء - تاسع", type: "اختبار", link: "physics9.html" }],
+            "10": [{ title: "كيمياء - عاشر", type: "اختبار", link: "chem10.html" }],
+            "11": [{ title: "عربي - حادي عشر", type: "وظيفة", link: "arabic11.html" }],
+            "12": [{ title: "نموذج بكالوريا شامل", type: "امتحان", link: "exam12.html" }]
         };
 
         function showExams() {
             const grade = document.getElementById('gradeSelect').value;
             const container = document.getElementById('examsArea');
-            container.innerHTML = ""; // مسح النتائج السابقة
+            container.innerHTML = ""; 
 
             if (grade && examsData[grade]) {
                 examsData[grade].forEach(exam => {
                     container.innerHTML += `
-                        <div class="bg-white p-6 rounded-2xl shadow-xl transform transition hover:scale-105">
-                            <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded-full border border-blue-200">${exam.type}</span>
+                        <div class="bg-white p-6 rounded-3xl shadow-2xl transform transition hover:scale-105 border-b-8 border-blue-500">
+                            <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full border border-blue-200">${exam.type}</span>
                             <h3 class="text-xl font-bold text-gray-800 mt-3">${exam.title}</h3>
-                            <button onclick="startExam('${exam.title}')" class="w-full mt-4 bg-blue-600 text-white py-2 rounded-xl font-bold hover:bg-blue-700">دخول</button>
+                            <button onclick="startExam('${exam.title}', '${exam.link}')" class="w-full mt-4 bg-blue-600 text-white py-3 rounded-2xl font-bold hover:bg-blue-700 shadow-lg">دخول</button>
                         </div>
                     `;
                 });
-            } else if (grade) {
-                container.innerHTML = "<p class='text-center col-span-full'>لا يوجد اختبارات متوفرة لهذا الصف حالياً.</p>";
             }
         }
 
         function startExam(title, link) {
-    const name = document.getElementById('studentName').value;
-    if(!name) { 
-        alert("يرجى كتابة اسمك الكامل أولاً"); 
-        return; 
-    }
-    // حفظ الاسم في ذاكرة المتصفح المؤقتة لنقله لصفحة الحل
-    localStorage.setItem('student_name', name);
-    window.location.href = link;
-}
-  
+            const name = document.getElementById('studentName').value;
+            if(!name) { 
+                alert("يرجى كتابة اسمك الكامل أولاً للدخول إلى " + title); 
+                return; 
+            }
+            // حفظ الاسم لنقله لصفحة الحل
+            localStorage.setItem('std_name', name);
+            window.location.href = link;
+        }
     </script>
 </body>
 </html>
