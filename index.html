@@ -38,13 +38,16 @@
 
     <script>
         const examsData = {
-            "7": [{ title: "رياضيات - سابع", type: "وظيفة", link: "math7.html" }],
-            "8": [{ title: "علوم - ثامن", type: "اختبار", link: "science8.html" }],
-            "9": [{ title: "فيزياء - تاسع", type: "اختبار", link: "physics9.html" }],
-            "10": [{ title: "كيمياء - عاشر", type: "اختبار", link: "chem10.html" }],
-            "11": [{ title: "عربي - حادي عشر", type: "وظيفة", link: "arabic11.html" }],
-            "12": [{ title: "نموذج بكالوريا شامل", type: "امتحان", link: "exam12.html" }]
-        };
+    // ... الصفوف الأخرى
+    "12": [
+        { 
+            title: "التربية الإسلامية - نموذج أ", 
+            type: "امتحان", 
+            link: "islam12.html" // تأكد أن الاسم يطابق ما رفعته على جيت هاب
+        }
+    ]
+};
+
 
         function showExams() {
             const grade = document.getElementById('gradeSelect').value;
