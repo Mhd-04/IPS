@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مذاكرة التربية الإسلامية - بكالوريا</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Tajawal', sans-serif; background-color: #374151; color: white; }
+        .exam-paper { background-color: white; color: #1f2937; border-radius: 30px; }
+        @media print { 
+            .no-print { display: none; } 
+            body { background: white; color: black; }
+            .exam-paper { box-shadow: none; border: 1px solid #ccc; }
+        }
+    </style>
+</head>
+<body class="p-4 md:p-10">
+
+    <div class="max-w-4xl mx-auto exam-paper shadow-2xl p-6 md:p-12">
+        <div class="flex flex-col md:flex-row justify-between items-center border-b-2 border-gray-800 pb-6 mb-8 gap-4">
+            <div class="text-center md:text-right">
+                <h1 class="text-2xl font-bold text-gray-800">ثانوية ومعهد ابن خلدون الخاصة</h1>
+                <p class="text-gray-600 font-bold">اختبار مادة: التربية الإسلامية (الفصل الأول)</p>
+                <p class="text-sm text-gray-500">قسم الذكور - شهادة التعليم الثانوي</p>
+            </div>
+            <img src="1000219663.jpg" class="w-20 h-20 rounded-full border-2 border-gray-800 p-1 bg-white">
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10 bg-gray-100 p-4 rounded-2xl border border-gray-300">
+            <div class="font-bold">اسم الطالب: <span id="stdNameDisp" class="text-blue-700 underline"></span></div>
+            <div class="font-bold">الشعبة: <span id="stdSectionDisp" class="text-blue-700 underline"></span></div>
+        </div>
+
+        <form id="examForm" class="space-y-8">
+            <div class="p-4 rounded-xl border-r-4 border-gray-800 bg-gray-50">
+                <p class="font-bold text-lg mb-4">السؤال الأول: وضح مفهوم "المسؤولية المجتمعية" في الإسلام مستشهداً بحديث نبوي شريف.</p>
+                <textarea class="w-full p-4 rounded-xl border border-gray-300 outline-none focus:ring-2 focus:ring-gray-800 h-32" placeholder="اكتب إجابتك هنا..."></textarea>
+            </div>
+
+            <div class="p-4 rounded-xl border-r-4 border-gray-800 bg-gray-50">
+                <p class="font-bold text-lg mb-4">السؤال الثاني (اختيار من متعدد): ما حكم البيع عند أذان الجمعة الثاني؟</p>
+                <div class="space-y-2">
+                    <label class="flex items-center gap-3 p-2 hover:bg-gray-200 rounded-lg cursor-pointer">
+                        <input type="radio" name="q2" value="مكروه" class="w-5 h-5"> مكروه
+                    </label>
+                    <label class="flex items-center gap-3 p-2 hover:bg-gray-200 rounded-lg cursor-pointer">
+                        <input type="radio" name="q2" value="باطل وحرام" class="w-5 h-5"> باطل وحرام
+                    </label>
+                    <label class="flex items-center gap-3 p-2 hover:bg-gray-200 rounded-lg cursor-pointer">
+                        <input type="radio" name="q2" value="مباح" class="w-5 h-5"> مباح
+                    </label>
+                </div>
+            </div>
+
+            <div class="p-4 rounded-xl border-r-4 border-gray-800 bg-gray-50">
+                <p class="font-bold text-lg mb-4">السؤال الثالث: علل تحريم "الربا" في المعاملات المالية الإسلامية.</p>
+                <textarea class="w-full p-4 rounded-xl border border-gray-300 outline-none focus:ring-2 focus:ring-gray-800 h-24" placeholder="اكتب إجابتك هنا..."></textarea>
+            </div>
+        </form>
+
+        <div class="mt-12 flex flex-col md:flex-row gap-4 no-print">
+            <button onclick="printResult()" class="flex-1 bg-gray-800 text-white py-4 rounded-2xl font-bold text-xl hover:bg-gray-900 shadow-lg flex items-center justify-center gap-2">
+                <span>🖨️</span> حفظ وحفظ كـ PDF
+            </button>
+            <button onclick="sendToWhatsApp()" class="flex-1 bg-green-600 text-white py-4 rounded-2xl font-bold text-xl hover:bg-green-700 shadow-lg flex items-center justify-center gap-2">
+                <span>💬</span> مراسلة المشرف
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // جلب البيانات المخزنة من الصفحة الرئيسية
+        window.onload = function() {
+            document.getElementById('stdNameDisp').innerText = localStorage.getItem('sName') || "لم يتم إدخال اسم";
+            document.getElementById('stdSectionDisp').innerText = localStorage.getItem('sSection') || "غير محدد";
+        };
+
+        // وظيفة الطباعة
+        function printResult() {
+            alert("ملاحظة: اختر 'Save as PDF' من قائمة الطابعات لحفظ حلك.");
+            window.print();
+        }
+
+        // وظيفة الواتساب
+        function sendToWhatsApp() {
+            const name = localStorage.getItem('sName');
+            const section = localStorage.getItem('sSection');
+            const phone = "9639xxxxxxxx"; // ضع هنا رقم واتساب المعهد أو المشرف
+            const message = `أنا الطالب: ${name} (الشعبة: ${section})%0Aلقد انتهيت من اختبار الديانة وأرسلت لكم ملف الـ PDF المرفق بالحل.`;
+            
+            window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
+        }
+    </script>
+</body>
+</html>
