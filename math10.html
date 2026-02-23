@@ -117,13 +117,45 @@
     }
 
     function gradeFullExam() {
-        let score = 0;
-        mcqs.forEach((item, i) => {
-            const sel = document.querySelector(`input[name="m${i}"]:checked`);
-            const card = document.getElementById(`mcqCard${i}`);
-            if(sel && parseInt(sel.value) === item.ans) { score++; card.classList.add('correct'); card.classList.remove('wrong'); }
-            else { card.classList.add('wrong'); card.classList.remove('correct'); }
-        });
+    let score = 0;
+
+    // تعطيل جميع خيارات الأتمتة لمنع تغيير الإجابة
+    const allInputs = document.querySelectorAll('input[type="radio"]');
+    allInputs.forEach(input => input.disabled = true);
+
+    // تصحيح أسئلة الخيارات (MCQs)
+    mcqs.forEach((item, i) => {
+        const sel = document.querySelector(`input[name="m${i}"]:checked`);
+        const card = document.getElementById(`mcqCard${i}`);
+        if(sel && parseInt(sel.value) === item.ans) {
+            score++;
+            card.classList.add('correct');
+        } else {
+            card.classList.add('wrong');
+        }
+    });
+
+    // تصحيح أسئلة الصح والخطأ (T/F)
+    tfs.forEach((item, i) => {
+        const card = document.getElementById(`tfCard${i}`);
+        if(tfUserAns[i] === item.ans) {
+            score++;
+            card.classList.add('correct');
+        } else {
+            card.classList.add('wrong');
+        }
+    });
+
+    // إخفاء زر التصحيح لمنع الطالب من الضغط عليه مرة أخرى
+    const submitBtn = document.querySelector('button[onclick="gradeFullExam()"]');
+    if(submitBtn) submitBtn.style.display = 'none';
+
+    // عرض النتيجة النهائية
+    const total = mcqs.length + tfs.length;
+    document.getElementById('resultDisplay').innerText = `نتيجتك النهائية: ${score} من ${total}`;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 
         tfs.forEach((item, i) => {
             const card = document.getElementById(`tfCard${i}`);
