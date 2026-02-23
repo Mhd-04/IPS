@@ -9,7 +9,6 @@
     <style>
         body { font-family: 'Tajawal', sans-serif; transition: background 0.6s ease, color 0.6s ease; }
         
-        /* تعريف الألوان الأساسية */
         .bg-silver { background: radial-gradient(circle, #e2e8f0, #94a3b8); color: #1e293b; }
         .bg-male { background: linear-gradient(135deg, #4b5563, #1f2937); color: white; }
         .bg-female { background: linear-gradient(135deg, #db2777, #880808); color: white; }
@@ -65,7 +64,6 @@
     <script>
         let currentTheme = "";
 
-        // وظيفة التحقق من كلمة السر
         function checkAccess(gender) {
             const pass = prompt("الرجاء إدخال كلمة السر الخاصة بالقسم:");
             const mPass = "m20262025";
@@ -80,7 +78,6 @@
             }
         }
 
-        // وظيفة تغيير مظهر الموقع
         function setTheme(gender, title) {
             currentTheme = gender;
             const body = document.getElementById('mainBody');
@@ -96,39 +93,30 @@
 
             document.getElementById('mainTitle').innerText = title;
             document.getElementById('gradeArea').classList.remove('hidden');
-            // مسح أي اختبارات معروضة عند تبديل القسم
             document.getElementById('examsArea').innerHTML = "";
             document.getElementById('gradeSelect').value = "";
         }
 
-        // قاعدة بيانات الاختبارات (مفصولة للذكور والإناث)
-        const examsData = {
-                    // قاعدة بيانات الاختبارات (مفصولة للذكور والإناث) - تم تعديل الخطأ هنا
+        // قاعدة بيانات الاختبارات - تم تصحيح الأقواس والفواصل
         const examsData = {
             "12": {
-                "male": [
-                    { title: "مذاكرة تربية إسلامية (ذكور)", type: "اختبار", link: "religion12.html" }
-                ],
-                "female": [
-                    { title: "مذاكرة تربية إسلامية (إناث)", type: "اختبار", link: "islam12.html" }
-                ]
+                "male": [{ title: "مذاكرة تربية إسلامية (ذكور)", type: "اختبار", link: "religion12.html" }],
+                "female": [{ title: "مذاكرة تربية إسلامية (إناث)", type: "اختبار", link: "islam12.html" }]
             },
             "9": {
                 "male": [{ title: "مذاكرة فيزياء - تاسع", type: "اختبار", link: "physics9.html" }],
                 "female": [{ title: "مذاكرة فيزياء - تاسع", type: "اختبار", link: "physics9.html" }]
-            }, // تم إضافة الفاصلة المفقودة هنا لإصلاح توقف البوابة
+            },
             "10": {
-                "male": [
-                    { title: "كويز الوحدة الثالثة رياضيات (ذكور)", type: "اختبار", link: "math10.html" }
-                ],
-                "female": [
-                    { title: "كويز الوحدة الثالثة رياضيات (إناث)", type: "اختبار", link: "math10.html" }
-                ]
-            } // تم إزالة السطر الزائد من داخل الروابط لضمان فتح الملف
+                "male": [{ title: "كويز الوحدة الثالثة رياضيات (ذكور)", type: "اختبار", link: "math10.html" }],
+                "female": [{ title: "كويز الوحدة الثالثة رياضيات (إناث)", type: "اختبار", link: "math10.html" }]
+            },
+            "7": {
+                "male": [{ title: "اختبار تاريخ - سابع", type: "اختبار", link: "math10.html" }],
+                "female": [{ title: "اختبار تاريخ - سابع إناث", type: "اختبار", link: "history7.html" }]
+            }
         };
 
-
-        // وظيفة عرض الاختبارات بناءً على الصف المختار والقسم الحالي
         function showExams() {
             const grade = document.getElementById('gradeSelect').value;
             const container = document.getElementById('examsArea');
@@ -139,7 +127,6 @@
                 
                 if (list && list.length > 0) {
                     list.forEach(exam => {
-                        // تخصيص الألوان حسب القسم
                         const accentColor = currentTheme === 'male' ? 'bg-gray-700 hover:bg-gray-800' : 'bg-pink-600 hover:bg-pink-700';
                         const borderColor = currentTheme === 'male' ? 'border-gray-500' : 'border-pink-500';
 
@@ -156,7 +143,6 @@
             }
         }
 
-        // وظيفة الدخول للاختبار وحفظ البيانات
         function startExam(link) {
             const name = document.getElementById('studentName').value;
             const section = document.getElementById('studentSection').value;
