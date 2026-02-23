@@ -3,56 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>كويز مادة الرياضيات الوحدة الثالثة - الأول الثانوي | IPS</title>
+    <title>كويز الرياضيات - الأول الثانوي | IPS</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Tajawal', sans-serif; }
         .male-theme { background: linear-gradient(135deg, #4b5563, #1f2937); }
         .female-theme { background: linear-gradient(135deg, #880808, #db2777); }
-        .question-card { transition: all 0.3s ease; border-radius: 25px; }
+        .question-card { transition: all 0.3s ease; border-radius: 25px; border: 2px solid transparent; }
         .correct { border: 3px solid #10b981 !important; background-color: #f0fdf4; }
         .wrong { border: 3px solid #ef4444 !important; background-color: #fef2f2; }
-        input[type="radio"]:checked + span { color: #2563eb; font-weight: bold; }
+        @media print { .no-print { display: none; } }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen pb-20">
 
-    <div id="headerColor" class="p-8 text-white text-center shadow-2xl mb-10 transition-colors duration-500">
-        <img src="1000219663.jpg" class="w-28 h-28 mx-auto rounded-full border-4 border-white bg-white mb-4 shadow-lg">
-        <h1 class="text-3xl font-extrabold">مذاكرة الرياضيات - الصف العاشر</h1>
-        <p id="studentDisplay" class="mt-2 text-lg font-bold opacity-90"></p>
-    </div>
+    <div id="examToPrint">
+        <div id="headerColor" class="p-8 text-white text-center shadow-2xl mb-10">
+            <img src="1000219663.jpg" class="w-28 h-28 mx-auto rounded-full border-4 border-white bg-white mb-4 shadow-lg">
+            <h1 class="text-3xl font-extrabold">مذاكرة الرياضيات - الوحدة الثالثة</h1>
+            <p id="studentDisplay" class="mt-2 text-lg font-bold opacity-90"></p>
+        </div>
 
-    <div class="container mx-auto px-4 max-w-3xl">
-        <form id="fullExamForm">
+        <div class="container mx-auto px-4 max-w-3xl">
             <h2 class="text-2xl font-bold mb-6 text-gray-700 border-r-4 border-blue-600 pr-4">أولاً: اختر الإجابة الصحيحة</h2>
             <div id="mcqContainer" class="space-y-6 mb-12"></div>
 
             <h2 class="text-2xl font-bold mb-6 text-gray-700 border-r-4 border-green-600 pr-4">ثانياً: ضع كلمة (صح) أو (خطأ)</h2>
             <div id="tfContainer" class="space-y-4 mb-12"></div>
 
-            <div class="text-center sticky bottom-5">
-                <button type="button" onclick="gradeFullExam()" class="bg-blue-600 text-white px-12 py-5 rounded-3xl font-bold text-2xl shadow-2xl hover:scale-105 transition transform active:scale-95">إنهاء الاختبار وعرض النتيجة</button>
+            <div id="resultBox" class="mt-10 p-8 rounded-3xl text-center hidden mb-10 border-4 shadow-2xl">
+                <h3 id="scoreText" class="text-4xl font-black mb-4"></h3>
+                <button onclick="printPDF()" class="no-print bg-green-600 text-white px-10 py-4 rounded-2xl font-bold text-xl shadow-lg hover:bg-green-700 transition transform active:scale-95">
+                    تحميل النتيجة PDF لإرسالها للمدرس
+                </button>
             </div>
-            
-            <div id="resultBox" class="mt-10 p-8 rounded-3xl text-center hidden animate-bounce">
-                <h3 id="scoreText" class="text-4xl font-black"></h3>
-            </div>
-        </form>
+        </div>
+    </div>
+
+    <div class="text-center sticky bottom-5 no-print" id="submitArea">
+        <button onclick="gradeFullExam()" class="bg-blue-600 text-white px-12 py-5 rounded-3xl font-bold text-2xl shadow-2xl hover:scale-105 transition transform active:scale-95">إنهاء الاختبار وعرض النتيجة</button>
     </div>
 
 <script>
-    // جلب البيانات من البوابة
+    // إعدادات المظهر والبيانات
     const sName = localStorage.getItem('sName') || "طالب زائر";
     const sTheme = localStorage.getItem('sTheme') || 'female';
-    const header = document.getElementById('headerColor');
-    header.classList.add(sTheme === 'male' ? 'male-theme' : 'female-theme');
-    document.getElementById('studentDisplay').innerText = `الطالب/ة: ${sName}`;
+    const sSection = localStorage.getItem('sSection') || '-';
+    document.getElementById('headerColor').classList.add(sTheme === 'male' ? 'male-theme' : 'female-theme');
+    document.getElementById('studentDisplay').innerText = `الطالب/ة: ${sName} | الشعبة: ${sSection}`;
 
-    // مصفوفة أسئلة الاختيار من متعدد (MCQ)
+    // 1. مصفوفة أسئلة الخيارات (11 سؤال)
     const mcqs = [
-        { q: "إذا علمت أن أحد حلول المعادلة \\(3x^2 + x - 2 = 0\\) هو \\(x_1 = -1\\) فالحل الآخر هو:", opts: ["\\(x = \\frac{1}{2}\\)", "\\(x = \\frac{3}{2}\\)", "\\(x = -\\frac{3}{2}\\)"], ans: 1 },
+        { q: "إذا علمت أن أحد حلول المعادلة \\(3x^2 + x - 2 = 0\\) هو \\(x_1 = -1\\) فالحل الآخر هو:", opts: ["\\(x = \\frac{1}{2}\\)", "\\(x = \\frac{2}{3}\\)", "\\(x = -\\frac{3}{2}\\)"], ans: 1 },
         { q: "إحدى طرق حل معادلة من الدرجة الثانية استخدام المميز \\(\\Delta\\) وقيمته:", opts: ["\\(c^2 - 4ab\\)", "\\(b^2 - 4ac\\)", "\\(a^2 - 4bc\\)"], ans: 1 },
         { q: "ليكن لدينا شعاعين لهما البداية نفسها ناتج جمعهما هو الشعاع:", opts: ["بداية الأول ثم نهاية الثاني", "قطر متوازي الأضلاع المنشأ عليهما", "نهاية الأول بداية الثاني"], ans: 1 },
         { q: "ناتج ضرب شعاع \\(u\\) بالعدد \\(k = -4\\) هو شعاع \\(ku\\) له:", opts: ["نفس اتجاه الشعاع \\(u\\)", "عكس اتجاه الشعاع \\(u\\)", "طويلة الشعاع \\(u\\) نفسها"], ans: 1 },
@@ -65,7 +70,7 @@
         { q: "يكون حل المتراجحة \\(-2x^2 + 3x + 2 \\ge 0\\) هو:", opts: ["\\(x \\in [-\\frac{1}{2}, 2]\\)", "\\(x \\in ]-\\infty, -\\frac{1}{2}] \\cup [2, +\\infty[\\)", "\\(x \\in ]-\\frac{1}{2}, 2[\\)"], ans: 0 }
     ];
 
-    // مصفوفة أسئلة الصح والخطأ (TF)
+    // 2. مصفوفة أسئلة الصح والخطأ (9 أسئلة)
     const tfs = [
         { q: "الشعاع الصفري لا منحى له", ans: "صح" },
         { q: "شرط الارتباط الخطي لشعاعين هو أن يكون لهما الطويلة نفسها", ans: "خطأ" },
@@ -74,15 +79,18 @@
         { q: "المعادلة \\(2x^2 - 4x + 3 = 0\\) مستحيلة الحل", ans: "صح" },
         { q: "إشارة العبارة \\(2x^2 - 4x + 3\\) سالبة دائماً", ans: "خطأ" },
         { q: "ناتج اختزال الشعاع \\(u = \\frac{3}{4}(2i-4j) + \\frac{1}{3}(-i+6j)\\) هو \\(5i - \\frac{11}{6}j\\)", ans: "صح" },
-        { q: "إذا كان ABC مثلث متساوي الأضلاع كان BC=AC=AB", ans: "خطأ" },
-        { q: "العلاقة الشعاعية \\((BA - AC) - CD = AB - CD = DA\\) صحيحة", ans: "صح" }
+        { q: "إذا كان ABC مثلث متساوي الأضلاع كان BC=AC=AB", ans: "صح" },
+        { q: "العلاقة الشعاعية \\((BA - AC) - CD = DA\\) صحيحة", ans: "صح" }
     ];
 
+    let tfUserAns = {};
+
     function init() {
+        // بناء أسئلة الخيارات
         const mcqCont = document.getElementById('mcqContainer');
         mcqs.forEach((item, i) => {
             mcqCont.innerHTML += `
-                <div id="mcqCard${i}" class="bg-white p-6 shadow-lg question-card border-2 border-transparent text-right">
+                <div id="mcqCard${i}" class="bg-white p-6 shadow-lg question-card text-right">
                     <h3 class="text-xl font-bold mb-4 text-gray-800">${i + 1}) ${item.q}</h3>
                     <div class="grid grid-cols-1 gap-3">
                         ${item.opts.map((opt, j) => `
@@ -95,80 +103,67 @@
                 </div>`;
         });
 
+        // بناء أسئلة الصح والخطأ
         const tfCont = document.getElementById('tfContainer');
         tfs.forEach((item, i) => {
             tfCont.innerHTML += `
-                <div id="tfCard${i}" class="bg-white p-5 shadow-md question-card border-2 border-transparent flex justify-between items-center">
+                <div id="tfCard${i}" class="bg-white p-5 shadow-md question-card flex justify-between items-center">
                     <p class="text-lg font-bold text-gray-700">${i + 1}) ${item.q}</p>
                     <div class="flex gap-2">
-                        <button type="button" onclick="setTF(${i}, 'صح')" id="tf${i}صح" class="px-4 py-2 rounded-xl border-2 font-bold hover:bg-green-100">صح</button>
-                        <button type="button" onclick="setTF(${i}, 'خطأ')" id="tf${i}خطأ" class="px-4 py-2 rounded-xl border-2 font-bold hover:bg-red-100">خطأ</button>
+                        <button type="button" onclick="setTF(${i}, 'صح')" id="tf${i}صح" class="px-5 py-2 rounded-xl border-2 font-bold transition">صح</button>
+                        <button type="button" onclick="setTF(${i}, 'خطأ')" id="tf${i}خطأ" class="px-5 py-2 rounded-xl border-2 font-bold transition">خطأ</button>
                     </div>
                 </div>`;
         });
         if(window.MathJax) MathJax.typeset();
     }
 
-    let tfUserAns = {};
     function setTF(i, val) {
         tfUserAns[i] = val;
-        document.getElementById(`tf${i}صح`).className = val === 'صح' ? "px-4 py-2 rounded-xl border-2 bg-green-500 text-white font-bold" : "px-4 py-2 rounded-xl border-2 font-bold";
-        document.getElementById(`tf${i}خطأ`).className = val === 'خطأ' ? "px-4 py-2 rounded-xl border-2 bg-red-500 text-white font-bold" : "px-4 py-2 rounded-xl border-2 font-bold";
+        document.getElementById(`tf${i}صح`).className = val === 'صح' ? "px-5 py-2 rounded-xl bg-green-500 text-white font-bold" : "px-5 py-2 rounded-xl border-2 font-bold";
+        document.getElementById(`tf${i}خطأ`).className = val === 'خطأ' ? "px-5 py-2 rounded-xl bg-red-500 text-white font-bold" : "px-5 py-2 rounded-xl border-2 font-bold";
     }
 
     function gradeFullExam() {
-    let score = 0;
+        let score = 0;
+        // قفل الإجابات
+        document.querySelectorAll('input[type="radio"]').forEach(inp => inp.disabled = true);
+        document.querySelectorAll('button[onclick^="setTF"]').forEach(btn => btn.disabled = true);
 
-    // تعطيل جميع خيارات الأتمتة لمنع تغيير الإجابة
-    const allInputs = document.querySelectorAll('input[type="radio"]');
-    allInputs.forEach(input => input.disabled = true);
-
-    // تصحيح أسئلة الخيارات (MCQs)
-    mcqs.forEach((item, i) => {
-        const sel = document.querySelector(`input[name="m${i}"]:checked`);
-        const card = document.getElementById(`mcqCard${i}`);
-        if(sel && parseInt(sel.value) === item.ans) {
-            score++;
-            card.classList.add('correct');
-        } else {
-            card.classList.add('wrong');
-        }
-    });
-
-    // تصحيح أسئلة الصح والخطأ (T/F)
-    tfs.forEach((item, i) => {
-        const card = document.getElementById(`tfCard${i}`);
-        if(tfUserAns[i] === item.ans) {
-            score++;
-            card.classList.add('correct');
-        } else {
-            card.classList.add('wrong');
-        }
-    });
-
-    // إخفاء زر التصحيح لمنع الطالب من الضغط عليه مرة أخرى
-    const submitBtn = document.querySelector('button[onclick="gradeFullExam()"]');
-    if(submitBtn) submitBtn.style.display = 'none';
-
-    // عرض النتيجة النهائية
-    const total = mcqs.length + tfs.length;
-    document.getElementById('resultDisplay').innerText = `نتيجتك النهائية: ${score} من ${total}`;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-
-        tfs.forEach((item, i) => {
-            const card = document.getElementById(`tfCard${i}`);
-            if(tfUserAns[i] === item.ans) { score++; card.classList.add('correct'); card.classList.remove('wrong'); }
-            else { card.classList.add('wrong'); card.classList.remove('correct'); }
+        // تصحيح الخيارات
+        mcqs.forEach((item, i) => {
+            const sel = document.querySelector(`input[name="m${i}"]:checked`);
+            const card = document.getElementById(`mcqCard${i}`);
+            if(sel && parseInt(sel.value) === item.ans) { score++; card.classList.add('correct'); }
+            else { card.classList.add('wrong'); }
         });
 
+        // تصحيح الصح والخطأ
+        tfs.forEach((item, i) => {
+            const card = document.getElementById(`tfCard${i}`);
+            if(tfUserAns[i] === item.ans) { score++; card.classList.add('correct'); }
+            else { card.classList.add('wrong'); }
+        });
+
+        // عرض النتيجة وإخفاء زر الإرسال
         const total = mcqs.length + tfs.length;
+        document.getElementById('submitArea').style.display = 'none';
         const resBox = document.getElementById('resultBox');
         resBox.classList.remove('hidden');
-        resBox.className = score > total/2 ? "mt-10 p-8 rounded-3xl text-center bg-green-100 text-green-800" : "mt-10 p-8 rounded-3xl text-center bg-red-100 text-red-800";
+        resBox.classList.add(score >= total/2 ? "bg-green-100 border-green-500" : "bg-red-100 border-red-500");
         document.getElementById('scoreText').innerText = `النتيجة النهائية: ${score} / ${total}`;
         window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function printPDF() {
+        const element = document.getElementById('examToPrint');
+        const opt = { 
+            margin: 5, 
+            filename: `نتيجة_رياضيات_${sName}.pdf`, 
+            html2canvas: { scale: 2 }, 
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } 
+        };
+        html2pdf().set(opt).from(element).save();
     }
 
     init();
