@@ -1,4 +1,4 @@
-            <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -9,25 +9,27 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Tajawal', sans-serif; transition: background 0.5s; }
+        body { font-family: 'Tajawal', sans-serif; }
         .male-theme { background: linear-gradient(135deg, #4b5563, #1f2937); }
         .female-theme { background: linear-gradient(135deg, #880808, #db2777); }
         .question-card { border-radius: 25px; border: 2px solid transparent; transition: all 0.3s; }
         .correct { border: 3px solid #10b981 !important; background-color: #f0fdf4; }
         .wrong { border: 3px solid #ef4444 !important; background-color: #fef2f2; }
+        /* تحسينات الطباعة */
         @media print { .no-print { display: none !important; } }
+        #examContent { background: white; padding: 20px; border-radius: 15px; }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen pb-20">
 
-    <div id="printableArea">
+    <div id="fullPageToExport">
         <div id="headerBox" class="p-8 text-white text-center shadow-2xl mb-10">
             <img src="1000219663.jpg" class="w-28 h-28 mx-auto rounded-full border-4 border-white bg-white mb-4 shadow-lg">
             <h1 class="text-3xl font-extrabold">كويز الرياضيات - الوحدة الثالثة</h1>
             <p id="studentInfo" class="mt-2 text-lg font-bold opacity-90"></p>
         </div>
 
-        <div class="container mx-auto px-4 max-w-3xl">
+        <div class="container mx-auto px-4 max-w-3xl" id="examContent">
             <h2 class="text-2xl font-bold mb-6 text-gray-700 border-r-4 border-blue-600 pr-4">أولاً: اختر الإجابة الصحيحة</h2>
             <div id="mcqContainer" class="space-y-6 mb-12"></div>
 
@@ -36,15 +38,15 @@
 
             <div id="resultBox" class="mt-10 p-8 rounded-3xl text-center hidden mb-10 border-4 shadow-2xl">
                 <h3 id="scoreText" class="text-4xl font-black mb-4"></h3>
-                <button onclick="generatePDF()" class="no-print bg-green-600 text-white px-10 py-4 rounded-2xl font-bold text-xl shadow-lg hover:bg-green-700 transition transform active:scale-95">
+                <button onclick="downloadPDF()" class="no-print bg-green-600 text-white px-10 py-4 rounded-2xl font-bold text-xl shadow-lg hover:bg-green-700 transition transform">
                     تحميل النتيجة PDF لإرسالها للمدرس
                 </button>
             </div>
         </div>
     </div>
 
-    <div class="text-center sticky bottom-5 no-print" id="submitBtnArea">
-        <button onclick="gradeFullExam()" class="bg-blue-600 text-white px-12 py-5 rounded-3xl font-bold text-2xl shadow-2xl hover:scale-105 transition transform active:scale-95">إنهاء الاختبار وعرض النتيجة</button>
+    <div class="text-center sticky bottom-5 no-print" id="submitArea">
+        <button onclick="gradeFullExam()" class="bg-blue-600 text-white px-12 py-5 rounded-3xl font-bold text-2xl shadow-2xl hover:scale-105 transition transform">إنهاء الاختبار وعرض النتيجة</button>
     </div>
 
 <script>
@@ -106,8 +108,8 @@
                 <div id="tfCard${i}" class="bg-white p-5 shadow-md question-card flex justify-between items-center">
                     <p class="text-lg font-bold text-gray-700">${i + 1}) ${item.q}</p>
                     <div class="flex gap-2">
-                        <button type="button" onclick="setTF(${i}, 'صح')" id="tf${i}صح" class="px-5 py-2 rounded-xl border-2 font-bold transition">صح</button>
-                        <button type="button" onclick="setTF(${i}, 'خطأ')" id="tf${i}خطأ" class="px-5 py-2 rounded-xl border-2 font-bold transition">خطأ</button>
+                        <button type="button" onclick="setTF(${i}, 'صح')" id="tf${i}صح" class="px-5 py-2 rounded-xl border-2 font-bold">صح</button>
+                        <button type="button" onclick="setTF(${i}, 'خطأ')" id="tf${i}خطأ" class="px-5 py-2 rounded-xl border-2 font-bold">خطأ</button>
                     </div>
                 </div>`;
         });
@@ -139,7 +141,7 @@
         });
 
         const total = mcqs.length + tfs.length;
-        document.getElementById('submitBtnArea').style.display = 'none';
+        document.getElementById('submitArea').style.display = 'none';
         const resBox = document.getElementById('resultBox');
         resBox.classList.remove('hidden');
         resBox.className = "mt-10 p-8 rounded-3xl text-center border-4 shadow-2xl " + (score >= total/2 ? "bg-green-100 border-green-500 text-green-800" : "bg-red-100 border-red-500 text-red-800");
@@ -147,14 +149,19 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function generatePDF() {
-        const element = document.getElementById('printableArea');
-        const opt = { 
-            margin: 5, 
-            filename: `نتيجة_رياضيات_${sName}.pdf`, 
-            html2canvas: { scale: 2, useCORS: true }, 
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } 
+    function downloadPDF() {
+        // تحديد العنصر بالكامل لضمان عدم وجود صفحات فارغة
+        const element = document.getElementById('fullPageToExport');
+        const opt = {
+            margin:       [10, 5, 10, 5],
+            filename:     `نتيجة_رياضيات_${sName}.pdf`,
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2, useCORS: true, scrollY: 0 }, 
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            pagebreak:    { mode: 'avoid-all' } // منع تقطيع الأسئلة في صفحات فارغة
         };
+
+        // تشغيل التحويل مع انتظار بسيط لضمان ثبات الصور والمعادلات
         html2pdf().set(opt).from(element).save();
     }
 
@@ -162,4 +169,3 @@
 </script>
 </body>
 </html>
-
