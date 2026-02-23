@@ -3,124 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اختبار الوحدة الثالثة مادة الرياضيات للصف الأول الثانوي  - 
-      | IPS</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>كويز مادة الرياضيات الوحدة الثالثة - الأول الثانوي | IPS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
-        body { background-color: #f4f7f9; font-family: 'Segoe UI', Tahoma, sans-serif; }
-        .exam-container { max-width: 900px; margin: auto; background: white; padding: 30px; border-radius: 15px; shadow: 0 0 20px rgba(0,0,0,0.1); }
-        .question-card { border: 1px solid #e0e0e0; border-radius: 10px; padding: 20px; margin-bottom: 20px; transition: 0.3s; }
-        .correct { border: 2px solid #28a745 !important; background-color: #f1fcf4 !important; }
-        .wrong { border: 2px solid #dc3545 !important; background-color: #fff5f5 !important; }
-        .student-header { background: #007bff; color: white; padding: 20px; border-radius: 10px; margin-bottom: 30px; }
+        body { font-family: 'Tajawal', sans-serif; }
+        .male-theme { background: linear-gradient(135deg, #4b5563, #1f2937); }
+        .female-theme { background: linear-gradient(135deg, #880808, #db2777); }
+        .question-card { transition: all 0.3s ease; border-radius: 25px; }
+        .correct { border: 3px solid #10b981 !important; background-color: #f0fdf4; }
+        .wrong { border: 3px solid #ef4444 !important; background-color: #fef2f2; }
+        input[type="radio"]:checked + span { color: #2563eb; font-weight: bold; }
     </style>
 </head>
-<body>
+<body class="bg-gray-50 min-h-screen pb-20">
 
-<div class="container py-5">
-    <div class="exam-container">
-        <div class="student-header text-center">
-            <h2>ورقة عمل مادة الرياضيات - الصف العاشر</h2>
-            <p>وحدة الجبر والهندسة (أتمتة)</p>
-        </div>
+    <div id="headerColor" class="p-8 text-white text-center shadow-2xl mb-10 transition-colors duration-500">
+        <img src="1000219663.jpg" class="w-28 h-28 mx-auto rounded-full border-4 border-white bg-white mb-4 shadow-lg">
+        <h1 class="text-3xl font-extrabold">مذاكرة الرياضيات - الصف العاشر</h1>
+        <p id="studentDisplay" class="mt-2 text-lg font-bold opacity-90"></p>
+    </div>
 
-        <div class="row g-3 mb-4 p-3 bg-light rounded">
-            <div class="col-md-6">
-                <label>اسم الطالب:</label>
-                <input type="text" id="sName" class="form-control" placeholder="أدخل اسمك الكامل">
+    <div class="container mx-auto px-4 max-w-3xl">
+        <form id="fullExamForm">
+            <h2 class="text-2xl font-bold mb-6 text-gray-700 border-r-4 border-blue-600 pr-4">أولاً: اختر الإجابة الصحيحة</h2>
+            <div id="mcqContainer" class="space-y-6 mb-12"></div>
+
+            <h2 class="text-2xl font-bold mb-6 text-gray-700 border-r-4 border-green-600 pr-4">ثانياً: ضع كلمة (صح) أو (خطأ)</h2>
+            <div id="tfContainer" class="space-y-4 mb-12"></div>
+
+            <div class="text-center sticky bottom-5">
+                <button type="button" onclick="gradeFullExam()" class="bg-blue-600 text-white px-12 py-5 rounded-3xl font-bold text-2xl shadow-2xl hover:scale-105 transition transform active:scale-95">إنهاء الاختبار وعرض النتيجة</button>
             </div>
-            <div class="col-md-6">
-                <label>رقم الطالب (ID):</label>
-                <input type="text" id="sID" class="form-control" placeholder="رقم الهوية">
-            </div>
-        </div>
-
-        <form id="fullExam">
-            <h4 class="text-primary mb-4">السؤال الأول: اختر الإجابة الصحيحة</h4>
-            <div id="mcq-area"></div>
-
-            <hr class="my-5">
-
-            <h4 class="text-primary mb-4">السؤال الثاني: أجب بـ (صح) أو (خطأ)</h4>
-            <div id="tf-area"></div>
-
-            <div class="text-center">
-                <button type="button" class="btn btn-success btn-lg px-5 shadow" onclick="calculateResult()">إرسال وتصحيح تلقائي</button>
-                <div id="finalScore" class="mt-4 display-6 fw-bold"></div>
+            
+            <div id="resultBox" class="mt-10 p-8 rounded-3xl text-center hidden animate-bounce">
+                <h3 id="scoreText" class="text-4xl font-black"></h3>
             </div>
         </form>
     </div>
-</div>
 
 <script>
-// مصفوفة الأسئلة مستخرجة بالكامل من الصور
-const mcqs = [
-    { q: "إذا علمت أن أحد حلول المعادلة 3x² + x - 2 = 0 هو x₁ = -1 فالحل الآخر هو:", opts: ["x = 1/2", "x = 3/2", "x = -3/2"], ans: 1 },
-    { q: "إحدى طرق حل معادلة من الدرجة الثانية استخدام المميز Δ وقيمته:", opts: ["c² - 4ab", "b² - 4ac", "a² - 4bc"], ans: 1 },
-    { q: "ليكن لدينا شعاعين لهما البداية نفسها ناتج جمعهما هو الشعاع:", opts: ["بداية الأول ثم نهاية الثاني", "قطر متوازي الأضلاع المنشأ عليهما", "نهاية الأول بداية الثاني"], ans: 1 },
-    { q: "ناتج ضرب شعاع u بالعدد k = -4 هو شعاع ku له:", opts: ["نفس اتجاه الشعاع u", "عكس اتجاه الشعاع u", "طويلة الشعاع u نفسها"], ans: 1 },
-    { q: "الصيغة القانونية لثلاثي الحدود f(x) = 2x² - 4x + 3 هي:", opts: ["2(x-1)² - 1", "2(x+1)² + 1", "2(x-1)² + 1"], ans: 2 },
-    { q: "أصغر قيمة للتابع f(x) = 2x² - 4x + 3 هي:", opts: ["+2", "-1", "+1"], ans: 2 },
-    { q: "حل المعادلة x² - 2x + 1 = 0 هو:", opts: ["مستحيلة الحل", "x₁ = x₂ = 1 حل مضاعف", "x₁ = 1, x₂ = 2 حلين مختلفين"], ans: 1 },
-    { q: "إشارة العبارة x² - 2x + 1 هي:", opts: ["موجبة", "غير موجب وغير سالب", "سالبة"], ans: 0 },
-    { q: "إحدى طرق حل المتراجحة -2x² + 3x + 2 ≥ 0 استخدام المميز وقيمته:", opts: ["Δ = +25", "Δ = -25", "Δ = 0"], ans: 0 },
-    { q: "نستنتج أن حل المعادلة -2x² + 3x + 2 = 0 هو:", opts: ["x₁ = -1/2 و x₂ = 2", "مستحيلة الحل", "x = 3/4"], ans: 0 },
-    { q: "يكون حل المتراجحة -2x² + 3x + 2 ≥ 0 هو:", opts: ["x ∈ [-1/2, 2]", "x ∈ ]-∞, -1/2] ∪ [2, +∞[", "x ∈ ]-1/2, 2["], ans: 0 }
-];
+    // جلب البيانات من البوابة
+    const sName = localStorage.getItem('sName') || "طالب زائر";
+    const sTheme = localStorage.getItem('sTheme') || 'female';
+    const header = document.getElementById('headerColor');
+    header.classList.add(sTheme === 'male' ? 'male-theme' : 'female-theme');
+    document.getElementById('studentDisplay').innerText = `الطالب/ة: ${sName}`;
 
-const tfs = [
-    { q: "الشعاع الصفري لا منحى له", ans: "صح" },
-    { q: "شرط الارتباط الخطي لشعاعين هو أن يكون لهما الطويلة نفسها", ans: "خطأ" },
-    { q: "يستعمل الارتباط الخطي لإثبات وقوع ثلاث نقاط على استقامة واحدة", ans: "صح" },
-    { q: "إذا كانت E, F منتصف الضلعين [AC], [AB] فإن BC = 1/2 EF", ans: "خطأ" },
-    { q: "المعادلة 2x² - 4x + 3 = 0 مستحيلة الحل", ans: "صح" },
-    { q: "إشارة العبارة 2x² - 4x + 3 سالبة دائماً", ans: "خطأ" },
-    { q: "ناتج اختزال الشعاع u = 3/4(2i-4j) + 1/3(-i+6j) هو 5i - 11/6j", ans: "صح" },
-    { q: "إذا كان ABC مثلث متساوي الأضلاع كان BC=AC=AB", ans: "خطأ" }, // حسب الصورة
-    { q: "العلاقة الشعاعية (BA - AC) - CD = AB - CD = DA صحيحة", ans: "صح" }
-];
+    // مصفوفة أسئلة الاختيار من متعدد (MCQ)
+    const mcqs = [
+        { q: "إذا علمت أن أحد حلول المعادلة \\(3x^2 + x - 2 = 0\\) هو \\(x_1 = -1\\) فالحل الآخر هو:", opts: ["\\(x = \\frac{1}{2}\\)", "\\(x = \\frac{3}{2}\\)", "\\(x = -\\frac{3}{2}\\)"], ans: 1 },
+        { q: "إحدى طرق حل معادلة من الدرجة الثانية استخدام المميز \\(\\Delta\\) وقيمته:", opts: ["\\(c^2 - 4ab\\)", "\\(b^2 - 4ac\\)", "\\(a^2 - 4bc\\)"], ans: 1 },
+        { q: "ليكن لدينا شعاعين لهما البداية نفسها ناتج جمعهما هو الشعاع:", opts: ["بداية الأول ثم نهاية الثاني", "قطر متوازي الأضلاع المنشأ عليهما", "نهاية الأول بداية الثاني"], ans: 1 },
+        { q: "ناتج ضرب شعاع \\(u\\) بالعدد \\(k = -4\\) هو شعاع \\(ku\\) له:", opts: ["نفس اتجاه الشعاع \\(u\\)", "عكس اتجاه الشعاع \\(u\\)", "طويلة الشعاع \\(u\\) نفسها"], ans: 1 },
+        { q: "الصيغة القانونية لثلاثي الحدود \\(f(x) = 2x^2 - 4x + 3\\) هي:", opts: ["\\(2(x-1)^2 - 1\\)", "\\(2(x+1)^2 + 1\\)", "\\(2(x-1)^2 + 1\\)"], ans: 2 },
+        { q: "أصغر قيمة للتابع \\(f(x) = 2x^2 - 4x + 3\\) هي:", opts: ["\\(+2\\)", "\\(-1\\)", "\\(+1\\)"], ans: 2 },
+        { q: "حل المعادلة \\(x^2 - 2x + 1 = 0\\) هو:", opts: ["مستحيلة الحل", "\\(x_1 = x_2 = 1\\) حل مضاعف", "\\(x_1 = 1, x_2 = 2\\) حلين مختلفين"], ans: 1 },
+        { q: "إشارة العبارة \\(x^2 - 2x + 1\\) هي:", opts: ["موجبة", "غير موجب وغير سالب", "سالبة"], ans: 0 },
+        { q: "إحدى طرق حل المتراجحة \\(-2x^2 + 3x + 2 \\ge 0\\) استخدام المميز وقيمته:", opts: ["\\(\\Delta = +25\\)", "\\(\\Delta = -25\\)", "\\(\\Delta = 0\\)"], ans: 0 },
+        { q: "نستنتج أن حل المعادلة \\(-2x^2 + 3x + 2 = 0\\) هو:", opts: ["\\(x_1 = -\\frac{1}{2}\\) و \\(x_2 = 2\\)", "مستحيلة الحل", "\\(x = \\frac{3}{4}\\)"], ans: 0 },
+        { q: "يكون حل المتراجحة \\(-2x^2 + 3x + 2 \\ge 0\\) هو:", opts: ["\\(x \\in [-\\frac{1}{2}, 2]\\)", "\\(x \\in ]-\\infty, -\\frac{1}{2}] \\cup [2, +\\infty[\\)", "\\(x \\in ]-\\frac{1}{2}, 2[\\)"], ans: 0 }
+    ];
 
-// توليد الأسئلة في الصفحة
-function render() {
-    const mcqArea = document.getElementById('mcq-area');
-    mcqs.forEach((m, i) => {
-        mcqArea.innerHTML += `
-            <div class="question-card" id="mcq-${i}">
-                <p class="fw-bold">${i+1}) ${m.q}</p>
-                ${m.opts.map((o, j) => `<div class="form-check"><input class="form-check-input" type="radio" name="m${i}" value="${j}"> ${o}</div>`).join('')}
-            </div>`;
-    });
+    // مصفوفة أسئلة الصح والخطأ (TF)
+    const tfs = [
+        { q: "الشعاع الصفري لا منحى له", ans: "صح" },
+        { q: "شرط الارتباط الخطي لشعاعين هو أن يكون لهما الطويلة نفسها", ans: "خطأ" },
+        { q: "يستعمل الارتباط الخطي لإثبات وقوع ثلاث نقاط على استقامة واحدة", ans: "صح" },
+        { q: "إذا كانت E, F منتصف الضلعين [AC], [AB] فإن \\(BC = \\frac{1}{2} EF\\)", ans: "خطأ" },
+        { q: "المعادلة \\(2x^2 - 4x + 3 = 0\\) مستحيلة الحل", ans: "صح" },
+        { q: "إشارة العبارة \\(2x^2 - 4x + 3\\) سالبة دائماً", ans: "خطأ" },
+        { q: "ناتج اختزال الشعاع \\(u = \\frac{3}{4}(2i-4j) + \\frac{1}{3}(-i+6j)\\) هو \\(5i - \\frac{11}{6}j\\)", ans: "صح" },
+        { q: "إذا كان ABC مثلث متساوي الأضلاع كان BC=AC=AB", ans: "خطأ" },
+        { q: "العلاقة الشعاعية \\((BA - AC) - CD = AB - CD = DA\\) صحيحة", ans: "صح" }
+    ];
 
-    const tfArea = document.getElementById('tf-area');
-    tfs.forEach((t, i) => {
-        tfArea.innerHTML += `
-            <div class="question-card" id="tf-${i}">
-                <p class="fw-bold">${i+1}) ${t.q}</p>
-                <button type="button" class="btn btn-outline-success btn-sm me-2" onclick="setTF(${i}, 'صح')">صح</button>
-                <button type="button" class="btn btn-outline-danger btn-sm" onclick="setTF(${i}, 'خطأ')">خطأ</button>
-            </div>`;
-    });
-}
+    function init() {
+        const mcqCont = document.getElementById('mcqContainer');
+        mcqs.forEach((item, i) => {
+            mcqCont.innerHTML += `
+                <div id="mcqCard${i}" class="bg-white p-6 shadow-lg question-card border-2 border-transparent text-right">
+                    <h3 class="text-xl font-bold mb-4 text-gray-800">${i + 1}) ${item.q}</h3>
+                    <div class="grid grid-cols-1 gap-3">
+                        ${item.opts.map((opt, j) => `
+                            <label class="flex items-center p-4 border rounded-2xl cursor-pointer hover:bg-blue-50 transition">
+                                <input type="radio" name="m${i}" value="${j}" class="w-5 h-5">
+                                <span class="mr-3 text-lg">${opt}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                </div>`;
+        });
 
-let tfAnswers = {};
-function setTF(i, v) { tfAnswers[i] = v; }
+        const tfCont = document.getElementById('tfContainer');
+        tfs.forEach((item, i) => {
+            tfCont.innerHTML += `
+                <div id="tfCard${i}" class="bg-white p-5 shadow-md question-card border-2 border-transparent flex justify-between items-center">
+                    <p class="text-lg font-bold text-gray-700">${i + 1}) ${item.q}</p>
+                    <div class="flex gap-2">
+                        <button type="button" onclick="setTF(${i}, 'صح')" id="tf${i}صح" class="px-4 py-2 rounded-xl border-2 font-bold hover:bg-green-100">صح</button>
+                        <button type="button" onclick="setTF(${i}, 'خطأ')" id="tf${i}خطأ" class="px-4 py-2 rounded-xl border-2 font-bold hover:bg-red-100">خطأ</button>
+                    </div>
+                </div>`;
+        });
+        if(window.MathJax) MathJax.typeset();
+    }
 
-function calculateResult() {
-    let score = 0;
-    mcqs.forEach((m, i) => {
-        const sel = document.querySelector(`input[name="m${i}"]:checked`);
-        if(sel && parseInt(sel.value) === m.ans) { score++; document.getElementById(`mcq-${i}`).className = "question-card correct"; }
-        else { document.getElementById(`mcq-${i}`).className = "question-card wrong"; }
-    });
+    let tfUserAns = {};
+    function setTF(i, val) {
+        tfUserAns[i] = val;
+        document.getElementById(`tf${i}صح`).className = val === 'صح' ? "px-4 py-2 rounded-xl border-2 bg-green-500 text-white font-bold" : "px-4 py-2 rounded-xl border-2 font-bold";
+        document.getElementById(`tf${i}خطأ`).className = val === 'خطأ' ? "px-4 py-2 rounded-xl border-2 bg-red-500 text-white font-bold" : "px-4 py-2 rounded-xl border-2 font-bold";
+    }
 
-    tfs.forEach((t, i) => {
-        if(tfAnswers[i] === t.ans) { score++; document.getElementById(`tf-${i}`).className = "question-card correct"; }
-        else { document.getElementById(`tf-${i}`).className = "question-card wrong"; }
-    });
+    function gradeFullExam() {
+        let score = 0;
+        mcqs.forEach((item, i) => {
+            const sel = document.querySelector(`input[name="m${i}"]:checked`);
+            const card = document.getElementById(`mcqCard${i}`);
+            if(sel && parseInt(sel.value) === item.ans) { score++; card.classList.add('correct'); card.classList.remove('wrong'); }
+            else { card.classList.add('wrong'); card.classList.remove('correct'); }
+        });
 
-    document.getElementById('finalScore').innerText = "النتيجة: " + score + " / " + (mcqs.length + tfs.length);
-}
-render();
+        tfs.forEach((item, i) => {
+            const card = document.getElementById(`tfCard${i}`);
+            if(tfUserAns[i] === item.ans) { score++; card.classList.add('correct'); card.classList.remove('wrong'); }
+            else { card.classList.add('wrong'); card.classList.remove('correct'); }
+        });
+
+        const total = mcqs.length + tfs.length;
+        const resBox = document.getElementById('resultBox');
+        resBox.classList.remove('hidden');
+        resBox.className = score > total/2 ? "mt-10 p-8 rounded-3xl text-center bg-green-100 text-green-800" : "mt-10 p-8 rounded-3xl text-center bg-red-100 text-red-800";
+        document.getElementById('scoreText').innerText = `النتيجة النهائية: ${score} / ${total}`;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    init();
 </script>
 </body>
 </html>
