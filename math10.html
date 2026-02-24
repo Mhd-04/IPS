@@ -6,52 +6,69 @@
     <title>كويز الرياضيات - الأول الثانوي | IPS</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Tajawal', sans-serif; }
-        .male-theme { background: linear-gradient(135deg, #4b5563, #1f2937); }
-        .female-theme { background: linear-gradient(135deg, #880808, #db2777); }
-        .question-card { border-radius: 25px; border: 2px solid transparent; transition: all 0.3s; margin-bottom: 1.5rem; padding: 1.5rem; background: white; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .correct { border: 3px solid #10b981 !important; background-color: #f0fdf4 !important; }
-        .wrong { border: 3px solid #ef4444 !important; background-color: #fef2f2 !important; }
-        @media print { .no-print { display: none !important; } }
+        body { font-family: 'Tajawal', sans-serif; background-color: #f3f4f6; margin: 0; padding: 0; }
+        .female-theme { background: linear-gradient(135deg, #880808, #db2777); color: white; }
+        .male-theme { background: linear-gradient(135deg, #4b5563, #1f2937); color: white; }
+        
+        .question-card { 
+            background: white !important; padding: 20px; margin-bottom: 20px; 
+            border-radius: 20px; border: 2px solid transparent; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            page-break-inside: avoid;
+        }
+
+        /* لضمان ظهور الألوان في ملف الـ PDF */
+        .correct { border: 4px solid #10b981 !important; background-color: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .wrong { border: 4px solid #ef4444 !important; background-color: #fef2f2 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white; }
+            .question-card { box-shadow: none; border: 1px solid #eee; }
+        }
     </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
+<body class="pb-24">
 
     <div id="captureArea">
-        <div id="headerBox" class="p-8 text-white text-center shadow-2xl mb-10">
-            <img src="1000219663.jpg" class="w-28 h-28 mx-auto rounded-full border-4 border-white bg-white mb-4 shadow-lg">
-            <h1 class="text-3xl font-extrabold">كويز الرياضيات - الوحدة الثالثة</h1>
-            <p id="studentInfo" class="mt-2 text-lg font-bold opacity-90"></p>
+        <div id="headerBox" class="p-8 text-center shadow-lg mb-8">
+            <img src="1000219663.jpg" class="w-24 h-24 mx-auto rounded-full border-4 border-white bg-white mb-4 shadow-md">
+            <h1 class="text-3xl font-black italic">نتيجة كويز الرياضيات - الوحدة الثالثة</h1>
+            <div class="flex justify-center gap-6 mt-4 text-lg font-bold bg-black/20 p-2 rounded-lg max-w-md mx-auto">
+                <div>الاسم: <span id="sn"></span></div>
+                <div>الشعبة: <span id="sc"></span></div>
+            </div>
+            <div id="scoreDisplay" class="text-2xl font-black mt-4 text-yellow-300"></div>
         </div>
 
         <div class="container mx-auto px-4 max-w-3xl">
             <div id="mcqContainer"></div>
             <div id="tfContainer"></div>
-
-            <div id="resultBox" class="mt-10 p-8 rounded-3xl text-center hidden mb-10 border-4 shadow-2xl">
-                <h3 id="scoreText" class="text-4xl font-black mb-4"></h3>
-                <button onclick="safeDownloadPDF()" id="pdfBtn" class="no-print bg-green-600 text-white px-10 py-4 rounded-2xl font-bold text-xl shadow-lg hover:bg-green-700 transition transform">
-                    تحميل النتيجة PDF لإرسالها للمدرس
-                </button>
-            </div>
         </div>
     </div>
 
-    <div class="text-center sticky bottom-5 no-print" id="submitArea">
-        <button onclick="gradeFullExam()" class="bg-blue-600 text-white px-12 py-5 rounded-3xl font-bold text-2xl shadow-2xl hover:scale-105 transition transform">إنهاء الاختبار وعرض النتيجة</button>
+    <div class="no-print fixed bottom-0 left-0 right-0 p-4 bg-white/90 border-t z-50 flex gap-4">
+        <button id="gradeBtn" onclick="gradeFullExam()" class="flex-1 bg-blue-700 text-white py-5 rounded-2xl font-black text-xl shadow-xl active:scale-95 transition-all">
+            تصحيح الاختبار وعرض النتيجة
+        </button>
+        <button id="printBtn" onclick="window.print()" class="hidden flex-1 bg-green-700 text-white py-5 rounded-2xl font-black text-xl shadow-xl active:scale-95 transition-all">
+            حفظ النتيجة بصيغة PDF
+        </button>
     </div>
 
 <script>
-    const sName = localStorage.getItem('sName') || "طالب زائر";
+    // جلب البيانات الأساسية
+    const sName = localStorage.getItem('sName') || "الاء فرحان الغفري";
+    const sSection = localStorage.getItem('sSection') || "G";
     const sTheme = localStorage.getItem('sTheme') || 'female';
-    const sSection = localStorage.getItem('sSection') || '-';
-
+    
     document.getElementById('headerBox').classList.add(sTheme === 'male' ? 'male-theme' : 'female-theme');
-    document.getElementById('studentInfo').innerText = `الطالب/ة: ${sName} | الشعبة: ${sSection}`;
+    document.getElementById('sn').innerText = sName;
+    document.getElementById('sc').innerText = sSection;
 
+    // الأسئلة والمعلومات كاملة كما في الكود السابق
     const mcqs = [
         { q: "إذا علمت أن أحد حلول المعادلة \\(3x^2 + x - 2 = 0\\) هو \\(x_1 = -1\\) فالحل الآخر هو:", opts: ["\\(x = \\frac{1}{2}\\)", "\\(x = \\frac{2}{3}\\)", "\\(x = -\\frac{3}{2}\\)"], ans: 1 },
         { q: "إحدى طرق حل معادلة من الدرجة الثانية استخدام المميز \\(\\Delta\\) وقيمته:", opts: ["\\(c^2 - 4ab\\)", "\\(b^2 - 4ac\\)", "\\(a^2 - 4bc\\)"], ans: 1 },
@@ -84,11 +101,11 @@
         const mcqCont = document.getElementById('mcqContainer');
         mcqs.forEach((item, i) => {
             mcqCont.innerHTML += `
-                <div id="mcqCard${i}" class="question-card text-right">
+                <div id="mcqCard${i}" class="question-card">
                     <h3 class="text-xl font-bold mb-4">${i + 1}) ${item.q}</h3>
                     <div class="grid grid-cols-1 gap-3">
                         ${item.opts.map((opt, j) => `
-                            <label class="flex items-center p-3 border rounded-xl cursor-pointer hover:bg-gray-50">
+                            <label class="flex items-center p-3 border rounded-xl cursor-pointer">
                                 <input type="radio" name="m${i}" value="${j}" class="w-5 h-5 ml-2">
                                 <span>${opt}</span>
                             </label>
@@ -119,9 +136,6 @@
 
     function gradeFullExam() {
         let score = 0;
-        document.querySelectorAll('input[type="radio"]').forEach(inp => inp.disabled = true);
-        document.querySelectorAll('button[onclick^="setTF"]').forEach(btn => btn.disabled = true);
-
         mcqs.forEach((item, i) => {
             const sel = document.querySelector(`input[name="m${i}"]:checked`);
             const card = document.getElementById(`mcqCard${i}`);
@@ -135,43 +149,10 @@
             else { card.classList.add('wrong'); }
         });
 
-        const total = mcqs.length + tfs.length;
-        document.getElementById('submitArea').style.display = 'none';
-        const resBox = document.getElementById('resultBox');
-        resBox.classList.remove('hidden');
-        resBox.className = "mt-10 p-8 rounded-3xl text-center border-4 shadow-2xl " + (score >= total/2 ? "bg-green-100 border-green-500 text-green-800" : "bg-red-100 border-red-500 text-red-800");
-        document.getElementById('scoreText').innerText = `النتيجة النهائية: ${score} من ${total}`;
+        document.getElementById('scoreDisplay').innerText = `النتيجة النهائية: ${score} من ${mcqs.length + tfs.length}`;
+        document.getElementById('gradeBtn').classList.add('hidden');
+        document.getElementById('printBtn').classList.remove('hidden');
         window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // الوظيفة المنقذة لحل مشكلة الـ PDF الفارغ
-    async function safeDownloadPDF() {
-        const element = document.getElementById('captureArea');
-        const btn = document.getElementById('pdfBtn');
-        btn.innerText = "جاري المعالجة... انتظر قليلاً";
-        btn.disabled = true;
-
-        // انتظار 2 ثانية لضمان استقرار كل العناصر الرياضية
-        await new Promise(r => setTimeout(r, 2000));
-
-        const opt = {
-            margin: [10, 5, 10, 5],
-            filename: `نتيجة_رياضيات_${sName}.pdf`,
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { 
-                scale: 2, 
-                useCORS: true, 
-                letterRendering: true,
-                scrollY: -window.scrollY 
-            },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-            pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
-        };
-
-        html2pdf().set(opt).from(element).toPdf().get('pdf').then(function (pdf) {
-            btn.innerText = "تم التحميل!";
-            setTimeout(() => { btn.innerText = "تحميل النتيجة PDF"; btn.disabled = false; }, 2000);
-        }).save();
     }
 
     init();
