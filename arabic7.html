@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+        <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -8,17 +8,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Tajawal', sans-serif; background-color: #fcfafb; }
+        body { font-family: 'Tajawal', sans-serif; background-color: #fdfafb; }
         
-        /* اللون العنابي الغامق جداً - الدرجة المطلوبة */
-        .bg-custom-maroon { background-color: #5d0014; } 
+        /* اللون العنابي الغامق الملكي - أغمق درجة لتجنب اللون الأحمر */
+        .bg-royal-maroon { background-color: #500000 !important; } 
         
         .question-card { 
             border-radius: 20px; 
             background: white; 
             padding: 25px; 
             margin-bottom: 20px; 
-            border-right: 12px solid #5d0014; 
+            border-right: 12px solid #500000 !important; 
             box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
         }
         
@@ -32,11 +32,12 @@
             font-size: 1.1rem; 
         }
         
-        textarea:focus { border-color: #5d0014; }
+        textarea:focus { border-color: #500000 !important; }
 
-        /* تنسيق الكلمات التي تحتها خط - اللون العنابي */
+        /* تنسيق الخطوط تحت الكلمات باللون العنابي الغامق */
         u { 
-            text-decoration-color: #5d0014; 
+            text-decoration: underline !important;
+            text-decoration-color: #500000 !important; 
             text-underline-offset: 6px; 
             font-weight: bold; 
             text-decoration-thickness: 3px; 
@@ -48,7 +49,7 @@
 <body>
 
     <div id="arabicCaptureArea">
-        <div class="bg-custom-maroon p-10 text-white text-center shadow-2xl mb-10">
+        <div class="bg-royal-maroon p-10 text-white text-center shadow-2xl mb-10">
             <img src="1000219663.jpg" class="w-28 h-28 mx-auto rounded-full border-4 border-white mb-4 bg-white shadow-lg">
             <h1 class="text-4xl font-extrabold mb-2">ورقة عمل مادة اللغة العربية - الصف السابع</h1>
             <p id="studentInfo" class="text-xl font-bold opacity-90"></p>
@@ -57,26 +58,26 @@
         <div class="container mx-auto px-6 max-w-4xl">
             <div id="questionsContainer"></div>
 
-            <div id="resultBox" class="mt-12 p-10 rounded-[45px] text-center mb-12 border-4 border-[#5d0014] bg-white shadow-2xl">
-                <div class="mb-6 border-b-2 border-dashed border-gray-200 pb-6">
+            <div id="resultBox" class="mt-12 p-10 rounded-[45px] text-center mb-12 border-4 border-[#500000] bg-white shadow-2xl">
+                <div class="mb-6 border-b-2 border-dashed border-gray-200 pb-6 text-center">
                     <img src="1000219663.jpg" class="w-24 h-24 mx-auto rounded-full mb-3 shadow-md">
                     <h2 class="text-3xl font-bold text-gray-800" id="resName"></h2>
-                    <p class="text-[#5d0014] text-xl font-bold" id="resClass"></p>
+                    <p class="text-[#500000] text-xl font-bold" id="resClass"></p>
                 </div>
                 
                 <div class="grid grid-cols-2 gap-6 mb-8">
                     <div class="p-6 bg-red-50 rounded-2xl border border-red-100">
-                        <p class="text-gray-500 mb-1">الدرجة المستحقة:</p>
-                        <p class="text-3xl font-bold text-[#5d0014]">/ 100</p>
+                        <p class="text-gray-500 mb-1">الدرجة النهائية:</p>
+                        <p class="text-3xl font-bold text-[#500000]">/ 100</p>
                     </div>
                     <div class="p-6 bg-red-50 rounded-2xl border border-red-100">
-                        <p class="text-gray-500 mb-1">توقيع المعلم:</p>
+                        <p class="text-gray-500 mb-1">توقيع المدرس:</p>
                         <div class="h-10 border-b-2 border-gray-300"></div>
                     </div>
                 </div>
 
-                <button onclick="downloadArabicPDF()" id="pdfBtn" class="no-print bg-[#5d0014] text-white px-12 py-5 rounded-3xl font-bold text-2xl shadow-2xl hover:opacity-90 transition">
-                    تحميل الملف بصيغة PDF
+                <button onclick="downloadArabicPDF()" id="pdfBtn" class="no-print bg-[#500000] text-white px-12 py-5 rounded-3xl font-bold text-2xl shadow-2xl hover:opacity-90 transition transform hover:scale-105">
+                    تحميل ورقة الإجابة PDF
                 </button>
             </div>
         </div>
@@ -87,10 +88,10 @@
     const sSection = localStorage.getItem('sSection') || "H";
     
     document.getElementById('studentInfo').innerText = `الطالب/ة: ${sName} | الشعبة: ${sSection}`;
-    document.getElementById('resName').innerText = "الاسم: " + sName;
-    document.getElementById('resClass').innerText = "الصف والشعبة: " + sSection;
+    document.getElementById('resName').innerText = "اسم الطالب: " + sName;
+    document.getElementById('resClass').innerText = "الصف: السابع | الشعبة: " + sSection;
 
-    // الأسئلة مع الكلمات الخمس المطلوبة تحتها خط بدقة
+    // الأسئلة مع الكلمات الخمسة المطلوبة تحتها خط بدقة
     const questions = [
         "اكتب بيتين من قصيدة (جزيرة أرواد)",
         "ما معنى الكلمات التالية: (مناكب - جذوة)؟",
@@ -124,7 +125,7 @@
 
         const opt = {
             margin: [10, 5, 10, 5],
-            filename: `عربي_سابع_${sName}.pdf`,
+            filename: `حل_عربي_سابع_${sName}.pdf`,
             image: { type: 'jpeg', quality: 1 },
             html2canvas: { scale: 3, useCORS: true, scrollY: 0 },
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
