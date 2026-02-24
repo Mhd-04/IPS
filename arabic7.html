@@ -2,130 +2,129 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>ورقة عمل لغة عربية - الحل النهائي</title>
+    <title>ورقة عمل اللغة العربية - IPS</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Tajawal', sans-serif; background-color: #fff5f7; margin: 0; padding: 0; }
         .female-theme { background: linear-gradient(135deg, #880808, #db2777); }
         
-        /* هذا الجزء يمنع التقطيع والصفحات الإضافية */
-        .pdf-page-fixed {
-            width: 790px; /* عرض ثابت لضمان عدم تمدد العناصر */
-            margin: auto;
+        #worksheetContainer {
+            width: 800px; /* عرض ثابت لضمان الجودة */
+            margin: 0 auto;
             background: white;
+            padding-bottom: 30px;
         }
 
         .question-card { 
-            page-break-inside: avoid !important; 
-            break-inside: avoid !important;
             background: white; 
             padding: 20px; 
-            margin: 10px 15px;
-            border-right: 8px solid #db2777; 
-            border-radius: 12px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            margin: 15px;
+            border-right: 10px solid #db2777; 
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
         
-        .answer-box { 
+        .answer-area { 
             width: 100%; 
-            min-height: 90px; 
-            padding: 12px; 
+            min-height: 100px; 
+            padding: 15px; 
             border: 2px solid #fce7f3; 
-            border-radius: 10px; 
+            border-radius: 12px; 
             font-size: 1.1rem;
-            line-height: 1.7;
+            line-height: 1.8;
             text-align: right;
-            direction: rtl;
             white-space: pre-wrap;
             display: block;
+            outline: none;
         }
 
-        u { text-decoration: none; border-bottom: 2px solid #880808; font-weight: bold; }
+        u { text-decoration: none; border-bottom: 3px solid #880808; font-weight: bold; }
         @media print { .no-print { display: none !important; } }
     </style>
 </head>
 <body>
 
-    <div id="finalPDFContent" class="pdf-page-fixed">
-        <div class="female-theme p-6 text-white text-center shadow-md mb-4">
-            <img src="1000219663.jpg" class="w-20 h-20 mx-auto rounded-full border-2 border-white mb-2 bg-white">
-            <h1 class="text-2xl font-bold">ورقة عمل مادة اللغة العربية - الصف السابع</h1>
-            <p id="studentDisplay" class="text-sm font-bold opacity-90"></p>
+    <div id="worksheetContainer">
+        <div class="female-theme p-8 text-white text-center shadow-lg mb-6">
+            <img src="1000219663.jpg" class="w-24 h-24 mx-auto rounded-full border-4 border-white mb-4 bg-white shadow-md">
+            <h1 class="text-3xl font-extrabold">ورقة عمل مادة اللغة العربية - الصف السابع</h1>
+            <p id="stDetails" class="mt-2 text-xl font-bold opacity-90"></p>
         </div>
 
-        <div id="qsList"></div>
+        <div id="questionsWrapper"></div>
 
-        <div class="p-4">
+        <div class="px-4">
             <div class="question-card bg-[#fff1f2] border-2 dashed border-[#db2777]">
-                <h3 class="text-lg font-bold text-pink-800 mb-2 underline">ركن التقييم:</h3>
-                <div class="flex justify-between text-sm">
-                    <div>الدرجة: <span class="font-bold text-[#880808]">/ 100</span></div>
-                    <div>توقيع المدرس: __________</div>
+                <h3 class="text-xl font-bold text-pink-800 mb-4 border-b-2 border-pink-200 pb-2">ركن التقييم:</h3>
+                <div class="flex justify-between items-center px-4">
+                    <div class="text-lg">الدرجة النهائية: <span class="text-2xl font-black text-[#880808]"> / 100</span></div>
+                    <div class="text-lg">توقيع المدرس: .......................</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="text-center py-10 no-print">
-        <button onclick="downloadAsImagePDF()" id="btn" class="bg-green-600 text-white px-12 py-5 rounded-full font-bold text-xl shadow-2xl">
-            تحميل الملف (بخط سليم تماماً)
+    <div class="text-center py-12 no-print">
+        <button onclick="downloadAsOnePage()" id="downloadBtn" class="bg-green-600 text-white px-20 py-6 rounded-full font-bold text-2xl shadow-2xl active:scale-95">
+            تحميل الورقة كاملة (بدون نقص)
         </button>
     </div>
 
 <script>
     const name = localStorage.getItem('sName') || "الاء فرحان الغفري";
     const sec = localStorage.getItem('sSection') || "G";
-    document.getElementById('studentDisplay').innerText = `الطالبة: ${name} | الشعبة: ${sec}`;
+    document.getElementById('stDetails').innerText = `الطالبة: ${name} | الشعبة: ${sec}`;
 
-    const questions = [
+    const arabicQuestions = [
         "اكتب بيتين من قصيدة (جزيرة أرواد)",
         "ما معنى الكلمات التالية: (مناكب - جذوة)؟",
-        "اشرح البيت التالي: فأهلها شعلة لم تخب جذوتها ★★★ خاضوا الحياة وباتوا في أعاليها",
+        "اشرح البيت التالي شرحاً وافياً: فأهلها شعلة لم تخب جذوتها ★★★ خاضوا الحياة وباتوا في أعاليها",
         "ما وزن الكلمات التالية: (مكتحل - عواصف)؟",
-        "أعرب ما تحته خط: (<u>ترى</u> <u>قلاعاً</u> أقيمت في <u>مناكبها</u> ★★★ <u>تحكي</u> الحضارة مذ <u>قامت</u> وتبديها)",
-        "استخرج مفعول به: سقى الله عند اللاذقية شاطئاً ★★★ مراحاً لأحلامي ومغنى وملعبا",
-        "حول المفعول به للمثنى: (رأى الفلاح عصفوراً على الشجرة)",
+        "أعرب ما تحته خط إعراباً كاملاً: (<u>ترى</u> <u>قلاعاً</u> أقيمت في <u>مناكبها</u> ★★★ <u>تحكي</u> الحضارة مذ <u>قامت</u> وتبديها)",
+        "استخرج مفعول به واحدد نوعه من جملة: سقى الله عند اللاذقية شاطئاً ★★★ مراحاً لأحلامي ومغنى وملعبا",
+        "حول المفعول به المفرد إلى مثنى: (رأى الفلاح عصفوراً على الشجرة)",
         "ما أنواع الأفعال من حيث الصحة والاعتلال: (وقف - يستغفر)؟",
-        "علل كتابة الهمزة في: (تشاؤون - ضياء)"
+        "علل كتابة الهمزة على صورتها في الكلمات التالية: (تشاؤون - ضياء)"
     ];
 
     function render() {
-        const c = document.getElementById('qsList');
-        questions.forEach((q, i) => {
-            c.innerHTML += `
+        const wrap = document.getElementById('questionsWrapper');
+        arabicQuestions.forEach((q, i) => {
+            wrap.innerHTML += `
                 <div class="question-card">
-                    <h3 class="text-lg font-bold mb-3 text-gray-800">${i + 1}) ${q}</h3>
-                    <div contenteditable="true" class="answer-box"></div>
+                    <h3 class="text-xl font-bold mb-4 text-gray-800">${i + 1}) ${q}</h3>
+                    <div contenteditable="true" class="answer-area"></div>
                 </div>
             `;
         });
     }
 
-    async function downloadAsImagePDF() {
-        const el = document.getElementById('finalPDFContent');
-        const b = document.getElementById('btn');
-        b.innerText = "جاري المعالجة الصورية...";
+    async function downloadAsOnePage() {
+        const btn = document.getElementById('downloadBtn');
+        const container = document.getElementById('worksheetContainer');
+        btn.innerText = "جاري التقاط الورقة...";
         
-        const opt = {
-            margin: 5,
-            filename: `عربي_سابع_مضمون.pdf`,
-            image: { type: 'jpeg', quality: 1 },
-            // تفعيل نظام التصوير الكامل لمنع "الكلمات غير المفهومة"
-            html2canvas: { 
-                scale: 2, 
-                useCORS: true, 
-                letterRendering: false,
-                scrollX: 0,
-                scrollY: 0
-            },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-            pagebreak: { mode: 'css' }
-        };
+        // استخدام html2canvas لالتقاط صورة عالية الدقة لكل المحتوى
+        html2canvas(container, {
+            scale: 2,
+            useCORS: true,
+            backgroundColor: "#ffffff"
+        }).then(canvas => {
+            const imgData = canvas.toDataURL('image/png');
+            const { jsPDF } = window.jspdf;
+            
+            // حساب أبعاد الـ PDF بناءً على حجم الصورة الناتجة
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const imgProps = pdf.getImageProperties(imgData);
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
-        html2pdf().set(opt).from(el).save().then(() => {
-            b.innerText = "تم التحميل";
+            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+            pdf.save(`ورقة_عربي_${name}.pdf`);
+            btn.innerText = "تم التحميل بنجاح";
         });
     }
     render();
