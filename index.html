@@ -8,18 +8,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Tajawal', sans-serif; transition: background 0.6s ease, color 0.6s ease; }
-        
         .bg-silver { background: radial-gradient(circle, #e2e8f0, #94a3b8); color: #1e293b; }
         .bg-male { background: linear-gradient(135deg, #4b5563, #1f2937); color: white; }
         .bg-female { background: linear-gradient(135deg, #db2777, #880808); color: white; }
-        
         .glass-card { 
             background: rgba(255, 255, 255, 0.2); 
             backdrop-filter: blur(15px); 
             border: 1px solid rgba(255, 255, 255, 0.3); 
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
         }
-
         .animate-fade-in { animation: fadeIn 0.5s ease-in; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -97,26 +94,23 @@
             document.getElementById('gradeSelect').value = "";
         }
 
-        // قاعدة بيانات الاختبارات - تم تصحيح الأقواس والفواصل
         const examsData = {
-            const examsData = {
-    "8": {
-        "male": [],
-        "female": [{ title: "كويز جغرافية (إناث)", type: "اختبار", link: "geography8.html" }]
-    },
-    "7": {
-        "male": [],
-        "female": [
-            { title: "ورقة عمل لغة عربية (إناث)", type: "ورقة عمل", link: "arabic7.html" },
-            { title: "كويز تاريخ - سابع", type: "اختبار", link: "history7.html" }
-        ]
-    },
-    "10": {
-        "male": [{ title: "كويز الوحدة الثالثة رياضيات (ذكور)", type: "اختبار", link: "math10.html" }],
-        "female": [{ title: "كويز الوحدة الثالثة رياضيات (إناث)", type: "اختبار", link: "math10.html" }]
-    }
-};
-
+            "8": {
+                "male": [],
+                "female": [{ title: "كويز جغرافية (إناث)", type: "اختبار", link: "geography8.html" }]
+            },
+            "7": {
+                "male": [],
+                "female": [
+                    { title: "ورقة عمل لغة عربية (إناث)", type: "ورقة عمل", link: "arabic7.html" },
+                    { title: "كويز تاريخ - سابع", type: "اختبار", link: "history7.html" }
+                ]
+            },
+            "10": {
+                "male": [{ title: "كويز الوحدة الثالثة رياضيات (ذكور)", type: "اختبار", link: "math10.html" }],
+                "female": [{ title: "كويز الوحدة الثالثة رياضيات (إناث)", type: "اختبار", link: "math10.html" }]
+            }
+        };
 
         function showExams() {
             const grade = document.getElementById('gradeSelect').value;
