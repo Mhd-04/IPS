@@ -2,40 +2,46 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>ورقة عمل اللغة العربية | IPS</title>
+    <title>ورقة عمل اللغة العربية - السابع | IPS</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Tajawal', sans-serif; background-color: #fff5f7; margin: 0; padding: 0; }
+        body { font-family: 'Tajawal', sans-serif; background-color: #fff5f7; }
         .female-theme { background: linear-gradient(135deg, #880808, #db2777); }
         
-        /* منع قص العناصر بين الصفحات */
-        .pdf-section { page-break-inside: avoid; break-inside: avoid; width: 100%; }
-
+        /* البطاقة تتمدد حسب المحتوى ولا تنقص */
         .question-card { 
+            page-break-inside: avoid !important; 
+            break-inside: avoid !important;
             background: white; 
-            padding: 18px; 
-            margin: 10px 0;
+            padding: 20px; 
+            margin-bottom: 25px; 
             border-right: 8px solid #db2777; 
-            border-radius: 12px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            display: block;
+            width: 100%;
         }
         
-        textarea { 
+        /* جعل خانة الإجابة تتمدد تلقائياً لتظهر كامل الكتابة */
+        .answer-area { 
             width: 100%; 
-            padding: 10px; 
+            min-height: 100px;
+            height: auto; 
+            padding: 15px; 
             border: 2px solid #fce7f3; 
-            border-radius: 10px; 
-            min-height: 90px; 
-            resize: none;
+            border-radius: 12px; 
             font-size: 1.1rem;
+            line-height: 1.6;
+            display: block;
+            white-space: pre-wrap; /* يحافظ على تنسيق الأسطر عند التحميل */
         }
 
         u { 
             text-decoration: underline !important;
             text-decoration-color: #880808 !important; 
-            text-underline-offset: 4px; 
+            text-underline-offset: 6px; 
             text-decoration-thickness: 3px; 
         }
 
@@ -44,92 +50,92 @@
 </head>
 <body>
 
-    <div id="finalCapture" style="width: 800px; margin: auto;">
-        <div class="pdf-section">
-            <div class="female-theme p-6 text-white text-center shadow-lg">
-                <img src="1000219663.jpg" class="w-20 h-20 mx-auto rounded-full border-2 border-white mb-3 bg-white">
-                <h1 class="text-2xl font-bold">ورقة عمل مادة اللغة العربية - الصف السابع</h1>
-                <p id="displayStudent" class="text-md font-bold mt-2 opacity-90"></p>
-            </div>
+    <div id="fullDocument" class="max-w-4xl mx-auto">
+        <div class="female-theme p-8 text-white text-center shadow-lg mb-8">
+            <img src="1000219663.jpg" class="w-24 h-24 mx-auto rounded-full border-4 border-white mb-4 bg-white shadow-md">
+            <h1 class="text-3xl font-extrabold">ورقة عمل مادة اللغة العربية - الصف السابع</h1>
+            <p id="studentDisplay" class="mt-2 text-xl font-bold opacity-90"></p>
         </div>
 
-        <div class="p-4">
-            <div id="questionsList"></div>
+        <div id="questionsContainer" class="px-4"></div>
 
-            <div class="pdf-section">
-                <div class="bg-[#fff1f2] border-2 dashed border-[#db2777] p-5 rounded-2xl mt-6">
-                    <h3 class="text-lg font-bold text-pink-800 mb-3 border-b border-pink-200">ركن التقييم والملاحظات:</h3>
-                    <div class="flex justify-between gap-4">
-                        <div class="flex-1 bg-white p-3 rounded-xl border border-pink-100">
-                            <p class="font-bold text-gray-600 underline text-sm">الدرجة النهائية:</p>
-                            <p class="text-gray-400">/ 100</p>
-                        </div>
-                        <div class="flex-1 bg-white p-3 rounded-xl border border-pink-100">
-                            <p class="font-bold text-gray-600 underline text-sm">توقيع المدرس:</p>
-                            <div class="h-6"></div>
-                        </div>
+        <div class="px-4">
+            <div class="question-card bg-[#fff1f2] border-2 dashed border-[#db2777]">
+                <h3 class="text-xl font-bold text-pink-800 mb-4 border-b-2 border-pink-200 pb-2">ركن التقييم والملاحظات:</h3>
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="bg-white p-4 rounded-xl border border-pink-100">
+                        <p class="font-bold text-gray-600 underline mb-2">الدرجة النهائية:</p>
+                        <p class="text-3xl text-[#880808] font-bold">/ 100</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl border border-pink-100">
+                        <p class="font-bold text-gray-600 underline mb-2">توقيع المدرس:</p>
+                        <div class="h-10 border-b-2 border-gray-100"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="text-center py-10 no-print">
-        <button onclick="downloadPerfectPDF()" id="btn" class="bg-green-600 text-white px-12 py-5 rounded-full font-bold text-2xl shadow-2xl">
-            تحميل PDF (حل نهائي)
+    <div class="text-center py-12 no-print">
+        <button onclick="downloadCompletePDF()" id="actionBtn" class="bg-green-600 text-white px-16 py-6 rounded-full font-bold text-2xl shadow-2xl hover:bg-green-700 transition transform active:scale-95">
+            تحميل الورقة كاملة PDF
         </button>
     </div>
 
 <script>
+    // جلب البيانات من التخزين
     const name = localStorage.getItem('sName') || "الاء فرحان الغفري";
-    const sec = localStorage.getItem('sSection') || "G";
-    document.getElementById('displayStudent').innerText = `الطالبة: ${name} | الشعبة: ${sec}`;
+    const section = localStorage.getItem('sSection') || "G";
+    document.getElementById('studentDisplay').innerText = `الطالبة: ${name} | الشعبة: ${section}`;
 
-    const qs = [
+    // كافة الأسئلة الـ 9 المطلوبة
+    const arabicQuestions = [
         "اكتب بيتين من قصيدة (جزيرة أرواد)",
         "ما معنى الكلمات التالية: (مناكب - جذوة)؟",
-        "اشرح البيت التالي: فأهلها شعلة لم تخب جذوتها ★★★ خاضوا الحياة وباتوا في أعاليها",
+        "اشرح البيت التالي شرحاً وافياً: فأهلها شعلة لم تخب جذوتها ★★★ خاضوا الحياة وباتوا في أعاليها",
         "ما وزن الكلمات التالية: (مكتحل - عواصف)؟",
-        "أعرب ما تحته خط: (<u>ترى</u> <u>قلاعاً</u> أقيمت في <u>مناكبها</u> ★★★ <u>تحكي</u> الحضارة مذ <u>قامت</u> وتبديها)",
-        "استخرج مفعول به: سقى الله عند اللاذقية شاطئاً ★★★ مراحاً لأحلامي ومغنى وملعبا",
-        "حول المفعول به للمثنى: (رأى الفلاح عصفوراً على الشجرة)",
+        "أعرب ما تحته خط إعراباً كاملاً: (<u>ترى</u> <u>قلاعاً</u> أقيمت في <u>مناكبها</u> ★★★ <u>تحكي</u> الحضارة مذ <u>قامت</u> وتبديها)",
+        "استخرج مفعول به واحدد نوعه من جملة: سقى الله عند اللاذقية شاطئاً ★★★ مراحاً لأحلامي ومغنى وملعبا",
+        "حول المفعول به المفرد إلى مثنى: (رأى الفلاح عصفوراً على الشجرة)",
         "ما أنواع الأفعال من حيث الصحة والاعتلال: (وقف - يستغفر)؟",
-        "علل كتابة الهمزة في: (تشاؤون - ضياء)"
+        "علل كتابة الهمزة على صورتها في الكلمات التالية: (تشاؤون - ضياء)"
     ];
 
-    function render() {
-        const c = document.getElementById('questionsList');
-        qs.forEach((q, i) => {
-            c.innerHTML += `
-                <div class="pdf-section">
-                    <div class="question-card">
-                        <h3 class="text-lg font-bold mb-3 text-gray-800">${i + 1}) ${q}</h3>
-                        <textarea placeholder="اكتبي الإجابة هنا..."></textarea>
-                    </div>
+    function renderQuestions() {
+        const container = document.getElementById('questionsContainer');
+        arabicQuestions.forEach((q, i) => {
+            container.innerHTML += `
+                <div class="question-card">
+                    <h3 class="text-xl font-bold mb-4 text-gray-800">${i + 1}) ${q}</h3>
+                    <div contenteditable="true" class="answer-area" placeholder="اكتبي الإجابة هنا..."></div>
                 </div>
             `;
         });
     }
 
-    async function downloadPerfectPDF() {
-        const element = document.getElementById('finalCapture');
-        const btn = document.getElementById('btn');
-        btn.innerText = "جاري الإنشاء...";
-        
+    async function downloadCompletePDF() {
+        const element = document.getElementById('fullDocument');
+        const btn = document.getElementById('actionBtn');
+        btn.innerText = "جاري حفظ كل الأسئلة...";
+        btn.disabled = true;
+
         const opt = {
-            margin: 5,
-            filename: `ورقة_عربي_سابع.pdf`,
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, useCORS: true, letterRendering: true },
+            margin: [10, 5, 10, 5],
+            filename: `ورقة_عربي_كاملة_${name}.pdf`,
+            image: { type: 'jpeg', quality: 1 },
+            html2canvas: { scale: 3, useCORS: true, letterRendering: true },
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            // منع قص البطاقات وضمان استمرارية الصفحات
             pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
         };
 
         html2pdf().set(opt).from(element).save().then(() => {
-            btn.innerText = "تم التحميل";
+            btn.innerText = "تم التحميل بنجاح";
+            btn.disabled = false;
         });
     }
-    render();
+
+    renderQuestions();
 </script>
 </body>
 </html>
