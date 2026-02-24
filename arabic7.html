@@ -1,4 +1,4 @@
-            <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -9,70 +9,70 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Tajawal', sans-serif; background-color: #fdf2f2; }
-        /* اللون العنابي للرأس */
-        .arabic-theme { background: linear-gradient(135deg, #800020, #a52a2a); }
-        /* حدود البطاقات باللون العنابي */
-        .question-card { border-radius: 20px; background: white; padding: 20px; margin-bottom: 20px; border-right: 8px solid #800020; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        textarea { width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 12px; min-height: 80px; outline: none; transition: 0.3s; }
-        textarea:focus { border-color: #800020; }
-        /* تنسيق الخط تحت الكلمات */
-        u { text-decoration-color: #800020; text-underline-offset: 5px; font-weight: bold; text-decoration-thickness: 2px; }
+        /* اللون العنابي المخصص للرأس */
+        .arabic-theme { background: linear-gradient(135deg, #60001a, #800020); }
+        /* حدود البطاقات بالعنابي */
+        .question-card { border-radius: 20px; background: white; padding: 25px; margin-bottom: 25px; border-right: 10px solid #800020; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        textarea { width: 100%; padding: 15px; border: 2px solid #e5e7eb; border-radius: 15px; min-height: 100px; outline: none; transition: 0.3s; font-size: 1.1rem; }
+        textarea:focus { border-color: #800020; ring: 2px solid #800020; }
+        /* تنسيق الخطوط تحت الكلمات المطلوبة */
+        u { text-decoration-color: #800020; text-underline-offset: 6px; font-weight: bold; text-decoration-thickness: 2.5px; }
         @media print { .no-print { display: none !important; } }
     </style>
 </head>
 <body>
 
     <div id="arabicCaptureArea">
-        <div class="arabic-theme p-8 text-white text-center shadow-lg mb-8">
-            <img src="1000219663.jpg" class="w-24 h-24 mx-auto rounded-full border-4 border-white mb-4 bg-white shadow-md">
-            <h1 class="text-3xl font-extrabold">ورقة عمل مادة اللغة العربية - الصف السابع</h1>
-            <p id="studentInfo" class="mt-2 text-lg font-bold opacity-90"></p>
+        <div class="arabic-theme p-10 text-white text-center shadow-2xl mb-10">
+            <img src="1000219663.jpg" class="w-28 h-28 mx-auto rounded-full border-4 border-white mb-5 bg-white shadow-lg">
+            <h1 class="text-4xl font-extrabold mb-3">ورقة عمل مادة اللغة العربية - الصف السابع</h1>
+            <p id="studentInfo" class="text-xl font-bold opacity-95"></p>
         </div>
 
-        <div class="container mx-auto px-4 max-w-4xl">
+        <div class="container mx-auto px-6 max-w-4xl">
             <div id="questionsContainer"></div>
 
-            <div id="resultBox" class="mt-10 p-8 rounded-[35px] text-center mb-10 border-4 border-[#800020] bg-white shadow-2xl">
-                <div class="mb-6 border-b-2 border-dashed border-red-100 pb-4">
-                    <img src="1000219663.jpg" class="w-20 h-20 mx-auto rounded-full mb-3 shadow-md">
-                    <h2 class="text-2xl font-bold text-gray-800" id="resName"></h2>
-                    <p class="text-[#800020] font-bold" id="resClass"></p>
+            <div id="resultBox" class="mt-12 p-10 rounded-[40px] text-center mb-12 border-4 border-[#800020] bg-white shadow-2xl">
+                <div class="mb-8 border-b-2 border-dashed border-red-100 pb-6">
+                    <img src="1000219663.jpg" class="w-24 h-24 mx-auto rounded-full mb-4 shadow-md">
+                    <h2 class="text-3xl font-bold text-gray-800" id="resName"></h2>
+                    <p class="text-[#800020] text-xl font-bold mt-2" id="resClass"></p>
                 </div>
                 
-                <h3 class="text-xl font-bold text-gray-700 mb-4 italic">ركن التقييم والدرجة:</h3>
-                <div class="grid grid-cols-2 gap-4 mb-6">
-                    <div class="p-4 bg-red-50 rounded-xl border border-red-100">
-                        <p class="text-sm text-gray-500">الدرجة النهائية:</p>
-                        <p class="text-2xl font-bold">/ 100</p>
+                <h3 class="text-2xl font-bold text-gray-700 mb-6 italic underline decoration-red-200">التقييم الوزاري والدرجة</h3>
+                <div class="grid grid-cols-2 gap-6 mb-8">
+                    <div class="p-6 bg-red-50 rounded-2xl border border-red-100">
+                        <p class="text-lg text-gray-500 mb-1">الدرجة:</p>
+                        <p class="text-3xl font-bold text-[#800020]">/ 100</p>
                     </div>
-                    <div class="p-4 bg-red-50 rounded-xl border border-red-100">
-                        <p class="text-sm text-gray-500">توقيع المدرس:</p>
-                        <div class="h-8 border-b border-gray-300"></div>
+                    <div class="p-6 bg-red-50 rounded-2xl border border-red-100">
+                        <p class="text-lg text-gray-500 mb-1">توقيع المعلم:</p>
+                        <div class="h-10 border-b-2 border-gray-300"></div>
                     </div>
                 </div>
 
-                <button onclick="downloadArabicPDF()" id="pdfBtn" class="no-print bg-green-600 text-white px-10 py-4 rounded-2xl font-bold text-xl shadow-lg hover:bg-green-700 transition">
-                    تحميل الورقة PDF
+                <button onclick="downloadArabicPDF()" id="pdfBtn" class="no-print bg-[#800020] text-white px-12 py-5 rounded-3xl font-bold text-2xl shadow-2xl hover:bg-[#60001a] transition transform hover:scale-105 active:scale-95">
+                    حفظ الورقة PDF
                 </button>
             </div>
         </div>
     </div>
 
 <script>
-    const sName = localStorage.getItem('sName') || "طالب/ة";
-    const sSection = localStorage.getItem('sSection') || "-";
+    const sName = localStorage.getItem('sName') || "اسم الطالب/ة";
+    const sSection = localStorage.getItem('sSection') || "غير محدد";
     
     document.getElementById('studentInfo').innerText = `الطالب/ة: ${sName} | الشعبة: ${sSection}`;
-    document.getElementById('resName').innerText = "الاسم الكامل: " + sName;
+    document.getElementById('resName').innerText = "الاسم: " + sName;
     document.getElementById('resClass').innerText = "الصف: السابع | الشعبة: " + sSection;
 
-    // الأسئلة مع الكلمات المطلوبة تحتها خط
+    // الأسئلة مع الكلمات المحددة بدقة
     const questions = [
         "اكتب بيتين من قصيدة (جزيرة أرواد)",
         "ما معنى الكلمات التالية: (مناكب - جذوة)؟",
         "اشرح البيت التالي شرحاً وافياً: فأهلها شعلة لم تخب جذوتها ★★★ خاضوا الحياة وباتوا في أعاليها",
         "ما وزن الكلمات التالية: (مكتحل - عواصف)؟",
-        "أعرب ما تحته خط: (<u>ترى</u> <u>قلاعاً</u> أقيمت في <u>مناكبها</u> ★★★ <u>تحكي</u> الحضارة مذ <u>قامت</u> وتبديها)",
+        "أعرب ما تحته خط إعراباً كاملاً: (<u>ترى</u> <u>قلاعاً</u> أقيمت في <u>مناكبها</u> ★★★ <u>تحكي</u> الحضارة مذ <u>قامت</u> وتبديها)",
         "استخرج مفعول به واحدد نوعه من جملة: سقى الله عند اللاذقية شاطئاً ★★★ مراحاً لأحلامي ومغنى وملعبا",
         "حول المفعول به المفرد إلى مثنى: (رأى الفلاح عصفوراً على الشجرة)",
         "ما أنواع الأفعال من حيث الصحة والاعتلال: (وقف - يستغفر)؟",
@@ -83,8 +83,8 @@
         const container = document.getElementById('questionsContainer');
         questions.forEach((q, i) => {
             container.innerHTML += `
-                <div class="question-card">
-                    <h3 class="text-xl font-bold mb-3 text-gray-800">${i + 1}) ${q}</h3>
+                <div class="question-card animate-fade-in">
+                    <h3 class="text-2xl font-bold mb-4 text-gray-800">${i + 1}) ${q}</h3>
                     <textarea placeholder="اكتبي الإجابة النموذجية هنا..."></textarea>
                 </div>
             `;
@@ -94,16 +94,16 @@
     async function downloadArabicPDF() {
         const element = document.getElementById('arabicCaptureArea');
         const btn = document.getElementById('pdfBtn');
-        btn.innerText = "جاري التحضير... انتظر 3 ثواني";
+        btn.innerText = "جاري الحفظ... يرجى الانتظار";
         btn.disabled = true;
 
         await new Promise(r => setTimeout(r, 3000));
 
         const opt = {
             margin: [10, 5, 10, 5],
-            filename: `عربي_سابع_${sName}.pdf`,
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
+            filename: `اجابة_عربي_سابع_${sName}.pdf`,
+            image: { type: 'jpeg', quality: 1 },
+            html2canvas: { scale: 3, useCORS: true, scrollY: 0, letterRendering: true },
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
             pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
         };
