@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+            <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -37,7 +37,7 @@
                 
                 <div class="grid grid-cols-2 gap-4 mt-6">
                     <button onclick="checkAccess('male')" class="bg-gray-600 hover:bg-gray-700 text-white p-4 rounded-2xl font-bold shadow-lg transition transform active:scale-95">بوابة الذكور</button>
-                    <button onclick="checkAccess('female')" class="bg-pink-600 hover:bg-[#880808] text-white p-4 rounded-2xl font-bold shadow-lg transition transform active:scale-95">بوابة الإناث</button>
+                    <button onclick="femaleCheck()" class="bg-pink-600 hover:bg-[#880808] text-white p-4 rounded-2xl font-bold shadow-lg transition transform active:scale-95">بوابة الإناث</button>
                 </div>
             </div>
 
@@ -75,6 +75,9 @@
             }
         }
 
+        // دالة مساعدة لتجنب أي تداخل
+        function femaleCheck() { checkAccess('female'); }
+
         function setTheme(gender, title) {
             currentTheme = gender;
             const body = document.getElementById('mainBody');
@@ -94,6 +97,7 @@
             document.getElementById('gradeSelect').value = "";
         }
 
+        // قاعدة بيانات الاختبارات (تم دمجها بشكل صحيح الآن)
         const examsData = {
             "8": {
                 "male": [],
