@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+            <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -8,13 +8,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Tajawal', sans-serif; background-color: #f9fafb; }
-        .arabic-theme { background: linear-gradient(135deg, #1e3a8a, #3b82f6); }
-        .question-card { border-radius: 20px; background: white; padding: 20px; margin-bottom: 20px; border-right: 8px solid #1e3a8a; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        body { font-family: 'Tajawal', sans-serif; background-color: #fdf2f2; }
+        /* اللون العنابي للرأس */
+        .arabic-theme { background: linear-gradient(135deg, #800020, #a52a2a); }
+        /* حدود البطاقات باللون العنابي */
+        .question-card { border-radius: 20px; background: white; padding: 20px; margin-bottom: 20px; border-right: 8px solid #800020; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
         textarea { width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 12px; min-height: 80px; outline: none; transition: 0.3s; }
-        textarea:focus { border-color: #1e3a8a; }
-        /* تنسيق الخط تحت الكلمات ليكون واضحاً */
-        u { text-decoration-color: #1e3a8a; text-underline-offset: 5px; font-weight: bold; text-decoration-thickness: 2px; }
+        textarea:focus { border-color: #800020; }
+        /* تنسيق الخط تحت الكلمات */
+        u { text-decoration-color: #800020; text-underline-offset: 5px; font-weight: bold; text-decoration-thickness: 2px; }
         @media print { .no-print { display: none !important; } }
     </style>
 </head>
@@ -22,7 +24,7 @@
 
     <div id="arabicCaptureArea">
         <div class="arabic-theme p-8 text-white text-center shadow-lg mb-8">
-            <img src="1000219663.jpg" class="w-24 h-24 mx-auto rounded-full border-4 border-white mb-4 bg-white">
+            <img src="1000219663.jpg" class="w-24 h-24 mx-auto rounded-full border-4 border-white mb-4 bg-white shadow-md">
             <h1 class="text-3xl font-extrabold">ورقة عمل مادة اللغة العربية - الصف السابع</h1>
             <p id="studentInfo" class="mt-2 text-lg font-bold opacity-90"></p>
         </div>
@@ -30,27 +32,27 @@
         <div class="container mx-auto px-4 max-w-4xl">
             <div id="questionsContainer"></div>
 
-            <div id="resultBox" class="mt-10 p-8 rounded-[35px] text-center mb-10 border-4 border-blue-600 bg-white shadow-2xl">
-                <div class="mb-6 border-b-2 border-dashed border-blue-200 pb-4">
+            <div id="resultBox" class="mt-10 p-8 rounded-[35px] text-center mb-10 border-4 border-[#800020] bg-white shadow-2xl">
+                <div class="mb-6 border-b-2 border-dashed border-red-100 pb-4">
                     <img src="1000219663.jpg" class="w-20 h-20 mx-auto rounded-full mb-3 shadow-md">
                     <h2 class="text-2xl font-bold text-gray-800" id="resName"></h2>
-                    <p class="text-blue-600 font-bold" id="resClass"></p>
+                    <p class="text-[#800020] font-bold" id="resClass"></p>
                 </div>
                 
-                <h3 class="text-xl font-bold text-gray-700 mb-4 italic">ركن التقييم والنتيجة:</h3>
+                <h3 class="text-xl font-bold text-gray-700 mb-4 italic">ركن التقييم والدرجة:</h3>
                 <div class="grid grid-cols-2 gap-4 mb-6">
-                    <div class="p-4 bg-gray-50 rounded-xl border border-gray-200">
-                        <p class="text-sm text-gray-500">الدرجة المستحقة:</p>
+                    <div class="p-4 bg-red-50 rounded-xl border border-red-100">
+                        <p class="text-sm text-gray-500">الدرجة النهائية:</p>
                         <p class="text-2xl font-bold">/ 100</p>
                     </div>
-                    <div class="p-4 bg-gray-50 rounded-xl border border-gray-200">
+                    <div class="p-4 bg-red-50 rounded-xl border border-red-100">
                         <p class="text-sm text-gray-500">توقيع المدرس:</p>
-                        <div class="h-8"></div>
+                        <div class="h-8 border-b border-gray-300"></div>
                     </div>
                 </div>
 
                 <button onclick="downloadArabicPDF()" id="pdfBtn" class="no-print bg-green-600 text-white px-10 py-4 rounded-2xl font-bold text-xl shadow-lg hover:bg-green-700 transition">
-                    تحميل الإجابات بصيغة PDF
+                    تحميل الورقة PDF
                 </button>
             </div>
         </div>
@@ -61,9 +63,10 @@
     const sSection = localStorage.getItem('sSection') || "-";
     
     document.getElementById('studentInfo').innerText = `الطالب/ة: ${sName} | الشعبة: ${sSection}`;
-    document.getElementById('resName').innerText = "اسم الطالب: " + sName;
-    document.getElementById('resClass').innerText = "الصف والشعبة: " + sSection;
+    document.getElementById('resName').innerText = "الاسم الكامل: " + sName;
+    document.getElementById('resClass').innerText = "الصف: السابع | الشعبة: " + sSection;
 
+    // الأسئلة مع الكلمات المطلوبة تحتها خط
     const questions = [
         "اكتب بيتين من قصيدة (جزيرة أرواد)",
         "ما معنى الكلمات التالية: (مناكب - جذوة)؟",
@@ -73,7 +76,7 @@
         "استخرج مفعول به واحدد نوعه من جملة: سقى الله عند اللاذقية شاطئاً ★★★ مراحاً لأحلامي ومغنى وملعبا",
         "حول المفعول به المفرد إلى مثنى: (رأى الفلاح عصفوراً على الشجرة)",
         "ما أنواع الأفعال من حيث الصحة والاعتلال: (وقف - يستغفر)؟",
-        "علل كتابة الهمزة على صورتها في الكلمات: (تشاؤون - ضياء)"
+        "علل كتابة الهمزة على صورتها في الكلمات التالية: (تشاؤون - ضياء)"
     ];
 
     function init() {
@@ -82,7 +85,7 @@
             container.innerHTML += `
                 <div class="question-card">
                     <h3 class="text-xl font-bold mb-3 text-gray-800">${i + 1}) ${q}</h3>
-                    <textarea placeholder="اكتب إجابتك هنا..."></textarea>
+                    <textarea placeholder="اكتبي الإجابة النموذجية هنا..."></textarea>
                 </div>
             `;
         });
@@ -91,14 +94,14 @@
     async function downloadArabicPDF() {
         const element = document.getElementById('arabicCaptureArea');
         const btn = document.getElementById('pdfBtn');
-        btn.innerText = "جاري الحفظ... انتظر 3 ثواني";
+        btn.innerText = "جاري التحضير... انتظر 3 ثواني";
         btn.disabled = true;
 
         await new Promise(r => setTimeout(r, 3000));
 
         const opt = {
             margin: [10, 5, 10, 5],
-            filename: `حل_عربي_سابع_${sName}.pdf`,
+            filename: `عربي_سابع_${sName}.pdf`,
             image: { type: 'jpeg', quality: 0.98 },
             html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
