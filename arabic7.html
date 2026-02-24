@@ -8,15 +8,41 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Tajawal', sans-serif; background-color: #f8f8f8; }
-        /* الدرجة العنابية المطابقة للصورة */
-        .header-maroon { background: linear-gradient(180deg, #7b0d1e, #5a0a16); }
-        /* تنسيق البطاقات */
-        .question-card { border-radius: 25px; background: white; padding: 25px; margin-bottom: 20px; border-right: 12px solid #7b0d1e; box-shadow: 0 5px 15px rgba(0,0,0,0.08); }
-        textarea { width: 100%; padding: 15px; border: 2px solid #eee; border-radius: 15px; min-height: 100px; outline: none; transition: 0.3s; font-size: 1.1rem; }
-        textarea:focus { border-color: #7b0d1e; }
-        /* الخطوط تحت كلمات الإعراب */
-        u { text-decoration-color: #7b0d1e; text-underline-offset: 6px; font-weight: bold; text-decoration-thickness: 3px; }
+        body { font-family: 'Tajawal', sans-serif; background-color: #fdfafb; }
+        
+        /* اللون العنابي الغامق (Maroon) ليكون مطابقاً للشعار تماماً */
+        .header-maroon { background: #6b001a; } 
+        
+        .question-card { 
+            border-radius: 20px; 
+            background: white; 
+            padding: 25px; 
+            margin-bottom: 20px; 
+            border-right: 12px solid #6b001a; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+        }
+        
+        textarea { 
+            width: 100%; 
+            padding: 15px; 
+            border: 2px solid #eee; 
+            border-radius: 15px; 
+            min-height: 100px; 
+            outline: none; 
+            transition: 0.3s; 
+            font-size: 1.1rem; 
+        }
+        
+        textarea:focus { border-color: #6b001a; }
+
+        /* تنسيق الخط تحت كلمات الإعراب باللون العنابي */
+        u { 
+            text-decoration-color: #6b001a; 
+            text-underline-offset: 6px; 
+            font-weight: bold; 
+            text-decoration-thickness: 3px; 
+        }
+
         @media print { .no-print { display: none !important; } }
     </style>
 </head>
@@ -32,40 +58,40 @@
         <div class="container mx-auto px-6 max-w-4xl">
             <div id="questionsContainer"></div>
 
-            <div id="resultBox" class="mt-12 p-10 rounded-[45px] text-center mb-12 border-4 border-[#7b0d1e] bg-white shadow-2xl">
-                <div class="mb-6 border-b-2 border-dashed border-gray-100 pb-6">
+            <div id="resultBox" class="mt-12 p-10 rounded-[45px] text-center mb-12 border-4 border-[#6b001a] bg-white shadow-2xl">
+                <div class="mb-6 border-b-2 border-dashed border-red-50 pb-6 text-center">
                     <img src="1000219663.jpg" class="w-24 h-24 mx-auto rounded-full mb-3 shadow-md">
                     <h2 class="text-3xl font-bold text-gray-800" id="resName"></h2>
-                    <p class="text-[#7b0d1e] text-xl font-bold" id="resClass"></p>
+                    <p class="text-[#6b001a] text-xl font-bold" id="resClass"></p>
                 </div>
                 
                 <div class="grid grid-cols-2 gap-6 mb-8">
-                    <div class="p-6 bg-gray-50 rounded-2xl border border-gray-100">
+                    <div class="p-6 bg-red-50 rounded-2xl border border-red-100">
                         <p class="text-gray-500 mb-1">الدرجة النهائية:</p>
-                        <p class="text-3xl font-bold text-[#7b0d1e]">/ 100</p>
+                        <p class="text-3xl font-bold text-[#6b001a]">/ 100</p>
                     </div>
-                    <div class="p-6 bg-gray-50 rounded-2xl border border-gray-100">
+                    <div class="p-6 bg-red-50 rounded-2xl border border-red-100">
                         <p class="text-gray-500 mb-1">توقيع المدرس:</p>
                         <div class="h-10 border-b-2 border-gray-300"></div>
                     </div>
                 </div>
 
-                <button onclick="downloadArabicPDF()" id="pdfBtn" class="no-print bg-[#7b0d1e] text-white px-12 py-5 rounded-3xl font-bold text-2xl shadow-2xl hover:bg-[#5a0a16] transition transform hover:scale-105">
-                    حفظ الورقة PDF
+                <button onclick="downloadArabicPDF()" id="pdfBtn" class="no-print bg-[#6b001a] text-white px-12 py-5 rounded-3xl font-bold text-2xl shadow-2xl hover:bg-[#4a0012] transition transform hover:scale-105">
+                    تحميل الورقة PDF
                 </button>
             </div>
         </div>
     </div>
 
 <script>
-    const sName = localStorage.getItem('sName') || "الاسم غير موجود";
+    const sName = localStorage.getItem('sName') || "طالب/ة";
     const sSection = localStorage.getItem('sSection') || "غير محدد";
     
     document.getElementById('studentInfo').innerText = `الطالب/ة: ${sName} | الشعبة: ${sSection}`;
-    document.getElementById('resName').innerText = "الاسم: " + sName;
-    document.getElementById('resClass').innerText = "الصف والشعبة: " + sSection;
+    document.getElementById('resName').innerText = "اسم الطالب: " + sName;
+    document.getElementById('resClass').innerText = "الصف: السابع | الشعبة: " + sSection;
 
-    // الأسئلة مع الخطوط تحت الكلمات المطلوبة
+    // الأسئلة مع الخطوط تحت الكلمات الخمس بدقة بناءً على طلبك
     const questions = [
         "اكتب بيتين من قصيدة (جزيرة أرواد)",
         "ما معنى الكلمات التالية: (مناكب - جذوة)؟",
@@ -84,7 +110,7 @@
             container.innerHTML += `
                 <div class="question-card">
                     <h3 class="text-2xl font-bold mb-4 text-gray-800">${i + 1}) ${q}</h3>
-                    <textarea placeholder="اكتب إجابتك هنا..."></textarea>
+                    <textarea placeholder="اكتب الإجابة هنا..."></textarea>
                 </div>
             `;
         });
@@ -93,7 +119,7 @@
     async function downloadArabicPDF() {
         const element = document.getElementById('arabicCaptureArea');
         const btn = document.getElementById('pdfBtn');
-        btn.innerText = "جاري الحفظ...";
+        btn.innerText = "جاري التحميل...";
         btn.disabled = true;
 
         await new Promise(r => setTimeout(r, 2000));
