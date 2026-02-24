@@ -99,24 +99,24 @@
 
         // قاعدة بيانات الاختبارات - تم تصحيح الأقواس والفواصل
         const examsData = {
-            "8": {
-                "male": [],
-                "female": [{ title: "كويز جغرافية (إناث)", type: "اختبار", link: "geography8.html" }]
-            },
-            "7": {
-                "male": [],
-                "female": [{ title: "ورقة عمل لغة عربية (إناث)", type: "ورقة عمل", link: "arabic7.html" }]
-            },
-            "7": {
-                "male": [],
-                "female": [{ title: "مذاكرة تاريخ - سابع", type: "اختبار", link: "history7.html" }]
-            },
-            "10": {
-                "male": [{ title: "كويز الوحدة الثالثة رياضيات (ذكور)", type: "اختبار", link: "math10.html" }],
-                "female": [{ title: "كويز الوحدة الثالثة رياضيات (إناث)", type: "اختبار", link: "math10.html" }]
-            }
-            
-        };
+            const examsData = {
+    "8": {
+        "male": [],
+        "female": [{ title: "كويز جغرافية (إناث)", type: "اختبار", link: "geography8.html" }]
+    },
+    "7": {
+        "male": [],
+        "female": [
+            { title: "ورقة عمل لغة عربية (إناث)", type: "ورقة عمل", link: "arabic7.html" },
+            { title: "كويز تاريخ - سابع", type: "اختبار", link: "history7.html" }
+        ]
+    },
+    "10": {
+        "male": [{ title: "كويز الوحدة الثالثة رياضيات (ذكور)", type: "اختبار", link: "math10.html" }],
+        "female": [{ title: "كويز الوحدة الثالثة رياضيات (إناث)", type: "اختبار", link: "math10.html" }]
+    }
+};
+
 
         function showExams() {
             const grade = document.getElementById('gradeSelect').value;
