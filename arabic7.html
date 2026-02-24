@@ -13,7 +13,7 @@
         .question-card { border-radius: 20px; background: white; padding: 20px; margin-bottom: 20px; border-right: 8px solid #1e3a8a; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
         textarea { width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 12px; min-height: 80px; outline: none; transition: 0.3s; }
         textarea:focus { border-color: #1e3a8a; }
-        /* تنسيق الخط تحت الكلمات */
+        /* تحسين مظهر الخط تحت الكلمات */
         u { text-decoration-color: #1e3a8a; text-underline-offset: 4px; font-weight: bold; }
         @media print { .no-print { display: none !important; } }
     </style>
@@ -31,54 +31,53 @@
             <div id="questionsContainer"></div>
 
             <div id="resultBox" class="mt-10 p-8 rounded-[35px] text-center mb-10 border-4 border-blue-600 bg-white shadow-2xl">
-                <div class="mb-6 border-b-2 border-dashed border-blue-200 pb-4 text-center">
+                <div class="mb-6 border-b-2 border-dashed border-blue-200 pb-4">
                     <img src="1000219663.jpg" class="w-20 h-20 mx-auto rounded-full mb-3 shadow-md">
                     <h2 class="text-2xl font-bold text-gray-800" id="resName"></h2>
                     <p class="text-blue-600 font-bold" id="resClass"></p>
                 </div>
                 
-                <h3 class="text-xl font-bold text-gray-700 mb-4 italic">ركن تقييم المعلم والنتيجة:</h3>
+                <h3 class="text-xl font-bold text-gray-700 mb-4 italic">تقييم المدرس والدرجة:</h3>
                 <div class="grid grid-cols-2 gap-4 mb-6">
                     <div class="p-4 bg-gray-50 rounded-xl border border-gray-200">
-                        <p class="text-sm text-gray-500">الدرجة النهائية:</p>
+                        <p class="text-sm text-gray-500">الدرجة:</p>
                         <p class="text-2xl font-bold">/ 100</p>
                     </div>
                     <div class="p-4 bg-gray-50 rounded-xl border border-gray-200">
-                        <p class="text-sm text-gray-500">توقيع المدرس:</p>
+                        <p class="text-sm text-gray-500">التوقيع:</p>
                         <div class="h-8"></div>
                     </div>
                 </div>
 
                 <button onclick="downloadArabicPDF()" id="pdfBtn" class="no-print bg-green-600 text-white px-10 py-4 rounded-2xl font-bold text-xl shadow-lg hover:bg-green-700 transition">
-                    تحميل ورقة الإجابة PDF
+                    تحميل الورقة PDF لإرسالها
                 </button>
             </div>
         </div>
     </div>
 
 <script>
-    // استعادة البيانات المخزنة
     const sName = localStorage.getItem('sName') || "طالب/ة";
     const sSection = localStorage.getItem('sSection') || "-";
     
     document.getElementById('studentInfo').innerText = `الطالب/ة: ${sName} | الشعبة: ${sSection}`;
-    document.getElementById('resName').innerText = "اسم الطالب الكامل: " + sName;
-    document.getElementById('resClass').innerText = "الشعبة والصف: " + sSection;
+    document.getElementById('resName').innerText = "الاسم: " + sName;
+    document.getElementById('resClass').innerText = "الصف والشعبة: " + sSection;
 
-    // الأسئلة مع الكلمات التي تحتها خط
+    // الأسئلة مع الكلمات التي تحتها خط بناءً على ورقتك الأصلية
     const questions = [
         "اكتب بيتين من قصيدة (جزيرة أرواد)",
-        "ما معنى الكلمات التالية: (مناكب - جذوة)؟",
-        "اشرح البيت التالي شرحاً وافياً: فأهلها شعلة لم تخب جذوتها ★★★ خاضوا الحياة وباتوا في أعاليها",
+        "ما معنى: مناكب - جذوة؟",
+        "اشرح البيت التالي: فأهلها شعلة لم تخب جذوتها★★★ خاضوا الحياة وباتوا في أعاليها",
         "ما وزن الكلمات التالية: (مكتحل - عواصف)؟",
-        "أعرب ما تحته خط إعراباً كاملاً: (ترى <u>قلاعاً</u> أقيمت في مناكبها ★★★ تحكي الحضارة مذ <u>قامت</u> وتبديها)",
-        "استخرج مفعول به واحدد نوعه من جملة: سقى الله عند اللاذقية شاطئاً ★★★ مراحاً لأحلامي ومغنى وملعبا",
-        "حول المفعول به المفرد إلى مثنى في الجملة الآتية: (رأى الفلاح عصفوراً على الشجرة)",
+        "أعرب ما تحته خط: (ترى <u>قلاعاً</u> أقيمت في <u>مناكبها</u>★★★تحكي الحضارة مذ <u>قامت</u> و<u>تبديها</u>)",
+        "استخرج مفعول به واحدد نوعه من جملة: سقى الله عند اللاذقية شاطئاً★★★مراحاً لأحلامي ومغنى وملعبا",
+        "حول المفعول به المفرد إلى مثنى: (رأى الفلاح عصفوراً على الشجرة)",
         "ما أنواع الأفعال من حيث الصحة والاعتلال: (وقف - يستغفر)؟",
-        "علل كتابة الهمزة على صورتها في الكلمات التالية: (تشاؤون - ضياء)"
+        "علل كتابة الهمزة على صورتها في الكلمات: (تشاؤون - ضياء)"
     ];
 
-    function initQuestions() {
+    function init() {
         const container = document.getElementById('questionsContainer');
         questions.forEach((q, i) => {
             container.innerHTML += `
@@ -90,19 +89,18 @@
         });
     }
 
-    // حل مشكلة الـ PDF الفارغ (الانتظار والضبط)
+    // حل مشكلة الـ PDF الفارغ وزيادة الدقة
     async function downloadArabicPDF() {
         const element = document.getElementById('arabicCaptureArea');
         const btn = document.getElementById('pdfBtn');
-        btn.innerText = "جاري المعالجة... انتظر 3 ثواني";
+        btn.innerText = "جاري التحضير... انتظر قليلاً";
         btn.disabled = true;
 
-        // مهلة لضمان تحميل الصور والخطوط بشكل سليم
         await new Promise(r => setTimeout(r, 3000));
 
         const opt = {
             margin: [10, 5, 10, 5],
-            filename: `إجابات_العربي_سابع_${sName}.pdf`,
+            filename: `عربي_سابع_${sName}.pdf`,
             image: { type: 'jpeg', quality: 0.98 },
             html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
@@ -110,12 +108,12 @@
         };
 
         html2pdf().set(opt).from(element).save().then(() => {
-            btn.innerText = "تم تحميل الملف بنجاح";
-            setTimeout(() => { btn.innerText = "تحميل ورقة الإجابة PDF"; btn.disabled = false; }, 3000);
+            btn.innerText = "تم التحميل";
+            btn.disabled = false;
         });
     }
 
-    initQuestions();
+    init();
 </script>
 </body>
 </html>
