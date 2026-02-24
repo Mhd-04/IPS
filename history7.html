@@ -3,141 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اختبار التاريخ - الصف السابع (إناث)</title>
+    <title>كويز تاريخ الصف السابع | IPS</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Tajawal', sans-serif; background-color: #fdf2f2; }
-        .female-header { background: linear-gradient(135deg, #880808, #db2777); }
-        .question-card { 
-            background: white; 
-            border-radius: 20px; 
-            padding: 20px; 
-            border-right: 6px solid #880808;
-            margin-bottom: 15px;
-            page-break-inside: avoid;
-        }
-        textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #fbcfe8;
-            border-radius: 12px;
-            outline: none;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-        @media print {
-            .no-print { display: none; }
-        }
+        body { font-family: 'Tajawal', sans-serif; background-color: #fff5f7; }
+        .female-theme { background: linear-gradient(135deg, #880808, #db2777); }
+        .question-card { border-radius: 20px; background: white; padding: 18px; margin-bottom: 15px; border-right: 8px solid #db2777; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        textarea { width: 100%; padding: 10px; border: 2px solid #fce7f3; border-radius: 12px; min-height: 90px; outline: none; transition: 0.3s; }
+        textarea:focus { border-color: #db2777; background-color: #fffbff; }
+        .teacher-rating { background: #fff1f2; border: 2px dashed #db2777; border-radius: 20px; padding: 20px; margin-top: 30px; }
+        @media print { .no-print { display: none !important; } }
     </style>
 </head>
-<body class="min-h-screen pb-10">
+<body>
 
-    <div id="examContent">
-        <div class="female-header p-8 text-white text-center shadow-lg mb-6">
-            <img src="1000219663.jpg" class="w-24 h-24 mx-auto rounded-full border-4 border-white bg-white mb-3 shadow-md">
-            <h1 class="text-2xl font-extrabold">اختبار مادة التاريخ - الصف السابع</h1>
-            <p class="text-lg opacity-90">قسم الإناث - IPS</p>
-            <div id="studentDisplay" class="mt-3 bg-white/20 inline-block px-5 py-1 rounded-full font-bold"></div>
+    <div id="historyCaptureArea">
+        <div class="female-theme p-8 text-white text-center shadow-lg mb-6">
+            <img src="1000219663.jpg" class="w-24 h-24 mx-auto rounded-full border-4 border-white mb-4 bg-white shadow-md">
+            <h1 class="text-3xl font-extrabold">كويز تاريخ- الصف السابع</h1>
+            <p id="studentInfoBox" class="mt-2 text-lg font-bold opacity-90"></p>
         </div>
 
-        <div class="container mx-auto px-4 max-w-3xl">
-            <div class="space-y-4">
-                <div class="question-card">
-                    <p class="font-bold">1) من حكم شمال دمشق حتى الثغور؟</p>
-                    <textarea rows="1" placeholder="اكتبي الإجابة هنا..."></textarea>
-                </div>
+        <div class="container mx-auto px-4 max-w-4xl">
+            <div id="historyQuestions"></div>
 
-                <div class="question-card">
-                    <p class="font-bold">2) ما هو مركز تأسيس الدولة الحمدانية وعلى يد من أسست؟</p>
-                    <textarea rows="2" placeholder="المركز والمؤسس..."></textarea>
+            <div class="teacher-rating">
+                <h3 class="text-xl font-bold text-pink-800 mb-4 border-b-2 border-pink-200 pb-2 italic">ركن التقييم والملاحظات (خاص بالمعلم):</h3>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-white p-4 rounded-xl shadow-inner border border-pink-100">
+                        <p class="font-bold text-gray-600 mb-2 underline">الدرجة النهائية:</p>
+                        <p class="text-gray-300">/ 100</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl shadow-inner border border-pink-100">
+                        <p class="font-bold text-gray-600 mb-2 underline">توقيع المدرس:</p>
+                        <div class="h-10"></div>
+                    </div>
                 </div>
+            </div>
 
-                <div class="question-card">
-                    <p class="font-bold">3) عدد أدوار صلاح الدين واشرح واحدة منها؟</p>
-                    <textarea rows="3" placeholder="تعداد وشرح..."></textarea>
-                </div>
-
-                <div class="question-card">
-                    <p class="font-bold">4) ما الدور المهم الذي قامت به الدولة الزنكية؟</p>
-                    <textarea rows="2"></textarea>
-                </div>
-
-                <div class="question-card">
-                    <p class="font-bold">5) علل قيام صلاح الدين بتحرير معظم المدن الساحلية السورية؟</p>
-                    <textarea rows="2"></textarea>
-                </div>
-
-                <div class="question-card">
-                    <p class="font-bold">6) علل استعان الخليفة العباسي القائم بأمر الله بزعيمهم طغرل بك؟</p>
-                    <textarea rows="2"></textarea>
-                </div>
-
-                <div class="question-card">
-                    <p class="font-bold">7) متى ضعفت الدولة الحمدانية؟</p>
-                    <textarea rows="1"></textarea>
-                </div>
-
-                <div class="question-card">
-                    <p class="font-bold">8) ما اسم القصر الذي بناه سيف الدولة؟</p>
-                    <textarea rows="1"></textarea>
-                </div>
-
-                <div class="question-card">
-                    <p class="font-bold">9) كيف نشأت الدولة الأيوبية؟</p>
-                    <textarea rows="2"></textarea>
-                </div>
-
-                <div class="question-card">
-                    <p class="font-bold">10) ما هي المعارك التي انتصر بها سيف الدولة؟</p>
-                    <textarea rows="2"></textarea>
-                </div>
-
-                <div class="question-card">
-                    <p class="font-bold">11) تحدث عن النهضة الفكرية في عهد سيف الدولة؟</p>
-                    <textarea rows="3"></textarea>
-                </div>
-
-                <div class="question-card">
-                    <p class="font-bold">12) تحدث عن معركة حطين؟</p>
-                    <textarea rows="4"></textarea>
-                </div>
+            <div class="text-center py-12 no-print">
+                <button onclick="downloadHistoryPDF()" id="downloadBtn" class="bg-green-600 text-white px-12 py-5 rounded-3xl font-bold text-2xl shadow-2xl hover:bg-green-700 transition transform active:scale-95">
+                    حفظ الإجابات وتحميل PDF
+                </button>
             </div>
         </div>
     </div>
 
-    <div class="container mx-auto px-4 max-w-3xl mt-8 flex flex-col gap-4 no-print">
-        <button onclick="saveAsPDF()" class="bg-[#880808] text-white py-4 rounded-2xl font-bold text-xl shadow-xl hover:bg-black transition">حفظ كملف PDF للإرسال</button>
-        <button onclick="window.location.href='index.html'" class="bg-gray-200 text-gray-700 py-3 rounded-2xl font-bold">العودة للرئيسية</button>
-    </div>
+<script>
+    // جلب بيانات الطالبة
+    const sName = localStorage.getItem('sName') || "طالبة";
+    const sSection = localStorage.getItem('sSection') || "-";
+    document.getElementById('studentInfoBox').innerText = `الطالبة: ${sName} | الشعبة: ${sSection}`;
 
-    <script>
-        // عرض اسم الطالبة
-        window.onload = function() {
-            const name = localStorage.getItem('sName') || "طالبة";
-            const section = localStorage.getItem('sSection') || "غير محددة";
-            document.getElementById('studentDisplay').innerText = `الطالبة: ${name} | الشعبة: ${section}`;
+    // أسئلة التاريخ الـ 12 كاملة
+    const historyQuestions = [
+        "من حكم شمال دمشق حتى الثغور؟",
+        "ما هو مركز تأسيس الدولة الحمدانية وعلى يد من أسست؟",
+        "عدد أدوار صلاح الدين واشرح واحده منها؟",
+        "ما الدور المهم الذي قامت به الدوله الزنكية؟",
+        "علل قيام صلاح الدين بتحرير معظم المدن الساحلية السورية؟",
+        "علل استعان الخليفه العباسيه القائم بأمر الله بزعيمهم طغرل بك؟",
+        "متى ضعفت الدولة الحمدانية؟",
+        "ما اسم القصر الذي بناه سيف الدولة؟",
+        "كيف نشأت الدولة الأيوبية؟",
+        "ما هي المعارك التي انتصر بها سيف الدولة؟",
+        "تحدث عن النهضة الفكرية في عهد سيف الدولة؟",
+        "تحدث عن معركة حطين؟"
+    ];
+
+    function renderHistory() {
+        const container = document.getElementById('historyQuestions');
+        historyQuestions.forEach((q, i) => {
+            container.innerHTML += `
+                <div class="question-card">
+                    <h3 class="text-lg font-bold mb-2 text-gray-800">${i + 1}) ${q}</h3>
+                    <textarea placeholder="اكتبي إجابتكِ هنا..."></textarea>
+                </div>
+            `;
+        });
+    }
+
+    // وظيفة التحميل مع حل مشكلة الـ PDF الفارغ
+    async function downloadHistoryPDF() {
+        const element = document.getElementById('historyCaptureArea');
+        const btn = document.getElementById('downloadBtn');
+        
+        btn.innerText = "جاري الحفظ... يرجى الانتظار";
+        btn.disabled = true;
+
+        // انتظار 3 ثواني لضمان استقرار الصفحة بالكامل
+        await new Promise(r => setTimeout(r, 3000));
+
+        const opt = {
+            margin: [10, 5, 10, 5],
+            filename: `إجابات_تاريخ_سابع_${sName}.pdf`,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { 
+                scale: 2, 
+                useCORS: true, 
+                scrollY: 0,
+                letterRendering: true 
+            },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
         };
 
-        // وظيفة تحويل الصفحة لـ PDF
-        function saveAsPDF() {
-            const element = document.getElementById('examContent');
-            const studentName = localStorage.getItem('sName') || "طالبة";
-            
-            const opt = {
-                margin:       [10, 10, 10, 10],
-                filename:     `اجابة_تاريخ_${studentName}.pdf`,
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2, useCORS: true },
-                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
+        html2pdf().set(opt).from(element).save().then(() => {
+            btn.innerText = "تم التحميل!";
+            setTimeout(() => { btn.innerText = "حفظ الإجابات وتحميل PDF"; btn.disabled = false; }, 3000);
+        });
+    }
 
-            // تشغيل التحويل
-            html2pdf().set(opt).from(element).save().then(() => {
-                alert("تم تحميل الملف! يرجى إرساله الآن للمدرس عبر الواتساب أو الإيميل.");
-            });
-        }
-    </script>
+    renderHistory();
+</script>
 </body>
 </html>
