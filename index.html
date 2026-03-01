@@ -1,4 +1,4 @@
-            <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -25,7 +25,7 @@
 
     <div class="container mx-auto px-4 py-10">
         <div class="text-center mb-8">
-            <img src="1000219663.jpg" class="w-32 h-32 mx-auto rounded-full border-4 border-white mb-4 bg-white shadow-xl">
+            <img src="1000219663.jpg" class="w-32 h-32 mx-auto rounded-full border-4 border-white bg-white mb-4 shadow-xl">
             <h1 id="mainTitle" class="text-4xl font-extrabold mb-2"> IPS </h1>
             <p id="subTitle" class="text-gray-600 font-bold">بوابة الاختبارات والوظائف الإلكترونية</p>
         </div>
@@ -62,21 +62,35 @@
         let currentTheme = "";
 
         function checkAccess(gender) {
+            const name = document.getElementById('studentName').value;
+            const section = document.getElementById('studentSection').value;
+
+            if(!name || !section) {
+                alert("الرجاء إدخال الاسم والشعبة أولاً");
+                return;
+            }
+
             const pass = prompt("الرجاء إدخال كلمة السر الخاصة بالقسم:");
             const mPass = "m20262025";
             const fPass = "20252026f";
 
             if (gender === 'male' && pass === mPass) {
+                saveData(name, section);
                 setTheme('male', "قسم الذكور");
             } else if (gender === 'female' && pass === fPass) {
+                saveData(name, section);
                 setTheme('female', "قسم الإناث");
             } else {
                 alert("كلمة السر خاطئة، حاول مرة أخرى.");
             }
         }
 
-        // دالة مساعدة لتجنب أي تداخل
         function femaleCheck() { checkAccess('female'); }
+
+        function saveData(n, s) {
+            localStorage.setItem('sName', n);
+            localStorage.setItem('sSection', s);
+        }
 
         function setTheme(gender, title) {
             currentTheme = gender;
@@ -97,64 +111,57 @@
             document.getElementById('gradeSelect').value = "";
         }
 
-        // قاعدة بيانات الاختبارات (تم دمجها بشكل صحيح الآن)
         const examsData = {
-            "8": {
-                "male": [],
-                "female": [{ title: "كويز جغرافية (إناث)", type: "اختبار", link: "geography8.html" },
-                      { title: "ورقة عمل لغة عربية (إناث)", type: "ورقة عمل", link: "​ar-8.html" }
-                              ]
-            },
             "7": {
                 "male": [],
                 "female": [
-                    { title: "ورقة عمل لغة عربية (إناث)", type: "ورقة عمل", link: "arabic7.html" },
-                    { title: "كويز تاريخ - سابع", type: "اختبار", link: "history7.html" }
+                    { title: "ورقة عمل لغة عربية (إناث)", link: "arabic7.html" },
+                    { title: "كويز تاريخ - سابع", link: "history7.html" }
                 ]
             },
+            "8": {
+                "male": [],
+                "female": [
+                    { title: "كويز جغرافية (إناث)", link: "geography8.html" },
+                    { title: "ورقة عمل لغة عربية (إناث)", link: "ar-8.html" }
+                ]
+            },
+            "9": {
+                "male": [],
+                "female": []
+            },
             "10": {
-                "male": [{ title: "كويز الوحدة الثالثة رياضيات (ذكور)", type: "اختبار", link: "math10.html" }],
-                "female": [{ title: "كويز الوحدة الثالثة رياضيات (إناث)", type: "اختبار", link: "math10.html" }
-                           {title:"اختبار لغة عربية",type: "اختبار", link: "arabic_quiz.html"}]
-                        
+                "male": [
+                    { title: "كويز رياضيات - الوحدة 3", link: "math10.html" }
+                ],
+                "female": [
+                    { title: "كويز رياضيات - الوحدة 3", link: "math10.html" },
+                    { title: "اختبار قصيدة ربوع", link: "arabic_quiz.html" }
+                ]
             }
         };
 
         function showExams() {
             const grade = document.getElementById('gradeSelect').value;
-            const container = document.getElementById('examsArea');
-            container.innerHTML = "";
+            const area = document.getElementById('examsArea');
+            area.innerHTML = "";
 
             if (grade && examsData[grade]) {
-                const list = examsData[grade][currentTheme]; 
-                
+                const list = examsData[grade][currentTheme];
                 if (list && list.length > 0) {
-                    list.forEach(exam => {
-                        const accentColor = currentTheme === 'male' ? 'bg-gray-700 hover:bg-gray-800' : 'bg-pink-600 hover:bg-pink-700';
-                        const borderColor = currentTheme === 'male' ? 'border-gray-500' : 'border-pink-500';
-
-                        container.innerHTML += `
-                            <div class="bg-white p-6 rounded-[30px] shadow-2xl text-right transform transition hover:scale-105 border-r-8 ${borderColor} animate-fade-in">
-                                <span class="bg-gray-100 text-gray-800 text-xs font-bold px-3 py-1 rounded-full">${exam.type}</span>
-                                <h3 class="text-2xl font-bold text-gray-800 mt-3">${exam.title}</h3>
-                                <button onclick="startExam('${exam.link}')" class="w-full mt-6 ${accentColor} text-white py-4 rounded-2xl font-bold text-xl shadow-md transition">بدء الآن</button>
-                            </div>`;
+                    list.forEach(ex => {
+                        area.innerHTML += `
+                            <a href="${ex.link}" class="block p-6 bg-white rounded-3xl shadow-xl hover:scale-105 transition transform border-r-8 ${currentTheme === 'male' ? 'border-gray-500' : 'border-pink-500'}">
+                                <div class="flex justify-between items-center text-gray-800">
+                                    <span class="font-bold text-lg">${ex.title}</span>
+                                    <span class="text-sm bg-gray-100 px-3 py-1 rounded-full">دخول ←</span>
+                                </div>
+                            </a>`;
                     });
                 } else {
-                    container.innerHTML = "<p class='text-center text-white font-bold'>لا توجد اختبارات متوفرة حالياً لهذا الصف.</p>";
+                    area.innerHTML = "<p class='text-center opacity-70'>لا توجد اختبارات متوفرة حالياً لهذا القسم.</p>";
                 }
             }
-        }
-
-        function startExam(link) {
-            const name = document.getElementById('studentName').value;
-            const section = document.getElementById('studentSection').value;
-            if(!name || !section) { alert("يرجى كتابة الاسم والشعبة للمتابعة"); return; }
-            
-            localStorage.setItem('sName', name);
-            localStorage.setItem('sSection', section);
-            localStorage.setItem('sTheme', currentTheme);
-            window.location.href = link;
         }
     </script>
 </body>
