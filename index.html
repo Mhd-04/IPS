@@ -102,7 +102,9 @@
             const section = document.getElementById('studentSection').value;
             if(!name || !section) { alert("يرجى إدخال الاسم والشعبة أولاً"); return; }
             const pass = prompt("الرجاء إدخال كلمة السر:");
-            if ((gender === 'male' && pass === "m20262025") || (gender === 'female' && pass === "20252026f")) {
+            const mPass = "m20262025";
+            const fPass = "20252026f";
+            if ((gender === 'male' && pass === mPass) || (gender === 'female' && pass === fPass)) {
                 localStorage.setItem('sName', name);
                 localStorage.setItem('sSection', section);
                 setTheme(gender, (gender === 'male' ? "قسم الذكور" : "قسم الإناث"));
@@ -111,7 +113,8 @@
 
         function setTheme(gender, title) {
             currentTheme = gender;
-            document.getElementById('mainBody').className = (gender === 'male') ? "bg-male min-h-screen pb-10" : "bg-female min-h-screen pb-10";
+            const body = document.getElementById('mainBody');
+            body.className = (gender === 'male') ? "bg-male min-h-screen pb-10" : "bg-female min-h-screen pb-10";
             document.getElementById('mainTitle').innerText = title;
             document.getElementById('gradeArea').classList.remove('hidden');
             document.getElementById('gradeSelect').value = "";
@@ -134,7 +137,7 @@
                                 </div>
                             </a>`;
                     });
-                } else { area.innerHTML = "<p class='text-center text-white opacity-80 font-bold'>لا توجد اختبارات متوفرة حالياً لهذا القسم.</p>"; }
+                } else { area.innerHTML = "<p class='text-center text-white opacity-80 font-bold'>لا توجد اختبارات متوفرة حالياً.</p>"; }
             }
         }
     </script>
