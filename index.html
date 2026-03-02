@@ -63,36 +63,36 @@
             "7": {
                 "male": [],
                 "female": [
-                    { title: "ورقة عمل لغة عربية (إناث)", link: "arabic7.html" },
-                    { title: "كويز تاريخ - سابع", link: "history7.html" }
+                    { title: "ورقة عمل لغة عربية (إناث)", link: "./arabic7.html" },
+                    { title: "كويز تاريخ - سابع", link: "./history7.html" }
                 ]
             },
             "8": {
                 "male": [],
                 "female": [
-                    { title: "كويز جغرافية (إناث)", link: "geography8.html" },
-                    { title: "ورقة عمل لغة عربية (إناث)", link: "ar-8.html" }
+                    { title: "كويز جغرافية (إناث)", link: "./geography8.html" },
+                    { title: "ورقة عمل لغة عربية (إناث)", link: "./ar-8.html" }
                 ]
             },
             "9": {
-                "male": [{ title: "كويز فيزياء - تاسع", link: "physics9.html" }],
-                "female": [{ title: "كويز فيزياء - تاسع", link: "physics9.html" }]
+                "male": [{ title: "كويز فيزياء - تاسع", link: "./physics9.html" }],
+                "female": [{ title: "كويز فيزياء - تاسع", link: "./physics9.html" }]
             },
             "10": {
-                "male": [{ title: "كويز رياضيات - الوحدة 3", link: "math10.html" }],
+                "male": [{ title: "كويز رياضيات - الوحدة 3", link: "./math10.html" }],
                 "female": [
-                    { title: "كويز رياضيات - الوحدة 3", link: "math10.html" },
-                    { title: "اختبار قصيدة ربوع", link: "arabic9_r.html" }
+                    { title: "كويز رياضيات - الوحدة 3", link: "./math10.html" },
+                    { title: "اختبار قصيدة ربوع", link: "./arabic9_r.html" }
                 ]
             },
             "12": {
                 "male": [
-                    { title: "كويز تربية إسلامية", link: "islam12.html" },
-                    { title: "كويز ديانة", link: "religion12.html" }
+                    { title: "كويز تربية إسلامية", link: "./islam12.html" },
+                    { title: "كويز ديانة", link: "./religion12.html" }
                 ],
                 "female": [
-                    { title: "كويز تربية إسلامية", link: "islam12.html" },
-                    { title: "كويز ديانة", link: "religion12.html" }
+                    { title: "كويز تربية إسلامية", link: "./islam12.html" },
+                    { title: "كويز ديانة", link: "./religion12.html" }
                 ]
             }
         };
@@ -113,8 +113,7 @@
 
         function setTheme(gender, title) {
             currentTheme = gender;
-            const body = document.getElementById('mainBody');
-            body.className = (gender === 'male') ? "bg-male min-h-screen pb-10" : "bg-female min-h-screen pb-10";
+            document.getElementById('mainBody').className = (gender === 'male') ? "bg-male min-h-screen pb-10" : "bg-female min-h-screen pb-10";
             document.getElementById('mainTitle').innerText = title;
             document.getElementById('gradeArea').classList.remove('hidden');
             document.getElementById('gradeSelect').value = "";
