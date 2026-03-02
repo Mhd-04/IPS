@@ -58,12 +58,11 @@
 
     <script>
         let currentTheme = "";
-        // تم تحديث الروابط لتكون مباشرة وكاملة لتجنب خطأ 404
         const baseURL = "https://mhd-04.github.io/IPS/";
 
         const examsData = {
             "7": { "male": [], "female": [{ title: "ورقة عمل لغة عربية", link: "arabic7.html" }, { title: "كويز تاريخ", link: "history7.html" }] },
-            "8": { "male": [], "female": [{ title: "كويز جغرافية", link: "geography8.html" }, { title: "ورقة عمل لغة عربية", link: "arb8.html" }] },
+            "8": { "male": [], "female": [{ title: "كويز جغرافية", link: "geography8.html" }, { title: "ورقة عمل لغة عربية", link: "arabic8.html" }] },
             "9": { "male": [{ title: "كويز فيزياء", link: "physics9.html" }], "female": [{ title: "كويز فيزياء", link: "physics9.html" }] },
             "10": { "male": [{ title: "كويز رياضيات", link: "math10.html" }], "female": [{ title: "كويز رياضيات", link: "math10.html" }, { title: "اختبار قصيدة ربوع", link: "arabic9_r.html" }] },
             "12": { "male": [{ title: "كويز تربية إسلامية", link: "islam12.html" }, { title: "كويز ديانة", link: "religion12.html" }], "female": [{ title: "كويز تربية إسلامية", link: "islam12.html" }, { title: "كويز ديانة", link: "religion12.html" }] }
@@ -72,9 +71,16 @@
         function checkAccess(gender) {
             const name = document.getElementById('studentName').value;
             const section = document.getElementById('studentSection').value;
+            
             if(!name || !section) { alert("يرجى إدخال البيانات"); return; }
+            
             const pass = prompt("كلمة السر:");
             if ((gender === 'male' && pass === "m20262025") || (gender === 'female' && pass === "20252026f")) {
+                
+                // التعديل الجوهري: حفظ البيانات لكي تراها صفحات الاختبار
+                localStorage.setItem('studentName', name);
+                localStorage.setItem('studentSection', section);
+                
                 setTheme(gender, (gender === 'male' ? "قسم الذكور" : "قسم الإناث"));
             } else { alert("كلمة السر خاطئة!"); }
         }
@@ -93,7 +99,6 @@
             if (grade && examsData[grade]) {
                 const list = examsData[grade][currentTheme];
                 list.forEach(ex => {
-                    // رابط كامل مع نظام منع التخزين المؤقت
                     const fullLink = baseURL + ex.link + "?v=" + new Date().getTime();
                     area.innerHTML += `
                         <a href="${fullLink}" class="block p-6 bg-white rounded-3xl shadow-xl hover:scale-105 transition transform border-r-8 ${currentTheme === 'male' ? 'border-gray-500' : 'border-pink-500'}">
