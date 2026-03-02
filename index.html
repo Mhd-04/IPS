@@ -100,44 +100,31 @@
         function checkAccess(gender) {
             const name = document.getElementById('studentName').value;
             const section = document.getElementById('studentSection').value;
-
-            if(!name || !section) {
-                alert("يرجى إدخال الاسم والشعبة أولاً");
-                return;
-            }
-
+            if(!name || !section) { alert("يرجى إدخال الاسم والشعبة أولاً"); return; }
             const pass = prompt("الرجاء إدخال كلمة السر:");
             const mPass = "m20262025";
             const fPass = "20252026f";
-
             if ((gender === 'male' && pass === mPass) || (gender === 'female' && pass === fPass)) {
                 localStorage.setItem('sName', name);
                 localStorage.setItem('sSection', section);
                 setTheme(gender, (gender === 'male' ? "قسم الذكور" : "قسم الإناث"));
-            } else {
-                alert("كلمة السر خاطئة!");
-            }
+            } else { alert("كلمة السر خاطئة!"); }
         }
 
         function setTheme(gender, title) {
             currentTheme = gender;
             const body = document.getElementById('mainBody');
-            const subTitle = document.getElementById('subTitle');
-            
             body.className = (gender === 'male') ? "bg-male min-h-screen pb-10" : "bg-female min-h-screen pb-10";
-            subTitle.style.color = (gender === 'male') ? "#cbd5e1" : "#fbcfe8";
-            
             document.getElementById('mainTitle').innerText = title;
             document.getElementById('gradeArea').classList.remove('hidden');
-            document.getElementById('examsArea').innerHTML = "";
             document.getElementById('gradeSelect').value = "";
+            document.getElementById('examsArea').innerHTML = "";
         }
 
         function showExams() {
             const grade = document.getElementById('gradeSelect').value;
             const area = document.getElementById('examsArea');
             area.innerHTML = "";
-
             if (grade && examsData[grade]) {
                 const list = examsData[grade][currentTheme];
                 if (list && list.length > 0) {
@@ -150,9 +137,7 @@
                                 </div>
                             </a>`;
                     });
-                } else {
-                    area.innerHTML = "<p class='text-center text-white opacity-80 font-bold'>لا توجد اختبارات متوفرة حالياً لهذا القسم.</p>";
-                }
+                } else { area.innerHTML = "<p class='text-center text-white opacity-80 font-bold'>لا توجد اختبارات متوفرة حالياً.</p>"; }
             }
         }
     </script>
