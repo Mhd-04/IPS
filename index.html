@@ -59,12 +59,13 @@
     <script>
         let currentTheme = "";
 
+        // البيانات مطابقة لملفاتك المرفوعة في الصور تماماً
         const examsData = {
-            "7": { "male": [], "female": [{ title: "ورقة عمل لغة عربية", link: "arabic7.html" }] },
-            "8": { "male": [], "female": [{ title: "ورقة عمل لغة عربية", link: "ar8.html" }, { title: "كويز جغرافية", link: "geography8.html" }] },
+            "7": { "male": [], "female": [{ title: "ورقة عمل لغة عربية", link: "arabic7.html" }, { title: "كويز تاريخ", link: "history7.html" }] },
+            "8": { "male": [], "female": [{ title: "كويز جغرافية", link: "geography8.html" }, { title: "ورقة عمل لغة عربية", link: "ar-8.html" }] },
             "9": { "male": [{ title: "كويز فيزياء", link: "physics9.html" }], "female": [{ title: "كويز فيزياء", link: "physics9.html" }] },
-            "10": { "male": [{ title: "كويز رياضيات", link: "math10.html" }], "female": [{ title: "كويز رياضيات", link: "math10.html" }] },
-            "12": { "male": [{ title: "كويز ديانة", link: "religion12.html" }], "female": [{ title: "كويز ديانة", link: "religion12.html" }] }
+            "10": { "male": [{ title: "كويز رياضيات", link: "math10.html" }], "female": [{ title: "كويز رياضيات", link: "math10.html" }, { title: "اختبار قصيدة ربوع", link: "arabic9_r.html" }] },
+            "12": { "male": [{ title: "كويز تربية إسلامية", link: "islam12.html" }, { title: "كويز ديانة", link: "religion12.html" }], "female": [{ title: "كويز تربية إسلامية", link: "islam12.html" }, { title: "كويز ديانة", link: "religion12.html" }] }
         };
 
         function checkAccess(gender) {
@@ -72,9 +73,11 @@
             const section = document.getElementById('studentSection').value;
             if(!name || !section) { alert("يرجى إدخال البيانات"); return; }
             const pass = prompt("كلمة السر:");
-            if ((gender === 'male' && pass === "m20262025") || (gender === 'female' && pass === "20252026f")) {
+            const mPass = "m20262025";
+            const fPass = "20252026f";
+            if ((gender === 'male' && pass === mPass) || (gender === 'female' && pass === fPass)) {
                 setTheme(gender, (gender === 'male' ? "قسم الذكور" : "قسم الإناث"));
-            } else { alert("خطأ!"); }
+            } else { alert("كلمة السر خاطئة!"); }
         }
 
         function setTheme(gender, title) {
@@ -90,20 +93,21 @@
             area.innerHTML = "";
             if (grade && examsData[grade]) {
                 const list = examsData[grade][currentTheme];
-                list.forEach(ex => {
-                    // الربط المباشر بدون مسارات معقدة لتجنب 404
-                    area.innerHTML += `
-                        <a href="${ex.link}" class="block p-6 bg-white rounded-3xl shadow-xl hover:scale-105 transition transform border-r-8 ${currentTheme === 'male' ? 'border-gray-500' : 'border-pink-500'}">
-                            <div class="flex justify-between items-center text-gray-800">
-                                <span class="font-bold text-lg">${ex.title}</span>
-                                <span class="text-sm bg-gray-100 px-3 py-1 rounded-full">دخول ←</span>
-                            </div>
-                        </a>`;
-                });
+                if (list && list.length > 0) {
+                    list.forEach(ex => {
+                        // استخدام نظام Timestamp لإجبار المتصفح على تحديث الرابط وتجنب خطأ 404
+                        const freshLink = `${ex.link}?v=${new Date().getTime()}`;
+                        area.innerHTML += `
+                            <a href="${freshLink}" class="block p-6 bg-white rounded-3xl shadow-xl hover:scale-105 transition transform border-r-8 ${currentTheme === 'male' ? 'border-gray-500' : 'border-pink-500'}">
+                                <div class="flex justify-between items-center text-gray-800">
+                                    <span class="font-bold text-lg">${ex.title}</span>
+                                    <span class="text-sm bg-gray-100 px-3 py-1 rounded-full text-black">دخول ←</span>
+                                </div>
+                            </a>`;
+                    });
+                } else { area.innerHTML = "<p class='text-center text-white opacity-80 font-bold'>لا توجد اختبارات متوفرة.</p>"; }
             }
         }
     </script>
 </body>
 </html>
-
-
