@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار اللغة العربية - الصف الثامن</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Tajawal', sans-serif; background-color: #f3f4f6; }
+        .question-card { background: white; border-radius: 20px; padding: 25px; margin-bottom: 20px; border-right: 6px solid #db2777; break-inside: avoid; }
+        input[type="text"], textarea { width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 12px; outline: none; transition: 0.3s; }
+        input[type="text"]:focus { border-color: #db2777; background-color: #fff1f2; }
+        .header-bg { background: linear-gradient(135deg, #db2777, #880808); }
+        
+        @media print {
+            .no-print { display: none !important; }
+            body { background-color: white; }
+            .question-card { border: 1px solid #eee; margin-bottom: 10px; }
+            .header-bg { background: white !important; color: black !important; border-bottom: 2px solid #000; }
+        }
+    </style>
+</head>
+<body class="pb-10">
+
+    <div class="header-bg text-white py-6 px-4 mb-8 shadow-lg text-center relative flex flex-col items-center">
+        <img src="1000219663.jpg" class="w-24 h-24 rounded-full border-4 border-white mb-3 bg-white shadow-xl">
+        <h1 class="text-3xl font-bold">اختبار اللغة العربية - الصف الثامن</h1>
+        <p class="mt-1 opacity-90 font-bold">ثانوية ومعهد ابن خلدون الخاصة</p>
+        
+        <button onclick="window.print()" class="no-print absolute top-4 left-4 bg-white/20 hover:bg-white/40 p-2 rounded-lg text-sm font-bold transition">
+            🖨️ حفظ كـ PDF
+        </button>
+    </div>
+
+    <div class="container mx-auto px-4 max-w-3xl">
+        <div id="studentData" class="mb-6 p-4 bg-white rounded-xl border border-pink-200 text-center font-bold text-pink-800 shadow-sm">
+            اسم الطالب: <span id="sNameDisplay">جاري التحميل...</span> | الشعبة: <span id="sSectionDisplay">...</span>
+        </div>
+
+        <form id="examForm">
+            <div class="question-card">
+                <h3 class="font-bold text-lg mb-4 text-pink-700">1. استخرج مفعولاً به وحدد نوعه مما يلي:</h3>
+                <p class="bg-gray-50 p-4 rounded-xl mb-4 text-center text-lg italic leading-relaxed border border-gray-100">
+                    "وأنت تعد فطورك فكر بغيرك.. لا تنسى قوت الحمام"
+                </p>
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="text" placeholder="المفعول به">
+                    <input type="text" placeholder="نوعه">
+                </div>
+            </div>
+
+            <div class="question-card">
+                <h3 class="font-bold text-lg mb-4 text-pink-700">2. ما معنى الكلمات التالية؟</h3>
+                <div class="space-y-3">
+                    <div class="flex items-center gap-3"><span class="w-20 font-bold">الغمام:</span><input type="text"></div>
+                    <div class="flex items-center gap-3"><span class="w-20 font-bold">تخوض:</span><input type="text"></div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <h3 class="font-bold text-lg mb-3 text-pink-700">3. علل زيادة الألف في كلمة (ركضوا).</h3>
+                <input type="text" placeholder="اكتب التعليل هنا...">
+            </div>
+
+            <div class="question-card">
+                <h3 class="font-bold text-lg mb-4 text-pink-700">4. استخرج مصدراً من البيت التالي وحدد نوعه:</h3>
+                <p class="bg-gray-50 p-4 rounded-xl mb-4 text-center text-lg italic leading-relaxed border border-gray-100">
+                    "أنا من أرسلت قلبي عاشقاً.. يرحم الفجع ويهوى الحسنا"
+                </p>
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="text" placeholder="المصدر">
+                    <input type="text" placeholder="نوعه">
+                </div>
+            </div>
+
+            <div class="question-card">
+                <h3 class="font-bold text-lg mb-3 text-pink-700">5. اكتب بيتين من قصيدة (أنت وأنا).</h3>
+                <textarea class="h-32" placeholder="اكتب البيتين هنا..."></textarea>
+            </div>
+
+            <div class="question-card">
+                <h3 class="font-bold text-lg mb-4 text-pink-700">6. أعرب ما تحته خط من البيت التالي إعراب مفردات:</h3>
+                <p class="bg-gray-50 p-6 rounded-2xl mb-6 text-center text-xl font-bold leading-loose">
+                    فِي <span class="text-pink-600 border-b-2 border-pink-600">دُرُوبِ</span> <span class="text-pink-600 border-b-2 border-pink-600">الحُبِّ</span> <span class="text-pink-600 border-b-2 border-pink-600">عِشْنَا</span> شَذىً... هَل <span class="text-pink-600 border-b-2 border-pink-600">غَرَسْنَا</span> <span class="text-pink-600 border-b-2 border-pink-600">الدَّرْبَ</span> إِلا سُورَا
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="flex flex-col gap-1"><label class="font-bold">إعراب  (في دروب):</label><input type="text"></div>
+                    <div class="flex flex-col gap-1"><label class="font-bold">إعراب (الحب):</label><input type="text"></div>
+                    <div class="flex flex-col gap-1"><label class="font-bold">إعراب (عشنا):</label><input type="text"></div>
+                    <div class="flex flex-col gap-1"><label class="font-bold">إعراب (غرسنا):</label><input type="text"></div>
+                    <div class="flex flex-col gap-1 md:col-span-2"><label class="font-bold">إعراب (الدرب):</label><input type="text"></div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <h3 class="font-bold text-lg mb-4 text-pink-700">7. صنف الأفعال الآتية إلى (صحيحة ومعتلة):</h3>
+                <p class="text-center mb-4 text-gray-600 font-bold">(تنسى - تُحرر - تعود - يجد)</p>
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="text" placeholder="أفعال صحيحة">
+                    <input type="text" placeholder="أفعال معتلة">
+                </div>
+            </div>
+
+            <div class="question-card">
+                <h3 class="font-bold text-lg mb-4 text-pink-700">8. ما مصدر الأفعال الرباعية التالية وما وزن المصدر؟</h3>
+                <div class="grid grid-cols-2 gap-4 text-center font-bold bg-gray-50 p-2 rounded-t-lg border">
+                    <div>الفعل</div><div>المصدر ووزنه</div>
+                </div>
+                <div class="grid grid-cols-2 gap-4 border-x border-b p-4 rounded-b-lg space-y-2">
+                    <div class="self-center font-bold">أعلن:</div> <input type="text">
+                    <div class="self-center font-bold">زلزلت:</div> <input type="text">
+                    <div class="self-center font-bold">شارك:</div> <input type="text">
+                </div>
+            </div>
+
+            <div class="flex gap-4 no-print mt-10">
+                <button type="button" onclick="submitAndPrint()" class="flex-1 bg-pink-600 hover:bg-pink-700 text-white font-bold py-4 rounded-2xl shadow-lg transition transform active:scale-95">إنهاء وطباعة</button>
+                <a href="https://mhd-04.github.io/IPS/index.html" class="bg-gray-500 hover:bg-gray-600 text-white px-8 py-4 rounded-2xl font-bold transition flex items-center justify-center">خروج</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        window.onload = function() {
+            // جلب البيانات مع أسماء المفاتيح الصحيحة
+            const name = localStorage.getItem('studentName') || localStorage.getItem('sName');
+            const section = localStorage.getItem('studentSection') || localStorage.getItem('sSection');
+            
+            document.getElementById('sNameDisplay').innerText = name || "غير مسجل";
+            document.getElementById('sSectionDisplay').innerText = section || "غير محددة";
+        };
+
+        function submitAndPrint() {
+            alert("تم حفظ الإجابات! سيتم الآن فتح نافذة الطباعة.");
+            window.print();
+        }
+    </script>
+</body>
+</html>
