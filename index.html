@@ -28,7 +28,7 @@
             <p id="subTitle" class="text-gray-600 font-bold">بوابة الاختبارات والوظائف الإلكترونية</p>
         </div>
 
-        <div class="max-w-md mx-auto glass-card p-8 rounded-[40px]">
+        <div id="loginArea" class="max-w-md mx-auto glass-card p-8 rounded-[40px]">
             <div class="space-y-4 text-gray-800">
                 <input type="text" id="studentName" placeholder="الاسم الكامل للطالب/ة" class="w-full p-4 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-pink-500 shadow-sm font-bold">
                 <input type="text" id="studentSection" placeholder="الشعبة" class="w-full p-4 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-pink-500 shadow-sm font-bold">
@@ -60,49 +60,21 @@
         let currentTheme = "";
 
         const examsData = {
-            "7": {
-                "male": [],
-                "female": [
-                    { title: "ورقة عمل لغة عربية (إناث)", link: "arabic7.html" },
-                    { title: "كويز تاريخ - سابع", link: "history7.html" }
-                ]
-            },
-            "8": {
-                "male": [],
-                "female": [
-                    { title: "كويز جغرافية (إناث)", link: "geography8.html" },
-                    { title: "ورقة عمل لغة عربية (إناث)", link: "ar8.html" }
-                ]
-            },
-            "9": {
-                "male": [{ title: "كويز فيزياء - تاسع", link: "physics9.html" }],
-                "female": [{ title: "كويز فيزياء - تاسع", link: "physics9.html" }]
-            },
-            "10": {
-                "male": [{ title: "كويز رياضيات - الوحدة 3", link: "math10.html" }],
-                "female": [
-                    { title: "كويز رياضيات - الوحدة 3", link: "math10.html" },
-                    { title: "اختبار قصيدة ربوع", link: "arabic9_r.html" }
-                ]
-            },
-            "12": {
-                "male": [{ title: "كويز تربية إسلامية", link: "islam12.html" }],
-                "female": [{ title: "كويز تربية إسلامية", link: "islam12.html" }]
-            }
+            "7": { "male": [], "female": [{ title: "ورقة عمل لغة عربية", link: "arabic7.html" }] },
+            "8": { "male": [], "female": [{ title: "ورقة عمل لغة عربية", link: "ar8.html" }, { title: "كويز جغرافية", link: "geography8.html" }] },
+            "9": { "male": [{ title: "كويز فيزياء", link: "physics9.html" }], "female": [{ title: "كويز فيزياء", link: "physics9.html" }] },
+            "10": { "male": [{ title: "كويز رياضيات", link: "math10.html" }], "female": [{ title: "كويز رياضيات", link: "math10.html" }] },
+            "12": { "male": [{ title: "كويز ديانة", link: "religion12.html" }], "female": [{ title: "كويز ديانة", link: "religion12.html" }] }
         };
 
         function checkAccess(gender) {
             const name = document.getElementById('studentName').value;
             const section = document.getElementById('studentSection').value;
-            if(!name || !section) { alert("يرجى إدخال الاسم والشعبة أولاً"); return; }
-            const pass = prompt("الرجاء إدخال كلمة السر:");
-            const mPass = "m20262025";
-            const fPass = "20252026f";
-            if ((gender === 'male' && pass === mPass) || (gender === 'female' && pass === fPass)) {
-                localStorage.setItem('sName', name);
-                localStorage.setItem('sSection', section);
+            if(!name || !section) { alert("يرجى إدخال البيانات"); return; }
+            const pass = prompt("كلمة السر:");
+            if ((gender === 'male' && pass === "m20262025") || (gender === 'female' && pass === "20252026f")) {
                 setTheme(gender, (gender === 'male' ? "قسم الذكور" : "قسم الإناث"));
-            } else { alert("كلمة السر خاطئة!"); }
+            } else { alert("خطأ!"); }
         }
 
         function setTheme(gender, title) {
@@ -110,8 +82,6 @@
             document.getElementById('mainBody').className = (gender === 'male') ? "bg-male min-h-screen pb-10" : "bg-female min-h-screen pb-10";
             document.getElementById('mainTitle').innerText = title;
             document.getElementById('gradeArea').classList.remove('hidden');
-            document.getElementById('gradeSelect').value = "";
-            document.getElementById('examsArea').innerHTML = "";
         }
 
         function showExams() {
@@ -120,21 +90,20 @@
             area.innerHTML = "";
             if (grade && examsData[grade]) {
                 const list = examsData[grade][currentTheme];
-                if (list && list.length > 0) {
-                    list.forEach(ex => {
-                        // أضفت ?v=1 لإجبار المتصفح على تحميل النسخة الجديدة من الملف وتجاهل الخطأ القديم
-                        area.innerHTML += `
-                            <a href="${ex.link}?v=1" class="block p-6 bg-white rounded-3xl shadow-xl hover:scale-105 transition transform border-r-8 ${currentTheme === 'male' ? 'border-gray-500' : 'border-pink-500'}">
-                                <div class="flex justify-between items-center text-gray-800">
-                                    <span class="font-bold text-lg">${ex.title}</span>
-                                    <span class="text-sm bg-gray-100 px-3 py-1 rounded-full">دخول ←</span>
-                                </div>
-                            </a>`;
-                    });
-                } else { area.innerHTML = "<p class='text-center text-white opacity-80 font-bold'>لا توجد اختبارات متوفرة حالياً.</p>"; }
+                list.forEach(ex => {
+                    // الربط المباشر بدون مسارات معقدة لتجنب 404
+                    area.innerHTML += `
+                        <a href="${ex.link}" class="block p-6 bg-white rounded-3xl shadow-xl hover:scale-105 transition transform border-r-8 ${currentTheme === 'male' ? 'border-gray-500' : 'border-pink-500'}">
+                            <div class="flex justify-between items-center text-gray-800">
+                                <span class="font-bold text-lg">${ex.title}</span>
+                                <span class="text-sm bg-gray-100 px-3 py-1 rounded-full">دخول ←</span>
+                            </div>
+                        </a>`;
+                });
             }
         }
     </script>
 </body>
 </html>
+
 
