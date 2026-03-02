@@ -59,7 +59,6 @@
     <script>
         let currentTheme = "";
 
-        // أصلحت الروابط هنا لتستخدم المسار المباشر بدون تعقيدات
         const examsData = {
             "7": {
                 "male": [],
@@ -72,7 +71,7 @@
                 "male": [],
                 "female": [
                     { title: "كويز جغرافية (إناث)", link: "geography8.html" },
-                    { title: "ورقة عمل لغة عربية (إناث)", link: "ar8.html" }
+                    { title: "ورقة عمل لغة عربية (إناث)", link: "ar.html" }
                 ]
             },
             "9": {
@@ -97,7 +96,9 @@
             const section = document.getElementById('studentSection').value;
             if(!name || !section) { alert("يرجى إدخال الاسم والشعبة أولاً"); return; }
             const pass = prompt("الرجاء إدخال كلمة السر:");
-            if ((gender === 'male' && pass === "m20262025") || (gender === 'female' && pass === "20252026f")) {
+            const mPass = "m20262025";
+            const fPass = "20252026f";
+            if ((gender === 'male' && pass === mPass) || (gender === 'female' && pass === fPass)) {
                 localStorage.setItem('sName', name);
                 localStorage.setItem('sSection', section);
                 setTheme(gender, (gender === 'male' ? "قسم الذكور" : "قسم الإناث"));
@@ -121,9 +122,9 @@
                 const list = examsData[grade][currentTheme];
                 if (list && list.length > 0) {
                     list.forEach(ex => {
-                        // الرابط هنا تم تنظيفه تماماً من أي محارف مخفية
+                        // أضفت ?v=1 لإجبار المتصفح على تحميل النسخة الجديدة من الملف وتجاهل الخطأ القديم
                         area.innerHTML += `
-                            <a href="${ex.link}" class="block p-6 bg-white rounded-3xl shadow-xl hover:scale-105 transition transform border-r-8 ${currentTheme === 'male' ? 'border-gray-500' : 'border-pink-500'}">
+                            <a href="${ex.link}?v=1" class="block p-6 bg-white rounded-3xl shadow-xl hover:scale-105 transition transform border-r-8 ${currentTheme === 'male' ? 'border-gray-500' : 'border-pink-500'}">
                                 <div class="flex justify-between items-center text-gray-800">
                                     <span class="font-bold text-lg">${ex.title}</span>
                                     <span class="text-sm bg-gray-100 px-3 py-1 rounded-full">دخول ←</span>
@@ -136,3 +137,4 @@
     </script>
 </body>
 </html>
+
