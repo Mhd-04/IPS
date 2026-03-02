@@ -58,8 +58,9 @@
 
     <script>
         let currentTheme = "";
+        // تم تحديث الروابط لتكون مباشرة وكاملة لتجنب خطأ 404
+        const baseURL = "https://mhd-04.github.io/IPS/";
 
-        // البيانات مطابقة لملفاتك المرفوعة في الصور تماماً
         const examsData = {
             "7": { "male": [], "female": [{ title: "ورقة عمل لغة عربية", link: "arabic7.html" }, { title: "كويز تاريخ", link: "history7.html" }] },
             "8": { "male": [], "female": [{ title: "كويز جغرافية", link: "geography8.html" }, { title: "ورقة عمل لغة عربية", link: "ar8.html" }] },
@@ -73,9 +74,7 @@
             const section = document.getElementById('studentSection').value;
             if(!name || !section) { alert("يرجى إدخال البيانات"); return; }
             const pass = prompt("كلمة السر:");
-            const mPass = "m20262025";
-            const fPass = "20252026f";
-            if ((gender === 'male' && pass === mPass) || (gender === 'female' && pass === fPass)) {
+            if ((gender === 'male' && pass === "m20262025") || (gender === 'female' && pass === "20252026f")) {
                 setTheme(gender, (gender === 'male' ? "قسم الذكور" : "قسم الإناث"));
             } else { alert("كلمة السر خاطئة!"); }
         }
@@ -93,19 +92,17 @@
             area.innerHTML = "";
             if (grade && examsData[grade]) {
                 const list = examsData[grade][currentTheme];
-                if (list && list.length > 0) {
-                    list.forEach(ex => {
-                        // استخدام نظام Timestamp لإجبار المتصفح على تحديث الرابط وتجنب خطأ 404
-                        const freshLink = `${ex.link}?v=${new Date().getTime()}`;
-                        area.innerHTML += `
-                            <a href="${freshLink}" class="block p-6 bg-white rounded-3xl shadow-xl hover:scale-105 transition transform border-r-8 ${currentTheme === 'male' ? 'border-gray-500' : 'border-pink-500'}">
-                                <div class="flex justify-between items-center text-gray-800">
-                                    <span class="font-bold text-lg">${ex.title}</span>
-                                    <span class="text-sm bg-gray-100 px-3 py-1 rounded-full text-black">دخول ←</span>
-                                </div>
-                            </a>`;
-                    });
-                } else { area.innerHTML = "<p class='text-center text-white opacity-80 font-bold'>لا توجد اختبارات متوفرة.</p>"; }
+                list.forEach(ex => {
+                    // رابط كامل مع نظام منع التخزين المؤقت
+                    const fullLink = baseURL + ex.link + "?v=" + new Date().getTime();
+                    area.innerHTML += `
+                        <a href="${fullLink}" class="block p-6 bg-white rounded-3xl shadow-xl hover:scale-105 transition transform border-r-8 ${currentTheme === 'male' ? 'border-gray-500' : 'border-pink-500'}">
+                            <div class="flex justify-between items-center text-gray-800">
+                                <span class="font-bold text-lg">${ex.title}</span>
+                                <span class="text-sm bg-gray-100 px-3 py-1 rounded-full">دخول ←</span>
+                            </div>
+                        </a>`;
+                });
             }
         }
     </script>
