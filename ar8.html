@@ -3,142 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ثانوية ومعهد ابن خلدون الخاصة</title>
+    <title>اختبار اللغة العربية - الصف الثامن</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Tajawal', sans-serif; transition: background 0.6s ease, color 0.6s ease; }
-        .bg-silver { background: radial-gradient(circle, #e2e8f0, #94a3b8); color: #1e293b; }
-        .bg-male { background: linear-gradient(135deg, #4b5563, #1f2937) !important; color: white !important; }
-        .bg-female { background: linear-gradient(135deg, #db2777, #880808) !important; color: white !important; }
-        .glass-card { 
-            background: rgba(255, 255, 255, 0.2); 
-            backdrop-filter: blur(15px); 
-            border: 1px solid rgba(255, 255, 255, 0.3); 
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
-        }
+        body { font-family: 'Tajawal', sans-serif; background-color: #f3f4f6; }
+        .question-card { background: white; border-radius: 20px; padding: 25px; margin-bottom: 20px; shadow: 0 4px 6px rgba(0,0,0,0.05); border-right: 6px solid #db2777; }
+        input[type="text"] { width: 100%; padding: 10px; border: 2px solid #e5e7eb; border-radius: 12px; outline: none; transition: 0.3s; }
+        input[type="text"]:focus { border-color: #db2777; }
+        .header-bg { background: linear-gradient(135deg, #db2777, #880808); }
     </style>
 </head>
-<body id="mainBody" class="bg-silver min-h-screen pb-10">
+<body class="pb-10">
 
-    <div class="container mx-auto px-4 py-10">
-        <div class="text-center mb-8">
-            <img src="1000219663.jpg" class="w-32 h-32 mx-auto rounded-full border-4 border-white mb-4 bg-white shadow-xl">
-            <h1 id="mainTitle" class="text-4xl font-extrabold mb-2"> IPS </h1>
-            <p id="subTitle" class="text-gray-600 font-bold">بوابة الاختبارات والوظائف الإلكترونية</p>
-        </div>
+    <div class="header-bg text-white py-8 px-4 mb-8 shadow-lg text-center">
+        <h1 class="text-3xl font-bold">اختبار اللغة العربية - الصف الثامن</h1>
+        <p class="mt-2 opacity-90">ثانوية ومعهد ابن خلدون الخاصة</p>
+    </div>
 
-        <div class="max-w-md mx-auto glass-card p-8 rounded-[40px]">
-            <div class="space-y-4 text-gray-800">
-                <input type="text" id="studentName" placeholder="الاسم الكامل للطالب/ة" class="w-full p-4 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-pink-500 shadow-sm font-bold">
-                <input type="text" id="studentSection" placeholder="الشعبة" class="w-full p-4 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-pink-500 shadow-sm font-bold">
-                
-                <div class="grid grid-cols-2 gap-4 mt-6">
-                    <button onclick="checkAccess('male')" class="bg-gray-600 hover:bg-gray-700 text-white p-4 rounded-2xl font-bold shadow-lg transition transform active:scale-95">بوابة الذكور</button>
-                    <button onclick="checkAccess('female')" class="bg-pink-600 hover:bg-[#880808] text-white p-4 rounded-2xl font-bold shadow-lg transition transform active:scale-95">بوابة الإناث</button>
+    <div class="container mx-auto px-4 max-w-3xl">
+        <form id="examForm">
+            
+            <div class="question-card">
+                <h3 class="font-bold text-lg mb-4">1. استخرج مفعولاً به وحدد نوعه مما يلي:</h3>
+                <p class="bg-gray-50 p-3 rounded-lg mb-4 text-center italic">"وأنتَ تُعدُّ فطورك فكِّر بغيرك.. لا تنسَ قوتَ الحمام"</p>
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="text" placeholder="المفعول به" name="q1_ans">
+                    <input type="text" placeholder="نوعه" name="q1_type">
                 </div>
             </div>
 
-            <div id="gradeArea" class="hidden mt-8 text-gray-900">
-                <label class="block mb-2 text-center font-bold">اختر المرحلة الدراسية:</label>
-                <select id="gradeSelect" onchange="showExams()" class="w-full p-4 rounded-2xl bg-white border-2 border-pink-200 font-bold outline-none cursor-pointer">
-                    <option value="">--- الصف الدراسي ---</option>
-                    <option value="7">السابع</option>
-                    <option value="8">الثامن</option>
-                    <option value="9">التاسع</option>
-                    <option value="10">الأول الثانوي</option>
-                    <option value="11">الثاني الثانوي</option>
-                    <option value="12">الثالث الثانوي</option>
-                </select>
+            <div class="question-card">
+                <h3 class="font-bold text-lg mb-4">2. ما معنى الكلمات التالية؟</h3>
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <span class="w-20">العِنان:</span>
+                        <input type="text" name="q2_1">
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="w-20">تخوض:</span>
+                        <input type="text" name="q2_2">
+                    </div>
+                </div>
             </div>
-        </div>
 
-        <div id="examsArea" class="mt-10 max-w-md mx-auto space-y-6"></div>
+            <div class="question-card">
+                <h3 class="font-bold text-lg mb-2">3. علل زيادة الألف في كلمة (ركلوا).</h3>
+                <input type="text" name="q3">
+            </div>
+
+            <div class="question-card">
+                <h3 class="font-bold text-lg mb-4">4. استخرج مصدراً من البيت التالي وحدد نوعه:</h3>
+                <p class="bg-gray-50 p-3 rounded-lg mb-4 text-center italic">"أما من أرسلت قلبي عاشقاً.. يرحم الفجع ويهوى الحثا"</p>
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="text" placeholder="المصدر" name="q4_ans">
+                    <input type="text" placeholder="نوعه" name="q4_type">
+                </div>
+            </div>
+
+            <div class="question-card">
+                <h3 class="font-bold text-lg mb-2">5. اكتب بيتين من قصيدة (أنت وأنا).</h3>
+                <textarea class="w-full p-4 border-2 border-gray-200 rounded-xl h-32 outline-none focus:border-pink-600" name="q5"></textarea>
+            </div>
+
+            <div class="question-card">
+                <h3 class="font-bold text-lg mb-4">6. أعرب ما تحته خط من البيت التالي:</h3>
+                <p class="bg-gray-50 p-3 rounded-lg mb-4 text-center">"في دروب الحب <u class="text-pink-600 font-bold">عشنا</u> شذى.. هل غرسنا <u class="text-pink-600 font-bold">الدرب</u> إلا سورا"</p>
+                <div class="space-y-4">
+                    <input type="text" placeholder="إعراب (عشنا)" name="q6_1">
+                    <input type="text" placeholder="إعراب (الدرب)" name="q6_2">
+                </div>
+            </div>
+
+            <div class="question-card">
+                <h3 class="font-bold text-lg mb-4">7. صنف الأفعال الآتية إلى (صحيحة ومعتلة):</h3>
+                <p class="text-center mb-4 text-gray-600">(تنسى - تُحرر - تعود - يجد)</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input type="text" placeholder="أفعال صحيحة" name="q7_correct">
+                    <input type="text" placeholder="أفعال معتلة" name="q7_weak">
+                </div>
+            </div>
+
+            <div class="question-card">
+                <h3 class="font-bold text-lg mb-4">8. ما مصدر الأفعال الرباعية التالية وما وزن المصدر؟</h3>
+                <div class="grid grid-cols-2 gap-4 text-center font-bold bg-gray-100 p-2 rounded-t-lg">
+                    <div>الفعل</div>
+                    <div>المصدر ووزنه</div>
+                </div>
+                <div class="grid grid-cols-2 gap-4 border p-4 rounded-b-lg space-y-2">
+                    <div class="self-center">أعلن</div> <input type="text" name="q8_1">
+                    <div class="self-center">زلزلت</div> <input type="text" name="q8_2">
+                    <div class="self-center">شارك</div> <input type="text" name="q8_3">
+                </div>
+            </div>
+
+            <div class="flex gap-4">
+                <button type="button" onclick="submitExam()" class="flex-1 bg-pink-600 hover:bg-pink-700 text-white font-bold py-4 rounded-2xl shadow-lg transition transform active:scale-95">إرسال الإجابات</button>
+                <a href="index.html" class="bg-gray-500 hover:bg-gray-600 text-white px-8 py-4 rounded-2xl font-bold transition">خروج</a>
+            </div>
+
+        </form>
     </div>
 
     <script>
-        let currentTheme = "";
-
-        const examsData = {
-            "7": {
-                "male": [],
-                "female": [
-                    { title: "ورقة عمل لغة عربية (إناث)", link: "arabic7.html" },
-                    { title: "كويز تاريخ - سابع", link: "history7.html" }
-                ]
-            },
-            "8": {
-                "male": [],
-                "female": [
-                    { title: "كويز جغرافية (إناث)", link: "geography8.html" },
-                    { title: "ورقة عمل لغة عربية (إناث)", link: "ar-8.html" }
-                ]
-            },
-            "9": {
-                "male": [{ title: "كويز فيزياء - تاسع", link: "physics9.html" }],
-                "female": [{ title: "كويز فيزياء - تاسع", link: "physics9.html" }]
-            },
-            "10": {
-                "male": [{ title: "كويز رياضيات - الوحدة 3", link: "math10.html" }],
-                "female": [
-                    { title: "كويز رياضيات - الوحدة 3", link: "math10.html" },
-                    { title: "اختبار قصيدة ربوع", link: "arabic9_r.html" }
-                ]
-            },
-            "12": {
-                "male": [
-                    { title: "كويز تربية إسلامية", link: "islam12.html" },
-                    { title: "كويز ديانة", link: "religion12.html" }
-                ],
-                "female": [
-                    { title: "كويز تربية إسلامية", link: "islam12.html" },
-                    { title: "كويز ديانة", link: "religion12.html" }
-                ]
-            }
-        };
-
-        function checkAccess(gender) {
-            const name = document.getElementById('studentName').value;
-            const section = document.getElementById('studentSection').value;
-            if(!name || !section) { alert("يرجى إدخال الاسم والشعبة أولاً"); return; }
-            const pass = prompt("الرجاء إدخال كلمة السر:");
-            const mPass = "m20262025";
-            const fPass = "20252026f";
-            if ((gender === 'male' && pass === mPass) || (gender === 'female' && pass === fPass)) {
-                localStorage.setItem('sName', name);
-                localStorage.setItem('sSection', section);
-                setTheme(gender, (gender === 'male' ? "قسم الذكور" : "قسم الإناث"));
-            } else { alert("كلمة السر خاطئة!"); }
-        }
-
-        function setTheme(gender, title) {
-            currentTheme = gender;
-            const body = document.getElementById('mainBody');
-            body.className = (gender === 'male') ? "bg-male min-h-screen pb-10" : "bg-female min-h-screen pb-10";
-            document.getElementById('mainTitle').innerText = title;
-            document.getElementById('gradeArea').classList.remove('hidden');
-            document.getElementById('gradeSelect').value = "";
-            document.getElementById('examsArea').innerHTML = "";
-        }
-
-        function showExams() {
-            const grade = document.getElementById('gradeSelect').value;
-            const area = document.getElementById('examsArea');
-            area.innerHTML = "";
-            if (grade && examsData[grade]) {
-                const list = examsData[grade][currentTheme];
-                if (list && list.length > 0) {
-                    list.forEach(ex => {
-                        area.innerHTML += `
-                            <a href="${ex.link}" class="block p-6 bg-white rounded-3xl shadow-xl hover:scale-105 transition transform border-r-8 ${currentTheme === 'male' ? 'border-gray-500' : 'border-pink-500'}">
-                                <div class="flex justify-between items-center text-gray-800">
-                                    <span class="font-bold text-lg">${ex.title}</span>
-                                    <span class="text-sm bg-gray-100 px-3 py-1 rounded-full">دخول ←</span>
-                                </div>
-                            </a>`;
-                    });
-                } else { area.innerHTML = "<p class='text-center text-white opacity-80 font-bold'>لا توجد اختبارات متوفرة حالياً لهذا القسم.</p>"; }
-            }
+        function submitExam() {
+            const name = localStorage.getItem('sName') || "طالبنا العزيز";
+            alert("شكراً لك " + name + "، تم استلام إجاباتك بنجاح وسنقوم بتصحيحها قريباً.");
+            window.location.href = "index.html";
         }
     </script>
 </body>
