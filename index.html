@@ -80,7 +80,7 @@
             const pass = prompt("كلمة السر:");
             if ((gender === 'male' && pass === "m20262025") || (gender === 'female' && pass === "20252026f")) {
                 
-                // حفظ البيانات في الذاكرة لتعمل في الصفحات الأخرى
+                // حفظ البيانات بشكل صحيح لتعمل في الصفحات الأخرى
                 localStorage.setItem('studentName', nameInput);
                 localStorage.setItem('studentSection', sectionInput);
                 
@@ -116,9 +116,9 @@
             }
         }
         
-        // تم تصحيح الخطأ هنا: إزالة localStorage.clear لضمان بقاء بيانات الطالب
+        // تم تصحيح الخطأ هنا: لم نعد نمسح الذاكرة عند التحميل
         window.onload = function() {
-            // لا يتم مسح البيانات هنا لضمان وصولها لصفحة الاختبار
+            console.log("IPS System Ready");
         };
     </script>
 </body>
