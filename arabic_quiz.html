@@ -2,110 +2,76 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اختبار قصيدة ربوع | IPS</title>
+    <title>اختبار قصيدة ربوع - اللغة العربية</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Tajawal', sans-serif; background-color: #f8fafc; margin: 0; padding: 0; }
-        .header-gradient { background: linear-gradient(135deg, #1e293b, #334155); color: white; }
-        .female-theme { background: linear-gradient(135deg, #880808, #db2777); color: white; }
-        
-        .question-card { 
-            background: white !important; padding: 20px; margin-bottom: 20px; 
-            border-radius: 15px; border: 2px solid #e2e8f0; 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-            page-break-inside: avoid;
-        }
-
-        .correct { border: 4px solid #10b981 !important; background-color: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-        .wrong { border: 4px solid #ef4444 !important; background-color: #fef2f2 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+        body { font-family: 'Cairo', sans-serif; }
+        .correct { border-color: #10b981 !important; background-color: #f0fdf4; }
+        .wrong { border-color: #ef4444 !important; background-color: #fef2f2; }
         @media print {
-            .no-print { display: none !important; }
-            body { background: white; }
-            .question-card { box-shadow: none; border: 1px solid #cbd5e1; }
+            .no-print { display: none; }
+            .correct { border: 2px solid #10b981 !important; }
         }
     </style>
 </head>
-<body class="pb-24">
+<body class="bg-slate-50 p-4 md:p-8">
 
-    <div id="quizArea">
-        <div id="headerBox" class="p-8 text-center shadow-lg mb-8 female-theme">
-            <img src="1000219663.jpg" class="w-24 h-24 mx-auto rounded-full border-4 border-white bg-white mb-4 shadow-md">
-            <h1 class="text-3xl font-black italic">اختبار لغة عربية: قصيدة "ربوع"</h1>
-            <div class="flex justify-center gap-6 mt-4 text-lg font-bold bg-black/20 p-2 rounded-lg max-w-md mx-auto">
-                <div>الاسم: <span id="sn"></span></div>
-                <div>الشعبة: <span id="sc"></span></div>
-            </div>
-            <div id="scoreDisplay" class="text-2xl font-black mt-4 text-yellow-300"></div>
-        </div>
-
-        <div class="container mx-auto px-4 max-w-4xl">
-            <div class="bg-blue-50 p-6 rounded-xl mb-8 border-r-8 border-blue-500 text-lg leading-relaxed shadow-sm">
-                <p class="font-bold text-blue-900 mb-2">من أبيات القصيدة:</p>
-                <p>تَهيَّمَني حَنيني واشتياقي ... وهاجتني مناجاةُ الرِّفاقِ</p>
-                <p>وكنتُ على البعادِ حليفَ غمٍّ ... كئيبَ الصَّدرِ مشدودَ الوثاقِ</p>
-            </div>
-
-            <div id="questionsContainer"></div>
-        </div>
+<div class="max-auto max-w-4xl bg-white shadow-2xl rounded-3xl overflow-hidden">
+    <div class="bg-pink-600 p-6 text-white text-center">
+        <h1 class="text-3xl font-bold">اختبار قصيدة "ربوع"</h1>
+        <p class="mt-2 opacity-90" id="scoreDisplay">اختر الاجابة الصحيحة  ثم اضغط على "عرض النتيجة"</p>
     </div>
 
-    <div class="no-print fixed bottom-0 left-0 right-0 p-4 bg-white/90 border-t z-50 flex gap-4">
-        <button id="gradeBtn" onclick="gradeQuiz()" class="flex-1 bg-pink-700 text-white py-5 rounded-2xl font-black text-xl shadow-xl active:scale-95 transition-all">
-            تصحيح الاختبار وعرض النتيجة
-        </button>
-        <button id="printBtn" onclick="window.print()" class="hidden flex-1 bg-slate-800 text-white py-5 rounded-2xl font-black text-xl shadow-xl active:scale-95 transition-all">
-            حفظ النتيجة بصيغة PDF
-        </button>
+    <div id="quizContainer" class="p-6 space-y-8">
+        </div>
+
+    <div class="p-6 border-t flex gap-4 justify-center">
+        <button id="gradeBtn" onclick="gradeQuiz()" class="bg-pink-600 hover:bg-pink-700 text-white px-8 py-3 rounded-xl font-bold transition-all shadow-lg active:scale-95">عرض النتيجة</button>
+        <button id="printBtn" onclick="window.print()" class="hidden bg-slate-800 hover:bg-slate-900 text-white px-8 py-3 rounded-xl font-bold transition-all shadow-lg">طباعة النتيجة (PDF)</button>
     </div>
+</div>
 
 <script>
-    const sName = localStorage.getItem('sName') || "طالبة";
-    const sSection = localStorage.getItem('sSection') || "تاسع";
-    document.getElementById('sn').innerText = sName;
-    document.getElementById('sc').innerText = sSection;
-
     const questions = [
-        { q: "الحالة الشعورية التي سيطرت على الشاعر في البيتين الأول والثاني هي:", opts: ["الفرح والسّرور بلقاء الأحبة", "الفخر والاعتزاز بالماضي", "الحزن والشّوق وألم الاغتراب", "الغضب والسّخط على الأعداء"], ans: 2 },
+        { q: "الحالة الشعورية التي سيطرت على الشاعر في البيتين هي:", opts: ["الفرح والسّرور بلقاء الأحبة", "الفخر والاعتزاز بالماضي", "الحزن والشّوق وألم الاغتراب", "الغضب والسّخط على الأعداء"], ans: 2 },
         { q: "المقصود بقول الشاعر (فأنْهَلوني بكأسٍ مِن محبَّتِهم دِهاقِ):", opts: ["أنّ أصدقاءه قدّموا له الماء ليرتوي", "أنّ لقاء الأصدقاء ومحبّتهم أعادت له الحياة والأمل", "أنّهم أقاموا له احتفالاً كبيراً", "أنّه كان عطشاً جداً في سفره"], ans: 1 },
         { q: "العبارة التي تدلّ على حبّ الشّاعر لوطنه في السّرّاء والضّرّاء هي:", opts: ["أحبّك تنشرين الجود", "أحبّك في النّعيم وفي الرّزايا", "ديار الخلد كنت لنا شموخاً", "ويبقى للعروبة منتداها"], ans: 1 },
         { q: "يشير الشاعر في البيت التاسع (وكم سُمتِ العدوَّ الفظَّ خَسْفاً) إلى:", opts: ["كثرة المفاوضات مع العدو", "تجاهل العدوّ وعدم الاكتراث به", "انتصار الوطن وإذلاله للمستعمر الظّالم", "معاناة الوطن من ظلم الأعداء"], ans: 2 },
-        { q: "القيمة البارزة في البيت الحادي عشر (ويبقى للعروبةِ مُنتَداها...):", opts: ["تقدير العلم والعلماء", "الاعتزاز بالانتماء القومي", "الحنين إلى الماضي البعيد", "الإعجاب بجمال الطّبيعة"], ans: 1 },
-        { q: "الفكرة الفرعيّة لبيت (أُحبُّكِ تَنشُرينَ الجُودَ...):", opts: ["تضحيات الوطن في المعارك", "عطاء الوطن وكرمه الذي يعمّ الآفاق", "جمال طبيعة الوطن وخلودها", "شوق الشّاعر للعودة إلى الوطن"], ans: 1 },
-        { q: "نوع المشتقّ في كلمة (مشدود):", opts: ["اسم فاعل", "صفة مشبّهة", "اسم مفعول", "مبالغة اسم فاعل"], ans: 2 },
+        { q: "القيمة البارزة في البيت (ويبقى للعروبةِ مُنتَداها...):", opts: ["تقدير العلم والعلماء", "الاعتزاز بالانتماء القومي", "الحنين إلى الماضي البعيد", "الإعجاب بجمال الطّبيعة"], ans: 1 },
+        { q: "الفكرة الفرعيّة التي يتناولها البيت (أُحبُّكِ تَنشُرينَ الجُودَ...):", opts: ["تضحيات الوطن في المعارك", "عطاء الوطن وكرمه الذي يعمّ الآفاق", "جمال طبيعة الوطن وخلودها", "شوق الشّاعر للعودة إلى الوطن"], ans: 1 },
+        { q: "نوع المشتقّ في كلمة (مشدود) الواردة في البيت الثّاني:", opts: ["اسم فاعل", "صفة مشبّهة", "اسم مفعول", "مبالغة اسم فاعل"], ans: 2 },
         { q: "الوزن الصّرفي للمصدر (اشتياق) ونوع فعله:", opts: ["افتعال (فعل خماسي)", "انفعال (فعل خماسي)", "إفعال (فعل رباعي)", "استفعال (فعل سداسي)"], ans: 0 },
-        { q: "كلمة (الفظّ) في قوله (العدوّ الفظّ) مشتق نوعه:", opts: ["اسم فاعل", "صفة مشبّهة باسم الفاعل", "اسم تفضيل", "اسم آلة"], ans: 1 },
+        { q: "كلمة (الفظّ) في قوله (العدوّ الفظّ) مشتقّ نوعه:", opts: ["اسم فاعل", "صفة مشبّهة باسم الفاعل", "اسم تفضيل", "اسم آلة"], ans: 1 },
         { q: "إعراب جملة (قد بلَغَتْ) في البيت الثامن:", opts: ["في محل نصب حال", "في محل جر مضاف إليه", "في محل رفع صفة", "استئنافية لا محل لها من الإعراب"], ans: 0 },
         { q: "إعراب جملة (أفاضت) في البيت العاشر:", opts: ["في محل رفع خبر", "في محل نصب حال", "صلة الموصول لا محل لها من الإعراب", "في محل جر صفة"], ans: 2 },
-        { q: "إعراب جملة (هاجتني) في البيت الأول:", opts: ["في محل رفع خبر", "في محل نصب حال", "معطوفة على جملة ابتدائية لا محل لها", "في محل جرّ بالإضافة"], ans: 2 },
-        { q: "المحسّن البديعي بين كلمتي (النّعيم) و (الرّزايا):", opts: ["طباق إيجاب", "طباق سلب", "جناس ناقص", "مقابلة"], ans: 0 },
-        { q: "مصدر الموسيقا الداخليّة في البيت الأوّل (اشتياقي / الرِّفاقِ):", opts: ["الجناس", "التّصريع", "الطّباق", "أ+ب"], ans: 1 },
+        { q: "إعراب جملة (هاجتني) في البيت الأول:", opts: ["في محل رفع خبر", "في محل نصب حال", "معطوفة على جملة ابتدائية لا محل لها من الإعراب", "في محل جرّ بالإضافة"], ans: 2 },
+        { q: "المحصّن البديعي المعنوي بين كلمتي (النّعيم) و (الرّزايا):", opts: ["طباق إيجاب", "طباق سلب", "جناس ناقص", "مقابلة"], ans: 0 },
+        { q: "مصدر الموسيقا الداخليّة البارز في البيت الأوّل (اشتياقي / الرِّفاقِ):", opts: ["الجناس", "التّصريع", "الطّباق", "أ+ب"], ans: 1 },
         { q: "إعراب كلمة (حليفَ) في البيت الثاني:", opts: ["خبر (كان) منصوب", "مفعول به منصوب", "حال منصوبة", "تمييز منصوب"], ans: 0 },
         { q: "إعراب كلمة (ديارَ) في البيت الخامس:", opts: ["مبتدأ مرفوع", "مفعول به لفعل محذوف", "منادى مضاف منصوب", "بدل منصوب"], ans: 2 },
         { q: "إعراب كلمة (الفظَّ) في البيت التاسع:", opts: ["مفعول به ثانٍ منصوب", "صفة (نعت) منصوبة", "حال منصوبة", "مضاف إليه مجرور"], ans: 1 },
         { q: "إعراب كلمة (أبيَّ) في البيت الحادي عشر:", opts: ["حال منصوبة", "خبر (يبقى) منصوب", "مفعول به منصوب", "صفة منصوبة"], ans: 0 },
-        { q: "نوع الأساليب الخبرية في (ظمئت إلى الحياة) و (قد بلغت بنا الرّوح التّراقي):", opts: ["الأول إنكاري والثّاني طلبي", "الأول ابتدائي والثاني ابتدائي", "كلاهما طلبي", "الأول ابتدائي والثّاني طلبي"], ans: 3 },
-        { q: "التقطيع العروضي الصحيح للبيت الثامن (البحر الوافر):", opts: ["أذاكرةٌ /عهوداً من / كفاحٍ وقد بلغت ب/ نا الرّوح الت /تراقي", "أذاكرةٌ /عهوداً من/ كفاحٍ وقد بلغت/ بنا الرّوح الت/ تراقي", "أذا/ كرةٌ عهو/ داً من / كفاحٍ وقد بلغ/ ت بنا الرّو/ح الت/ تراقي", "أذاكر/ ةٌ عهو/داً من / كفاحٍ وقد بل/ غت بنا / الرّوح/ التّراقي"], ans: 0 }
+        { q: "في قول الشّاعر (ظمئت إلى الحياة) و (قد بلغت بنا الرّوح التّراقي) أسلوبان خبريّان:", opts: ["الأول إنكاري والثّاني طلبي", "الأول ابتدائي والثاني ابتدائي", "كلاهما طلبي", "الأول ابتدائي والثّاني طلبي"], ans: 3 },
+        { q: "التّقطيع العروضي الصحيح للبيت الثامن من البحر الوافر هو الخيار:", opts: ["الخيار (أ)", "الخيار (ب)", "الخيار (ج)", "الخيار (د)"], ans: 1 }
     ];
 
     function init() {
-        const container = document.getElementById('questionsContainer');
-        questions.forEach((item, i) => {
-            container.innerHTML += `
-                <div id="qCard${i}" class="question-card">
-                    <h3 class="text-xl font-bold mb-4 text-slate-800">${i + 1}) ${item.q}</h3>
-                    <div class="grid grid-cols-1 gap-3">
-                        ${item.opts.map((opt, j) => `
-                            <label class="flex items-center p-4 border-2 border-slate-100 rounded-xl cursor-pointer hover:bg-slate-50 transition-colors">
-                                <input type="radio" name="q${i}" value="${j}" class="w-5 h-5 ml-3 accent-pink-600">
-                                <span class="text-lg">${opt}</span>
-                            </label>
-                        `).join('')}
-                    </div>
-                </div>`;
-        });
+        const container = document.getElementById('quizContainer');
+        container.innerHTML = questions.map((item, i) => `
+            <div id="qCard${i}" class="p-5 border-2 border-slate-100 rounded-2xl transition-all">
+                <h3 class="text-xl font-bold mb-4 text-slate-800">${i + 1}) ${item.q}</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    ${item.opts.map((opt, j) => `
+                        <label class="flex items-center p-4 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-colors">
+                            <input type="radio" name="q${i}" value="${j}" class="w-5 h-5 ml-3 accent-pink-600">
+                            <span class="text-lg">${opt}</span>
+                        </label>
+                    `).join('')}
+                </div>
+                <div id="ansKey${i}" class="hidden mt-3 text-sm font-bold text-emerald-700">الإجابة الصحيحة: ${item.opts[item.ans]}</div>
+            </div>
+        `).join('');
     }
 
     function gradeQuiz() {
@@ -113,17 +79,26 @@
         questions.forEach((item, i) => {
             const selected = document.querySelector(`input[name="q${i}"]:checked`);
             const card = document.getElementById(`qCard${i}`);
+            const ansKey = document.getElementById(`ansKey${i}`);
             
+            // إظهار سلم التصحيح (الإجابات الصحيحة)
+            ansKey.classList.remove('hidden');
+
             if (selected && parseInt(selected.value) === item.ans) {
                 score++;
                 card.classList.add('correct');
             } else {
                 card.classList.add('wrong');
             }
+            // تعطيل الاختيارات بعد الحل
+            const inputs = document.getElementsByName(`q${i}`);
+            inputs.forEach(input => input.disabled = true);
         });
 
         const total = questions.length;
-        document.getElementById('scoreDisplay').innerText = `النتيجة النهائية: ${score} من ${total}`;
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        scoreDisplay.innerHTML = `انتهى الاختبار! نتيجتك: <span class="text-yellow-300 font-black">${score} من ${total}</span>`;
+        
         document.getElementById('gradeBtn').classList.add('hidden');
         document.getElementById('printBtn').classList.remove('hidden');
         window.scrollTo({ top: 0, behavior: 'smooth' });
