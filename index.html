@@ -69,20 +69,25 @@
         };
 
         function checkAccess(gender) {
-            const name = document.getElementById('studentName').value;
-            const section = document.getElementById('studentSection').value;
+            const nameInput = document.getElementById('studentName').value;
+            const sectionInput = document.getElementById('studentSection').value;
             
-            if(!name || !section) { alert("يرجى إدخال البيانات"); return; }
+            if(!nameInput || !sectionInput) { 
+                alert("يرجى إدخال الاسم والشعبة أولاً"); 
+                return; 
+            }
             
             const pass = prompt("كلمة السر:");
             if ((gender === 'male' && pass === "m20262025") || (gender === 'female' && pass === "20252026f")) {
                 
-                // التعديل الجوهري: حفظ البيانات لكي تراها صفحات الاختبار
-                localStorage.setItem('studentName', name);
-                localStorage.setItem('studentSection', section);
+                // حفظ البيانات في الذاكرة لتعمل في الصفحات الأخرى
+                localStorage.setItem('studentName', nameInput);
+                localStorage.setItem('studentSection', sectionInput);
                 
                 setTheme(gender, (gender === 'male' ? "قسم الذكور" : "قسم الإناث"));
-            } else { alert("كلمة السر خاطئة!"); }
+            } else { 
+                alert("كلمة السر خاطئة!"); 
+            }
         }
 
         function setTheme(gender, title) {
@@ -110,6 +115,11 @@
                 });
             }
         }
+        
+        // مسح الذاكرة القديمة عند فتح الصفحة لأول مرة لضمان بيانات جديدة
+        window.onload = function() {
+            localStorage.clear();
+        };
     </script>
 </body>
 </html>
