@@ -32,19 +32,19 @@
         </div>
     </div>
 
-    <div class="p-5 bg-slate-50 border-b flex flex-col md:flex-row justify-between gap-4 shadow-inner no-print font-bold">
-        <div class="flex items-center">
+    <div class="p-5 bg-slate-50 border-b flex flex-col md:flex-row justify-between gap-4 shadow-inner no-print font-bold text-center md:text-right">
+        <div class="flex items-center justify-center md:justify-start">
             <span class="text-slate-600 ml-2">اسم الطالب:</span> 
             <span id="displayName" class="text-pink-700">جاري التحميل...</span>
         </div>
-        <div class="flex items-center border-r-2 pr-4 border-slate-200">
+        <div class="flex items-center justify-center md:justify-start border-r-0 md:border-r-2 pr-0 md:pr-4 border-slate-200">
             <span class="text-slate-600 ml-2">الشعبة / الفئة:</span> 
             <span id="displaySection" class="text-pink-700">--</span>
         </div>
     </div>
 
     <div class="p-6 bg-white border-b relative">
-        <p class="text-pink-600 font-bold mb-4 text-md flex items-center gap-2">
+        <p class="text-pink-600 font-bold mb-4 text-md flex items-center gap-2 justify-center md:justify-start">
             <span class="w-2 h-2 bg-pink-600 rounded-full"></span> ورد في قصيدة ربوع:
         </p>
         <div class="poem-box bg-slate-50 p-6 rounded-xl shadow-sm border border-slate-100 italic text-center">
@@ -70,7 +70,6 @@
 </div>
 
 <script>
-    // 1. تعريف الأسئلة (مرة واحدة فقط)
     const questions = [
         { q: "الحالة الشعورية التي سيطرت على الشاعر في البيتين هي:", opts: ["أ) الفرح والسّرور بلقاء الأحبة.", "ب) الفخر والاعتزاز بالماضي.", "ج) الحزن والشّوق وألم الاغتراب.", "د) الغضب والسّخط على الأعداء."], ans: 2 },
         { q: "المقصود بقول الشاعر (فأنْهَلوني بكأسٍ مِن محبَّتِهم دِهاقِ) في البيت (ظمئت إلى الحياة فأنهلوني.. بكأسٍ من محبّتهم دهاقِ):", opts: ["أ) أنّ أصدقاءه قدّموا له الماء ليرتوي.", "ب) أنّ لقاء الأصدقاء ومحبّتهم أعادت له الحياة والأمل.", "ج) أنّهم أقاموا له احتفالاً كبيراً.", "د) أنّه كان عطشاً جداً في سفره."], ans: 1 },
@@ -95,15 +94,13 @@
                                         ], ans: 1 }
     ];
 
-    // 2. وظيفة التحميل والبدء
     window.onload = function() {
-        // جلب البيانات بالمسميات التي وضعتها في index.html
-        document.getElementById('displayName').innerText = localStorage.getItem('sName') || "لم يتم إدخال الاسم";
-        document.getElementById('displaySection').innerText = localStorage.getItem('sSection') || "--";
+        // تم تعديل الأسماء هنا لتطابق الصفحة الرئيسية
+        document.getElementById('displayName').innerText = localStorage.getItem('studentName') || "لم يتم إدخال الاسم";
+        document.getElementById('displaySection').innerText = localStorage.getItem('studentSection') || "--";
         init();
     };
 
-    // 3. بناء واجهة الأسئلة
     function init() {
         const container = document.getElementById('quizContainer');
         container.innerHTML = questions.map((item, i) => `
@@ -121,7 +118,6 @@
         `).join('');
     }
 
-    // 4. دالة التصحيح
     function gradeQuiz() {
         let score = 0;
         questions.forEach((item, i) => {
