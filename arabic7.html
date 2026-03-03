@@ -3,103 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ورقة عمل اللغة العربية - IPS</title>
+    <title>ورقة عمل اللغة العربية - مدرسة ابن خلدون</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Tajawal', sans-serif; background-color: #fff1f2; margin: 0; padding: 0; }
-        .header-bg { background: linear-gradient(135deg, #880808, #db2777); }
+        body { font-family: 'Tajawal', sans-serif; background-color: #f8fafc; margin: 0; padding: 0; }
+        .female-theme { background: linear-gradient(135deg, #880808, #db2777); color: white; }
+        .male-theme { background: linear-gradient(135deg, #4b5563, #1f2937); color: white; }
         
+        /* نظام العامودين للأسئلة */
+        .qs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        @media (max-width: 768px) { .qs-grid { grid-template-columns: 1fr; } }
+
         .question-card { 
             background: white; 
             padding: 20px; 
-            margin-bottom: 20px; 
-            border-right: 10px solid #db2777; 
-            border-radius: 12px;
+            border-right: 8px solid #db2777; 
+            border-radius: 15px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            page-break-inside: avoid; /* يمنع انقسام السؤال بين صفحتين */
+            page-break-inside: avoid;
         }
 
         .answer-box { 
             width: 100%; 
-            min-height: 100px; 
-            margin-top: 15px;
-            padding: 15px; 
-            border: 2px solid #fbcfe8; 
-            border-radius: 10px; 
-            font-size: 1.2rem;
-            line-height: 1.8;
-            color: #333;
+            min-height: 80px; 
+            margin-top: 12px;
+            padding: 10px; 
+            border: 2px solid #fce7f3; 
+            border-radius: 8px; 
+            font-size: 1.1rem;
             outline: none;
             background: #fff;
         }
 
         u { text-decoration: none; border-bottom: 3px solid #880808; font-weight: bold; }
 
-        /* تنسيقات الطباعة لضمان جودة الـ PDF */
         @media print {
-            body { background-color: white; }
             .no-print { display: none !important; }
-            .header-bg { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-            .question-card { border-right-width: 15px; box-shadow: none; border: 1px solid #eee; border-right: 10px solid #db2777; }
-            .answer-box { border: 1px solid #ddd; }
+            body { background: white; }
+            .question-card { border: 1px solid #eee; border-right: 8px solid #db2777; shadow: none; }
         }
     </style>
 </head>
-<body>
+<body class="pb-24">
 
-    <div id="printArea" class="max-w-4xl mx-auto bg-white shadow-xl min-h-screen">
-        <div class="header-bg p-8 text-white text-center shadow-lg mb-6">
-            <img src="1000219663.jpg" class="w-24 h-24 mx-auto rounded-full border-4 border-white mb-4 bg-white">
+    <div id="printArea" class="max-w-5xl mx-auto bg-white shadow-2xl min-h-screen rounded-b-3xl overflow-hidden">
+        <div id="headerBox" class="p-8 text-center shadow-lg mb-6">
+            <img src="1000219663.jpg" class="w-24 h-24 mx-auto rounded-full border-4 border-white bg-white mb-4 shadow-md" onerror="this.src='https://via.placeholder.com/100'">
             <h1 class="text-3xl font-black italic">ورقة عمل مادة اللغة العربية</h1>
-            <p id="studentData" class="text-xl font-bold mt-2"></p>
+            
+            <div class="flex justify-center gap-6 mt-4 text-lg font-bold bg-black/20 p-3 rounded-xl max-w-2xl mx-auto">
+                <div>الاسم: <span id="sn" class="underline">جاري التحميل...</span></div>
+                <div>الشعبة: <span id="sc" class="underline">--</span></div>
+            </div>
         </div>
 
-        <div id="qsContainer" class="p-6"></div>
+        <div id="qsContainer" class="p-6 qs-grid"></div>
 
         <div class="p-6">
             <div class="question-card bg-pink-50 border-2 border-dashed border-pink-300">
-                <h3 class="text-xl font-bold text-pink-900 mb-4 border-b border-pink-200 pb-2">ركن التقييم:</h3>
-                <div class="flex justify-between items-center px-4">
-                    <div class="text-lg">الدرجة: <span class="text-3xl text-[#880808] font-black">/ 100</span></div>
-                    <div class="text-lg">توقيع المدرس: .....................</div>
+                <div class="flex justify-between items-center px-4 font-black text-pink-900">
+                    <div class="text-xl">الدرجة النهائية: / 100</div>
+                    <div class="text-xl">توقيع المدرس: .....................</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="no-print fixed bottom-10 left-0 right-0 text-center">
-        <button onclick="window.print()" class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white px-16 py-6 rounded-full font-black text-2xl shadow-2xl hover:scale-105 transition-all">
-            حفظ بصيغة PDF
+    <div class="no-print fixed bottom-6 left-0 right-0 flex justify-center">
+        <button onclick="window.print()" class="bg-pink-700 text-white px-12 py-5 rounded-2xl font-black text-xl shadow-2xl hover:bg-pink-800 transition-all active:scale-95">
+             حفظ ورقة العمل بصيغة PDF
         </button>
     </div>
 
 <script>
-    const name = localStorage.getItem('sName') || "الاء فرحان الغفري";
-    const sec = localStorage.getItem('sSection') || "G";
-    document.getElementById('studentData').innerText = `الطالبة: ${name} | الشعبة: ${sec}`;
-
+    // الأسئلة
     const questions = [
         "اكتب بيتين من قصيدة (جزيرة أرواد)",
         "ما معنى الكلمات التالية: (مناكب - جذوة)؟",
         "اشرح البيت التالي شرحاً وافياً: فأهلها شعلة لم تخب جذوتها ★★★ خاضوا الحياة وباتوا في أعاليها",
         "ما وزن الكلمات التالية: (مكتحل - عواصف)؟",
-        "أعرب ما تحته خط إعراباً كاملاً: (<u>ترى</u> <u>قلاعاً</u> أقيمت في <u>مناكبها</u> ★★★ <u>تحكي</u> الحضارة مذ <u>قامت</u> وتبديها)",
+        "أعرب ما تحته خط: (<u>ترى</u> <u>قلاعاً</u> أقيمت في <u>مناكبها</u> ★★★ <u>تحكي</u> الحضارة مذ <u>قامت</u> وتبديها)",
         "استخرج مفعول به واحدد نوعه من جملة: سقى الله عند اللاذقية شاطئاً ★★★ مراحاً لأحلامي ومغنى وملعبا",
         "حول المفعول به المفرد إلى مثنى: (رأى الفلاح عصفوراً على الشجرة)",
         "ما أنواع الأفعال من حيث الصحة والاعتلال: (وقف - يستغفر)؟",
         "علل كتابة الهمزة على صورتها في الكلمات التالية: (تشاؤون - ضياء)"
     ];
 
-    const container = document.getElementById('qsContainer');
-    questions.forEach((q, i) => {
-        container.innerHTML += `
-            <div class="question-card">
-                <h2 class="text-xl font-bold text-gray-800 leading-relaxed">${i + 1}) ${q}</h2>
-                <div contenteditable="true" class="answer-box"></div>
-            </div>
-        `;
-    });
+    window.onload = function() {
+        // جلب البيانات الصحيحة من التخزين المحلي
+        const name = localStorage.getItem('studentName');
+        const section = localStorage.getItem('studentSection');
+        const theme = localStorage.getItem('studentTheme') || 'female';
+
+        document.getElementById('sn').innerText = name || "لم يتم إدخال الاسم";
+        document.getElementById('sc').innerText = section || "--";
+        
+        // تطبيق ثيم الألوان بناءً على جنس الطالب
+        const header = document.getElementById('headerBox');
+        header.className = (theme === 'male') ? "p-8 text-center male-theme shadow-lg mb-6" : "p-8 text-center female-theme shadow-lg mb-6";
+
+        // توليد الأسئلة في العامودين
+        const container = document.getElementById('qsContainer');
+        questions.forEach((q, i) => {
+            container.innerHTML += `
+                <div class="question-card">
+                    <h2 class="text-lg font-bold text-gray-800 leading-relaxed">${i + 1}) ${q}</h2>
+                    <div contenteditable="true" class="answer-box"></div>
+                </div>
+            `;
+        });
+    };
 </script>
 </body>
 </html>
