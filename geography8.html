@@ -97,10 +97,18 @@
         </button>
     </div>
 
-    <script>
-        // جلب البيانات الأساسية فقط
-        document.getElementById('sn').innerText = localStorage.getItem('sName') || "الاء فرحان الغفري";
-        document.getElementById('sc').innerText = localStorage.getItem('sSection') || "ثامن - أولى";
+        <script>
+        // الحل: استخدمنا المسميات studentName و studentSection لتتطابق مع الصفحة الرئيسية
+        // وقمنا بإزالة الأسماء الثابتة لضمان عرض ما يدخله الطالب فقط
+        
+        window.onload = function() {
+            const name = localStorage.getItem('studentName');
+            const section = localStorage.getItem('studentSection');
+
+            document.getElementById('sn').innerText = name || "لم يتم إدخال الاسم";
+            document.getElementById('sc').innerText = section || "لم تحدد";
+        };
     </script>
+
 </body>
 </html>
