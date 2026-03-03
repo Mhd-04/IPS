@@ -19,7 +19,6 @@
             page-break-inside: avoid;
         }
 
-        /* لضمان ظهور الألوان في ملف الـ PDF */
         .correct { border: 4px solid #10b981 !important; background-color: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
         .wrong { border: 4px solid #ef4444 !important; background-color: #fef2f2 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 
@@ -34,11 +33,11 @@
 
     <div id="captureArea">
         <div id="headerBox" class="p-8 text-center shadow-lg mb-8">
-            <img src="1000219663.jpg" class="w-24 h-24 mx-auto rounded-full border-4 border-white bg-white mb-4 shadow-md">
+            <img src="1000219663.jpg" class="w-24 h-24 mx-auto rounded-full border-4 border-white bg-white mb-4 shadow-md" onerror="this.src='https://via.placeholder.com/100'">
             <h1 class="text-3xl font-black italic"> كويز الرياضيات - الوحدة الثالثة</h1>
-            <div class="flex justify-center gap-6 mt-4 text-lg font-bold bg-black/20 p-2 rounded-lg max-w-md mx-auto">
-                <div>الاسم: <span id="sn"></span></div>
-                <div>الشعبة: <span id="sc"></span></div>
+            <div class="flex flex-col md:flex-row justify-center gap-4 mt-4 text-lg font-bold bg-black/20 p-3 rounded-lg max-w-xl mx-auto">
+                <div>الاسم: <span id="sn" class="underline">جاري التحميل...</span></div>
+                <div>الشعبة: <span id="sc" class="underline">--</span></div>
             </div>
             <div id="scoreDisplay" class="text-2xl font-black mt-4 text-yellow-300"></div>
         </div>
@@ -59,16 +58,7 @@
     </div>
 
 <script>
-    // جلب البيانات الأساسية
-    const sName = localStorage.getItem('sName') || "الاء فرحان الغفري";
-    const sSection = localStorage.getItem('sSection') || "G";
-    const sTheme = localStorage.getItem('sTheme') || 'female';
-    
-    document.getElementById('headerBox').classList.add(sTheme === 'male' ? 'male-theme' : 'female-theme');
-    document.getElementById('sn').innerText = sName;
-    document.getElementById('sc').innerText = sSection;
-
-    // الأسئلة والمعلومات كاملة كما في الكود السابق
+    // الأسئلة والمعلومات
     const mcqs = [
         { q: "إذا علمت أن أحد حلول المعادلة \\(3x^2 + x - 2 = 0\\) هو \\(x_1 = -1\\) فالحل الآخر هو:", opts: ["\\(x = \\frac{1}{2}\\)", "\\(x = \\frac{2}{3}\\)", "\\(x = -\\frac{3}{2}\\)"], ans: 1 },
         { q: "إحدى طرق حل معادلة من الدرجة الثانية استخدام المميز \\(\\Delta\\) وقيمته:", opts: ["\\(c^2 - 4ab\\)", "\\(b^2 - 4ac\\)", "\\(a^2 - 4bc\\)"], ans: 1 },
@@ -97,6 +87,26 @@
 
     let tfUserAns = {};
 
+    // تعديل جلب البيانات ليكون متوافقاً مع الصفحة الرئيسية
+    window.onload = function() {
+        const savedName = localStorage.getItem('studentName');
+        const savedSection = localStorage.getItem('studentSection');
+        const savedTheme = localStorage.getItem('studentTheme') || 'female'; // افتراضي إناث
+
+        document.getElementById('sn').innerText = savedName || "لم يتم إدخال الاسم";
+        document.getElementById('sc').innerText = savedSection || "--";
+        
+        // تطبيق الثيم (أحمر للإناث، رمادي للذكور)
+        const header = document.getElementById('headerBox');
+        if (savedTheme === 'male') {
+            header.classList.add('male-theme');
+        } else {
+            header.classList.add('female-theme');
+        }
+        
+        init();
+    };
+
     function init() {
         const mcqCont = document.getElementById('mcqContainer');
         mcqs.forEach((item, i) => {
@@ -105,9 +115,9 @@
                     <h3 class="text-xl font-bold mb-4">${i + 1}) ${item.q}</h3>
                     <div class="grid grid-cols-1 gap-3">
                         ${item.opts.map((opt, j) => `
-                            <label class="flex items-center p-3 border rounded-xl cursor-pointer">
-                                <input type="radio" name="m${i}" value="${j}" class="w-5 h-5 ml-2">
-                                <span>${opt}</span>
+                            <label class="flex items-center p-3 border rounded-xl cursor-pointer hover:bg-gray-50 transition-colors">
+                                <input type="radio" name="m${i}" value="${j}" class="w-5 h-5 ml-2 accent-pink-600">
+                                <span class="text-lg">${opt}</span>
                             </label>
                         `).join('')}
                     </div>
@@ -117,11 +127,11 @@
         const tfCont = document.getElementById('tfContainer');
         tfs.forEach((item, i) => {
             tfCont.innerHTML += `
-                <div id="tfCard${i}" class="question-card flex justify-between items-center">
+                <div id="tfCard${i}" class="question-card flex flex-col md:flex-row justify-between items-center gap-4">
                     <p class="text-lg font-bold">${i + 1}) ${item.q}</p>
                     <div class="flex gap-2">
-                        <button type="button" onclick="setTF(${i}, 'صح')" id="tf${i}صح" class="px-5 py-2 rounded-xl border-2 font-bold">صح</button>
-                        <button type="button" onclick="setTF(${i}, 'خطأ')" id="tf${i}خطأ" class="px-5 py-2 rounded-xl border-2 font-bold">خطأ</button>
+                        <button type="button" onclick="setTF(${i}, 'صح')" id="tf${i}صح" class="px-8 py-2 rounded-xl border-2 font-bold transition-all">صح</button>
+                        <button type="button" onclick="setTF(${i}, 'خطأ')" id="tf${i}خطأ" class="px-8 py-2 rounded-xl border-2 font-bold transition-all">خطأ</button>
                     </div>
                 </div>`;
         });
@@ -130,8 +140,16 @@
 
     function setTF(i, val) {
         tfUserAns[i] = val;
-        document.getElementById(`tf${i}صح`).className = val === 'صح' ? "px-5 py-2 rounded-xl bg-green-500 text-white font-bold" : "px-5 py-2 rounded-xl border-2 font-bold";
-        document.getElementById(`tf${i}خطأ`).className = val === 'خطأ' ? "px-5 py-2 rounded-xl bg-red-500 text-white font-bold" : "px-5 py-2 rounded-xl border-2 font-bold";
+        const correctBtn = document.getElementById(`tf${i}صح`);
+        const wrongBtn = document.getElementById(`tf${i}خطأ`);
+        
+        if (val === 'صح') {
+            correctBtn.className = "px-8 py-2 rounded-xl bg-green-500 text-white font-bold shadow-md";
+            wrongBtn.className = "px-8 py-2 rounded-xl border-2 font-bold opacity-50";
+        } else {
+            wrongBtn.className = "px-8 py-2 rounded-xl bg-red-500 text-white font-bold shadow-md";
+            correctBtn.className = "px-8 py-2 rounded-xl border-2 font-bold opacity-50";
+        }
     }
 
     function gradeFullExam() {
@@ -139,14 +157,22 @@
         mcqs.forEach((item, i) => {
             const sel = document.querySelector(`input[name="m${i}"]:checked`);
             const card = document.getElementById(`mcqCard${i}`);
-            if(sel && parseInt(sel.value) === item.ans) { score++; card.classList.add('correct'); }
-            else { card.classList.add('wrong'); }
+            if(sel && parseInt(sel.value) === item.ans) { 
+                score++; 
+                card.classList.add('correct'); 
+            } else { 
+                card.classList.add('wrong'); 
+            }
         });
 
         tfs.forEach((item, i) => {
             const card = document.getElementById(`tfCard${i}`);
-            if(tfUserAns[i] === item.ans) { score++; card.classList.add('correct'); }
-            else { card.classList.add('wrong'); }
+            if(tfUserAns[i] === item.ans) { 
+                score++; 
+                card.classList.add('correct'); 
+            } else { 
+                card.classList.add('wrong'); 
+            }
         });
 
         document.getElementById('scoreDisplay').innerText = `النتيجة النهائية: ${score} من ${mcqs.length + tfs.length}`;
@@ -154,8 +180,6 @@
         document.getElementById('printBtn').classList.remove('hidden');
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-
-    init();
 </script>
 </body>
 </html>
