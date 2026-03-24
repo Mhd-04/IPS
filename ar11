@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>ثانوية ابن خلدون الخاصة - سبر لغة عربية
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Amiri:wght@400;700&display=swap');
+        body { font-family: 'Cairo', sans-serif; background-color: #f9fafb; }
+        .poem-container { font-family: 'Amiri', serif; background: #fff; border-radius: 15px; border: 1px solid #f3f4f6; }
+        .section-title { color: #d81b60; font-weight: bold; margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
+        .section-title::before { content: ''; width: 8px; height: 8px; background: #d81b60; border-radius: 50%; }
+        .answer-input { width: 100%; border: 1px solid #e5e7eb; border-radius: 8px; padding: 10px; outline: none; transition: 0.3s; background: #fff; }
+        .answer-input:focus { border-color: #d81b60; box-shadow: 0 0 0 3px rgba(216, 27, 96, 0.1); }
+        .header-bg { background-color: #d81b60; }
+        @media print { .no-print { display: none !important; } }
+    </style>
+</head>
+<body class="p-2 md:p-6">
+
+<div class="max-w-4xl mx-auto bg-white shadow-xl rounded-3xl overflow-hidden border border-gray-100">
+    
+    <div class="header-bg p-4 flex items-center justify-between text-white">
+        <div class="flex items-center gap-3">
+            <div class="bg-white p-1 rounded-lg">
+                <img src="1000219663.jpg" alt="Logo" onerror="this.src='https://via.placeholder.com/50?text=KH'" class="w-12 h-12 object-contain">
+            </div>
+            <div>
+                <h1 class="text-xl font-bold">ثانوية ابن خلدون الخاصة</h1>
+                <p class="text-xs opacity-80 italic">اختبار مادة اللغة العربية:  ""</p>
+            </div>
+        </div>
+        <div class="bg-white/20 p-2 rounded-xl text-center min-w-[80px] border border-white/30">
+            <span class="block text-[10px] font-bold uppercase">النتيجة</span>
+            <span id="scoreDisplay" class="text-xl font-bold">-- / 20</span>
+        </div>
+    </div>
+
+    <div class="p-4 bg-gray-50/50 border-b flex justify-between text-sm font-bold">
+        <div><span class="text-pink-600">اسم الطالب:</span> <span id="displayName" class="text-gray-800 underline decoration-dotted">جاري التحميل...</span></div>
+        <div><span class="text-pink-600">الشعبة / الفئة:</span> <span id="displaySection" class="text-gray-800 underline decoration-dotted">--</span></div>
+    </div>
+
+    <div class="p-6">
+        <h2 class="section-title">ورد في قصيدة الجواهري:</h2>
+        <div class="poem-container p-8 text-center text-xl md:text-2xl leading-relaxed italic text-gray-700 shadow-sm">
+            <p>1- أستلهم <span class="underline decoration-pink-500">النغم</span> الخفي <span class="text-pink-600 font-bold">(يموج)</span> في &nbsp;&nbsp;&nbsp; جرح الشهيد بثورة خرساء</p>
+            <p>2- <span class="underline decoration-pink-500">آمنت</span> بالحمر النوافح في الثرى &nbsp;&nbsp;&nbsp; <span class="underline decoration-pink-500">يبساً</span> أريج الواحة الخضراء</p>
+            <p>3- <span class="underline decoration-pink-500">المهديات</span> العمى آية رؤية &nbsp;&nbsp;&nbsp; والمسمعات الصم أي دعاء</p>
+        </div>
+    </div>
+
+    <div class="p-6 space-y-10">
+        
+        <section>
+            <h3 class="section-title">أولاً: أجب عن الأسئلة الآتية:</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div><label class="block text-sm mb-1">1- جمع كلمة (رؤى).</label><input type="text" class="answer-input"></div>
+                <div><label class="block text-sm mb-1">2- مفرد كلمة المهديات - الصم.</label><input type="text" class="answer-input"></div>
+                <div><label class="block text-sm mb-1">3- عكس كلمة (آمنت).</label><input type="text" class="answer-input"></div>
+                <div><label class="block text-sm mb-1">4- الأبيات من الشعر: القومي - الوطني - الاجتماعي</label><input type="text" class="answer-input"></div>
+            </div>
+        </section>
+
+        <section>
+            <h3 class="section-title">ثانياً: أجب عن الأسئلة الآتية:</h3>
+            <div class="space-y-4">
+                <div><label class="block text-sm mb-1">1- ما أثر الدماء في الأرض كما بدت في البيت الثاني؟</label><input type="text" class="answer-input"></div>
+                <div><label class="block text-sm mb-1">2- اذكر دليلاً على أثر دماء الشهداء في الإنسان كما بدت في البيت الثالث.</label><input type="text" class="answer-input"></div>
+                <div><label class="block text-sm mb-1">3- اذكر قيمة من الأبيات السابقة وحدد موطنها.</label><input type="text" class="answer-input"></div>
+                <div><label class="block text-sm mb-1">4- في قول الشاعر: (المهديات العمى) صورة بيانية حللها ثم سمها، واشرح وظيفة المبالغة.</label><textarea class="answer-input" rows="2"></textarea></div>
+            </div>
+        </section>
+
+        <section>
+            <h3 class="section-title">ثالثاً: أكمل الفراغات مما يأتي:</h3>
+            <div class="bg-pink-50/50 p-4 rounded-xl border border-pink-100 space-y-4 text-sm leading-loose">
+                <div>1- الشعور العاطفي في البيت الثاني <input type="text" class="bg-transparent border-b border-pink-300 outline-none w-24 text-center"> من أدوات التعبير عنه <input type="text" class="bg-transparent border-b border-pink-300 outline-none w-24 text-center"> مثال <input type="text" class="bg-transparent border-b border-pink-300 outline-none w-32 text-center"></div>
+                <div>2- الموسيقا الداخلية في البيت الأول <input type="text" class="bg-transparent border-b border-pink-300 outline-none w-32 text-center"> مثال <input type="text" class="bg-transparent border-b border-pink-300 outline-none w-32 text-center"></div>
+                <div>3- في البيت الثاني محسن معنوي <input type="text" class="bg-transparent border-b border-pink-300 outline-none w-32 text-center"> نوعه <input type="text" class="bg-transparent border-b border-pink-300 outline-none w-32 text-center"></div>
+                <div>4- أسلوب خبري في البيت الأول <input type="text" class="bg-transparent border-b border-pink-300 outline-none w-32 text-center"> نوعه <input type="text" class="bg-transparent border-b border-pink-300 outline-none w-32 text-center"></div>
+            </div>
+        </section>
+
+        <section>
+            <h3 class="section-title">رابعاً: أكمل ما يأتي:</h3>
+            <div class="space-y-4">
+                <div class="flex items-center gap-2 text-sm"><span>1- (المسمعات- خرساء ) أسماء مشتقة، نوعها</span> <input type="text" class="answer-input flex-1"></div>
+                <div class="flex items-center gap-2 text-sm"><span>2- العلّة الصرفية في (دعاء) مع التعليل</span> <input type="text" class="answer-input flex-1"></div>
+                <div class="flex items-center gap-2 text-sm"><span>3- علل الألف اللينة في ( الثرى)</span> <input type="text" class="answer-input flex-1"></div>
+                <div class="text-sm"><span>4- رتب الكلمات الآتية حسب ورودها في معجم يأخذ بأوائل الكلمات ( أستلهم – أريج – العمى )</span> <input type="text" class="answer-input mt-2"></div>
+            </div>
+        </section>
+
+        <section class="pb-8 border-b">
+            <h3 class="section-title">خامساً القواعد:</h3>
+            <div class="space-y-6">
+                <div><label class="block text-sm mb-1">1- استخرج من البيت الأول نعتاً ومنعوتاً وحدد أوجه التطابق.</label><input type="text" class="answer-input"></div>
+                <div><label class="block text-sm mb-1">2- استخرج من البيت الثالث مفعولاً به وحدد نوعه.</label><input type="text" class="answer-input"></div>
+                <div class="flex items-center gap-2 text-sm"><span>3- ضع في الفراغ اسماً مختصاً واضبطه بالشكل:</span> بكم <input type="text" class="bg-pink-100 border-b-2 border-pink-500 w-24 text-center outline-none"> يُبنى المستقبل</div>
+                <div><label class="block text-sm mb-2 font-bold italic">4- أعرب ماتحته خط إعراب مفردات ومايين قوسين إعراب جمل (النغم - آمنت - يبساً - المهديات - يموج):</label><textarea class="answer-input" rows="4"></textarea></div>
+            </div>
+        </section>
+    </div>
+
+    <div class="p-6 bg-gray-50 flex flex-col md:flex-row gap-4 justify-center no-print">
+        <button onclick="window.print()" class="bg-gray-800 text-white px-8 py-3 rounded-xl font-bold hover:bg-black transition-all">طباعة الورقة</button>
+        <button onclick="alert('تم إرسال إجاباتك بنجاح!')" class="bg-pink-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-pink-700 shadow-lg shadow-pink-200 transition-all">إرسال الحل</button>
+    </div>
+</div>
+
+<script>
+    // كود الربط: يقوم بسحب البيانات المخزنة من صفحة Login
+    window.onload = function() {
+        // سحب الاسم من الذاكرة المحلية
+        const savedName = localStorage.getItem('studentName');
+        // سحب الشعبة من الذاكرة المحلية
+        const savedSection = localStorage.getItem('studentSection');
+
+        // عرض البيانات في المكان المخصص لها، أو وضع قيمة افتراضية إذا كانت فارغة
+        document.getElementById('displayName').innerText = savedName || "لم يتم تسجيل الاسم";
+        document.getElementById('displaySection').innerText = savedSection || "غير محدد";
+    };
+</script>
+</body>
+</html>
